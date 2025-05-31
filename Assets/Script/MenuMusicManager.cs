@@ -5,6 +5,7 @@ public class MenuMusicManager : MonoBehaviour
 {
     private static MenuMusicManager instance;
 
+    // Keep menu music in settings
     void Awake()
     {
         if (instance == null)
@@ -27,7 +28,7 @@ public class MenuMusicManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name != "MenuInicio" && scene.name != "Ajustes")
+        if (scene.name != "Menu" && scene.name != "Settings")
         {
             SceneManager.sceneLoaded -= OnSceneLoaded;
             Destroy(gameObject);
