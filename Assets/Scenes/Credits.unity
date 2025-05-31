@@ -236,7 +236,7 @@ GameObject:
   - component: {fileID: 666258869}
   - component: {fileID: 666258868}
   m_Layer: 0
-  m_Name: LogoEmpresa
+  m_Name: companyLogo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -412,7 +412,7 @@ GameObject:
   - component: {fileID: 880893309}
   - component: {fileID: 880893308}
   m_Layer: 0
-  m_Name: Fondo
+  m_Name: background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -496,7 +496,7 @@ GameObject:
   - component: {fileID: 987553000}
   - component: {fileID: 987552999}
   m_Layer: 0
-  m_Name: MusicCredits
+  m_Name: musicCredits
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -625,7 +625,7 @@ GameObject:
   - component: {fileID: 1082450535}
   - component: {fileID: 1082450534}
   m_Layer: 5
-  m_Name: Leyenda
+  m_Name: message
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -761,7 +761,7 @@ GameObject:
   - component: {fileID: 1439364797}
   - component: {fileID: 1439364799}
   m_Layer: 5
-  m_Name: Creditos
+  m_Name: credits
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

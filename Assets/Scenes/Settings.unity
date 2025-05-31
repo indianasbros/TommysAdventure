@@ -486,7 +486,7 @@ GameObject:
   - component: {fileID: 181115937}
   - component: {fileID: 181115938}
   m_Layer: 5
-  m_Name: Ingles
+  m_Name: English
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -572,7 +572,7 @@ GameObject:
   - component: {fileID: 185956327}
   - component: {fileID: 185956328}
   m_Layer: 5
-  m_Name: "Espa\xF1ol"
+  m_Name: Spanish
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -658,7 +658,7 @@ GameObject:
   - component: {fileID: 211420868}
   - component: {fileID: 211420867}
   m_Layer: 0
-  m_Name: Fondo
+  m_Name: background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -747,7 +747,7 @@ GameObject:
   - component: {fileID: 315192457}
   - component: {fileID: 315192458}
   m_Layer: 0
-  m_Name: ajustesImagen
+  m_Name: settingImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -832,7 +832,7 @@ GameObject:
   - component: {fileID: 375455347}
   - component: {fileID: 375455346}
   m_Layer: 5
-  m_Name: Lenguaje
+  m_Name: Lenguage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -965,7 +965,7 @@ GameObject:
   - component: {fileID: 463427283}
   - component: {fileID: 463427282}
   m_Layer: 0
-  m_Name: LogoEmpresa
+  m_Name: companyLogo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1048,7 +1048,7 @@ GameObject:
   m_Component:
   - component: {fileID: 625433906}
   m_Layer: 0
-  m_Name: PanelIdioma
+  m_Name: ' languagePanel'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1174,7 +1174,7 @@ GameObject:
   - component: {fileID: 799017506}
   - component: {fileID: 799017505}
   m_Layer: 0
-  m_Name: Personaje
+  m_Name: character
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

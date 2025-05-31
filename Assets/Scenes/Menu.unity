@@ -390,7 +390,7 @@ GameObject:
   - component: {fileID: 211420868}
   - component: {fileID: 211420867}
   m_Layer: 0
-  m_Name: Fondo
+  m_Name: background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -608,7 +608,7 @@ GameObject:
   - component: {fileID: 463427283}
   - component: {fileID: 463427282}
   m_Layer: 0
-  m_Name: LogoEmpresa
+  m_Name: companyLogo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -694,7 +694,7 @@ GameObject:
   - component: {fileID: 484629600}
   - component: {fileID: 484629599}
   m_Layer: 5
-  m_Name: ButtonAjustes
+  m_Name: ButtonSettings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -917,7 +917,7 @@ GameObject:
   - component: {fileID: 799017506}
   - component: {fileID: 799017505}
   m_Layer: 0
-  m_Name: Personaje
+  m_Name: character
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1137,7 +1137,7 @@ GameObject:
   - component: {fileID: 1132256336}
   - component: {fileID: 1132256335}
   m_Layer: 5
-  m_Name: ButtonCreditos
+  m_Name: ButtonCredits
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1471,7 +1471,7 @@ GameObject:
   - component: {fileID: 1742037110}
   - component: {fileID: 1742037109}
   m_Layer: 5
-  m_Name: Titulo
+  m_Name: Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1603,7 +1603,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1834965426}
   m_Layer: 5
-  m_Name: Botones
+  m_Name: Buttons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1762,7 +1762,7 @@ GameObject:
   - component: {fileID: 2144959050}
   - component: {fileID: 2144959049}
   m_Layer: 5
-  m_Name: ButtonJugar
+  m_Name: ButtonPlay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
