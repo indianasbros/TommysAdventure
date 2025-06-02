@@ -4,12 +4,7 @@ using UnityEngine;
 
 public class eliminar : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
+ //puto el que lee
     // Update is called once per frame
     void Update()
     {
