@@ -20,12 +20,12 @@ public class CodeDoor1 : MonoBehaviour
         if (enteredCode == correctCode)
         {
             Debug.Log("¡Código correcto! Puerta desbloqueada.");
-            doorScript.canOpen = true;
+            doorScript.CanOpen = true;
         }
         else
         {
             Debug.Log("Código incorrecto. Inténtalo de nuevo.");
-            doorScript.canOpen = false;
+            doorScript.CanOpen = false;
         }
 
         enteredCode = ""; // reinicia para el próximo intento
