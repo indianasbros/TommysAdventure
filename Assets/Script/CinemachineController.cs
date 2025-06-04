@@ -22,7 +22,7 @@ public class CinemachineController : MonoBehaviour
 
     void Start()
     {
-
+        anim = GetComponent<Animator>();
     }
 
     void Update()
@@ -33,11 +33,16 @@ public class CinemachineController : MonoBehaviour
     {
         if (cameraToChangeTo != null)
         {
-            anim.SetBool(cameraToChangeTo,true);
+            
+            anim.Play(cameraToChangeTo);
         }
         else
         {
             Debug.LogWarning("Camera to change to is null.");
         }
+    }
+    public void ChangeMainCamera()
+    {
+        anim.Play("VCam_Gameplay");
     }
 }

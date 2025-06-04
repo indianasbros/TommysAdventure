@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: State-Driven Camera Blends
   m_EditorClassIdentifier: 
   m_CustomBlends:
-  - m_From: Main
+  - m_From: VCam_Gameplay
     m_To: CodePanel-Room1
     m_Blend:
       m_Style: 1
-      m_Time: 2
+      m_Time: 1
       m_CustomCurve:
         serializedVersion: 2
         m_Curve: []
@@ -25,18 +25,29 @@ MonoBehaviour:
         m_PostInfinity: 0
         m_RotationOrder: 0
   - m_From: CodePanel-Room1
-    m_To: Main
+    m_To: VCam_Gameplay
     m_Blend:
       m_Style: 1
-      m_Time: 2
+      m_Time: 1
       m_CustomCurve:
         serializedVersion: 2
         m_Curve: []
         m_PreInfinity: 0
         m_PostInfinity: 0
         m_RotationOrder: 0
-  - m_From: 
-    m_To: 
+  - m_From: VCam_Gameplay
+    m_To: Piano-Room2
+    m_Blend:
+      m_Style: 1
+      m_Time: 1
+      m_CustomCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 0
+        m_PostInfinity: 0
+        m_RotationOrder: 0
+  - m_From: Piano-Room2
+    m_To: VCam_Gameplay
     m_Blend:
       m_Style: 1
       m_Time: 2

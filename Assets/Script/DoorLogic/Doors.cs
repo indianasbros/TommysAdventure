@@ -6,19 +6,19 @@ using UnityEngine;
 using UnityEngine.UIElements;
 public class Doors : MonoBehaviour
 {
-    public float speed = 90f; // grados por segundo
-    public Axis rotationAxis = Axis.Y; // eje por defecto (cámbialo en el Inspector)
-    private bool canOpen;
+    protected float speed = 30f; // grados por segundo
+    protected Axis rotationAxis = Axis.Y; // eje por defecto (cámbialo en el Inspector)
+    protected bool canOpen;
+    protected float initialAngle;
+    protected float targetAngle;
+    protected bool isOpen = false;
     public bool CanOpen
     {
         get { return canOpen; }
         set { canOpen = value; }
     }
-    private float initialAngle;
-    private float targetAngle;
-    private bool isOpen = false;
 
-    public enum Axis { X, Y, Z }
+    protected enum Axis { X, Y, Z }
 
     void Start()
     {
@@ -35,7 +35,12 @@ public class Doors : MonoBehaviour
             float newAngle = Mathf.MoveTowardsAngle(currentAngle, targetAngle, speed * Time.deltaTime);
             SetCurrentAngle(newAngle);
         }
+        OpenDoor();
 
+    }
+
+    virtual protected void OpenDoor()
+    {
         if (Input.GetKeyDown(KeyCode.Space) && canOpen)
         {
             if (!isOpen)
@@ -50,7 +55,7 @@ public class Doors : MonoBehaviour
             }
         }
     }
-
+    
     float GetCurrentAngle()
     {
         switch (rotationAxis)
