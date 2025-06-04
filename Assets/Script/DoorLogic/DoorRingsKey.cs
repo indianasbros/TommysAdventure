@@ -4,12 +4,13 @@ using JetBrains.Annotations;
 using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UIElements;
-public class Doors : MonoBehaviour
+public class DoorRingsKay : MonoBehaviour
 {
     public float speed = 90f; // grados por segundo
     public Axis rotationAxis = Axis.Y; // eje por defecto (cámbialo en el Inspector)
     public bool canOpen;
-
+    public bool haveRing1;
+    public bool haveRing2;
     private float initialAngle;
     private float targetAngle;
     private bool isOpen = false;
@@ -20,6 +21,8 @@ public class Doors : MonoBehaviour
     {
         initialAngle = GetCurrentAngle();
         targetAngle = initialAngle;
+        haveRing1 = false;
+        haveRing2 = false;
     }
 
     void Update()
@@ -32,7 +35,7 @@ public class Doors : MonoBehaviour
             SetCurrentAngle(newAngle);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && canOpen)
+        if (Input.GetKeyDown(KeyCode.Space) && canOpen && haveRing1 && haveRing2)
         {
             if (!isOpen)
             {
