@@ -8,8 +8,12 @@ public class Doors : MonoBehaviour
 {
     public float speed = 90f; // grados por segundo
     public Axis rotationAxis = Axis.Y; // eje por defecto (cámbialo en el Inspector)
-    public bool canOpen;
-
+    private bool canOpen;
+    public bool CanOpen
+    {
+        get { return canOpen; }
+        set { canOpen = value; }
+    }
     private float initialAngle;
     private float targetAngle;
     private bool isOpen = false;

@@ -4,12 +4,8 @@ using UnityEngine;
 
 public class ExitKey : MonoBehaviour
 {
-    GameObject gameObject;
+
     public bool canTake;
-    void Start()
-    {
-        gameObject = GetComponent<GameObject>();
-    }
 
     // Update is called once per frame
     void Update()

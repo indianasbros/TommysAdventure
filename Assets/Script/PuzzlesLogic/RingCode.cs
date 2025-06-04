@@ -5,11 +5,10 @@ using UnityEngine;
 
 public class RingCode : MonoBehaviour
 {
-    GameObject gameObject;
     public bool canTake;
     void Start()
     {
-        gameObject = GetComponent<GameObject>();
+        canTake = false;
     }
 
     // Update is called once per frame

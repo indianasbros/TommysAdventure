@@ -7,7 +7,6 @@ public class PlayerInventory : MonoBehaviour
     // This script manages the player's inventory, allowing items to be added when the player collides with them and interact with the item.
     private GameObject[] slots;
     int maxSlots = 0;
-    int enabledSlots = 0;
     bool canAddItem = true;
     bool isInventoryOpen = false;
     Item itemToAdd;
@@ -73,9 +72,15 @@ public class PlayerInventory : MonoBehaviour
             Item item = other.GetComponent<Item>();
             if (item != null)
             {
-                canAddItem = true; 
-                itemToAdd = item;  
+                canAddItem = true;
+                itemToAdd = item;
             }
+        }
+        if (other.TryGetComponent(out Interactable interactable))
+        {
+            interactable.canInteract = false; // Allow interaction with the item
+            interactable.isInteracting = true; // Set the item as being interacted with
+            interactable.ChangeToCamera(); // Change the camera to the item view if needed
         }
     }
     public void AddItem(GameObject item, string itemName, string description, Sprite icon, int itemID)
