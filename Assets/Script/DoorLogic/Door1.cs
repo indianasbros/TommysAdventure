@@ -1,7 +1,7 @@
 using UnityEngine;
 
 public class Door1 : Doors
-{
+{ 
     public bool puzzle1;
     public bool Puzzle1Solved
     {
