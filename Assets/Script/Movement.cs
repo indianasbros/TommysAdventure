@@ -21,12 +21,20 @@ public class PlayerMovement : MonoBehaviour
     private float turnSmoothVelocity;
     private Vector2 lookInput; // Para guardar el movimiento del mouse
     Animator animator;
+
+    // Steps Audio
+    [SerializeField] private AudioSource stepAudioSource;
+    [SerializeField] private AudioClip stepClip;
+
     void Start()
     {
         animator = GetComponent<Animator>();
         rigidbody3D = GetComponent<Rigidbody>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        // Steps Audio
+        stepAudioSource.clip = stepClip;
+        stepAudioSource.loop = true;
     }
 
     void Update()
@@ -53,6 +61,12 @@ public class PlayerMovement : MonoBehaviour
         animator.SetFloat("Velocity", inputDirection.magnitude);
         if (inputDirection.magnitude >= 0.1f)
         {
+            // Steps Audio
+            if (!stepAudioSource.isPlaying)
+            {
+                stepAudioSource.Play();
+            }
+
             // Aquí NO calculamos el ángulo basado en la cámara
             // Solo movemos relativo al personaje
 
@@ -66,6 +80,14 @@ public class PlayerMovement : MonoBehaviour
             float targetAngle = Mathf.Atan2(moveDir.x, moveDir.z) * Mathf.Rad2Deg;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, rotationSmoothTime);
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
+        }
+        else
+        {
+            //Steps Audio
+            if (stepAudioSource.isPlaying)
+            {
+                stepAudioSource.Stop();
+            }
         }
     }
 }

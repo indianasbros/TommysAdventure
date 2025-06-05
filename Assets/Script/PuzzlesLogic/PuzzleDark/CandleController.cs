@@ -66,6 +66,7 @@ public class CandleController : MonoBehaviour
     {
         transform.SetParent(null);
         isCarried = false;
+
         rb.isKinematic = false;
 
         // Deja la vela un poco más abajo para que caiga
