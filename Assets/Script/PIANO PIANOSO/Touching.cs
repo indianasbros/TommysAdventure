@@ -16,6 +16,8 @@ public class Touching : MonoBehaviour
     private Vector3 originalPosition;
     private bool isPressed = false;
 
+    [SerializeField] private PianoCheck pianoCheck;
+
     void Start()
     {
         audioSource = GetComponent<AudioSource>();

@@ -10,6 +10,16 @@ public class PlayerInventory : MonoBehaviour
     bool canAddItem = true;
     bool isInventoryOpen = false;
     Item itemToAdd;
+    private bool isInteracting = false;
+    public bool IsInteracting
+    {
+        get { return isInteracting; }
+        set
+        {
+            isInteracting = value;
+        }
+    }
+
     [Header("Inventory UI")]
     [SerializeField]GameObject inventory;
     [SerializeField]GameObject inventorySlotHandler;
@@ -68,26 +78,9 @@ public class PlayerInventory : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.E) && interactableObject != null)
         {
-            if (!interactableObject.isInteracting)
-            {
-                Debug.Log("Interacting with object: " + interactableObject.name);
-                interactableObject.isInteracting = true; // Set the interactable object to interacting state
-                interactableObject.canInteract = false; // Disable further interactions with the item
-                interactableObject.ChangeToCamera(); // Change the camera to the item view if needed
-                animator.enabled = false; // Disable the player animator to prevent further interactions
-                rb.isKinematic = true; // Disable physics interactions while interacting with the item
-                playerMovement.enabled = false; // Disable player movement while interacting
-            }
-            else
-            {
-                Debug.Log("Already interacting with object: " + interactableObject.name);
-                interactableObject.ChangeToMainCamera(); // Change back to the main camera
-                interactableObject.isInteracting = false; // Reset the interacting state
-                interactableObject.canInteract = true; // Re-enable interactions with the item
-                animator.enabled = true; // Re-enable the player animator
-                rb.isKinematic = false; // Re-enable physics interactions
-                playerMovement.enabled = true; // Re-enable player movement
-            }
+            Debug.Log("Interacting with object: " + interactableObject.name+ " at position: " + interactableObject.transform.position);
+            Debug.Log("gamemanager instance: " + GameplayManager.Instance);
+            GameplayManager.Instance.InteractWithObject(interactableObject.gameObject); // Call the interact method in GameplayManager
         }
 
     }
@@ -105,7 +98,6 @@ public class PlayerInventory : MonoBehaviour
         }
         if (other.TryGetComponent(out Interactable interactable))
         {
-            interactable.canInteract = false; // Allow interaction with the item
             interactableObject = interactable; // Store the interactable object for later use
         }
     }

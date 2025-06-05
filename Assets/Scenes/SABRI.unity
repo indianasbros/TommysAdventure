@@ -11419,6 +11419,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doorSound: {fileID: 0}
+  puzzle1: 0
 --- !u!135 &642743976
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -13822,7 +13823,7 @@ Transform:
   m_GameObject: {fileID: 745581182}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.9, y: 0, z: 9.1}
+  m_LocalPosition: {x: -2.5, y: 0, z: 9.1}
   m_LocalScale: {x: 1.8966, y: 1, z: 1.938}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -13847,8 +13848,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 26.19169, y: 1, z: 28.40214}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 27.433916, y: 1, z: 34.1167}
+  m_Center: {x: -0.62111825, y: 0, z: -0.37113282}
 --- !u!114 &745581185
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33223,7 +33224,7 @@ Transform:
   m_GameObject: {fileID: 1524211539}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.4, y: 3.2, z: -6.7}
+  m_LocalPosition: {x: -5.4, y: 3.2, z: 13.3}
   m_LocalScale: {x: 2.118686, y: 1.2347, z: 2.286989}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -40393,6 +40394,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 472780d55889db947b990250e64e7cb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doorSound: {fileID: 0}
+  puzzle2: 0
 --- !u!1 &1802254777
 GameObject:
   m_ObjectHideFlags: 0
@@ -42057,6 +42060,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doorSound: {fileID: 8300000, guid: 4a978ac34f0b73f459672c11c46f9a92, type: 3}
+  puzzle1: 0
 --- !u!1001 &1873198055
 PrefabInstance:
   m_ObjectHideFlags: 0
