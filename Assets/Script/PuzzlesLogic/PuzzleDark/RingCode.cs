@@ -14,7 +14,7 @@ public class RingCode : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && canTake)
+        if (Input.GetKeyDown(KeyCode.E) && canTake)
         {
             //se añade al inventario
             Destroy(gameObject, 0.1f);
