@@ -20,10 +20,21 @@ public class Doors : MonoBehaviour
 
     protected enum Axis { X, Y, Z }
 
+    // Door Audio
+    public AudioClip doorSound; //Inspector
+    private AudioSource audioSource;
+
     void Start()
     {
         initialAngle = GetCurrentAngle();
         targetAngle = initialAngle;
+
+        //Door Audio
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
     }
 
     void Update()
@@ -47,6 +58,12 @@ public class Doors : MonoBehaviour
             {
                 targetAngle = (initialAngle - 80f + 360f) % 360f; // abre 80 grados
                 isOpen = true;
+
+                //Door Audio
+                if (doorSound != null)
+                {
+                    audioSource.PlayOneShot(doorSound);
+                }
             }
             else
             {
