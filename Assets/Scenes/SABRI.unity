@@ -3678,6 +3678,10 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1403801630999566456, guid: c5f868f465e50e943902cf18499f2d31, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3634390280443979936, guid: c5f868f465e50e943902cf18499f2d31, type: 3}
       propertyPath: m_Name
       value: Door
@@ -11313,6 +11317,10 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1403801630999566456, guid: c5f868f465e50e943902cf18499f2d31, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3634390280443979936, guid: c5f868f465e50e943902cf18499f2d31, type: 3}
       propertyPath: m_Name
       value: Door
@@ -11419,6 +11427,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doorSound: {fileID: 0}
+  puzzle1: 0
 --- !u!135 &642743976
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -15766,6 +15775,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1435335299}
     m_Modifications:
+    - target: {fileID: 1403801630999566456, guid: c5f868f465e50e943902cf18499f2d31, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3634390280443979936, guid: c5f868f465e50e943902cf18499f2d31, type: 3}
       propertyPath: m_Name
       value: Door
@@ -20527,6 +20540,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 757972899}
     m_Modifications:
+    - target: {fileID: 1403801630999566456, guid: c5f868f465e50e943902cf18499f2d31, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3634390280443979936, guid: c5f868f465e50e943902cf18499f2d31, type: 3}
       propertyPath: m_Name
       value: Door
@@ -42057,6 +42074,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doorSound: {fileID: 8300000, guid: 4a978ac34f0b73f459672c11c46f9a92, type: 3}
+  puzzle1: 0
 --- !u!1001 &1873198055
 PrefabInstance:
   m_ObjectHideFlags: 0
