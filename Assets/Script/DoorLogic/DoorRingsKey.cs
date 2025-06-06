@@ -12,7 +12,7 @@ public class DoorRingsKey : Doors
     protected override void OpenDoor()
     {
 
-        if (Input.GetKeyDown(KeyCode.Space) && canOpen && haveRing1 && haveRing2)
+        if (Input.GetKeyDown(KeyCode.E) && canOpen && haveRing1 && haveRing2)
         {
             if (!isOpen)
             {

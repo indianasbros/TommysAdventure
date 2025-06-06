@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -12,7 +13,7 @@ public class PianoCheck : MonoBehaviour
     [SerializeField] private UnityEvent onAccessGranted;
     [SerializeField] private UnityEvent onAccessDenied;
     
-    [SerializeField] private int notesCombo = 1234;
+    [SerializeField] private string notesCombo = "1234";
 
     public UnityEvent OnAccessGranted => onAccessGranted;
     public UnityEvent OnAccessDenied => onAccessDenied;
@@ -25,12 +26,12 @@ public class PianoCheck : MonoBehaviour
 
 
     private string currentInput;
-    private bool displayingResult = false;
     private bool accessWasGranted = false;
 
     private void Awake()
     {
         ClearInput();
+        notesCombo = "1234"; // Set your desired passcode here
     }
 
 
@@ -38,41 +39,32 @@ public class PianoCheck : MonoBehaviour
     public void AddInput(string input, AudioClip noteSfx)
     {
         audioSource.PlayOneShot(noteSfx);
-        if (displayingResult || accessWasGranted) return;
-        switch (input)
-        {
-            case "enter":
-                CheckCombo();
-                break;
-            default:
-                if (currentInput != null && currentInput.Length == 4) // 4 max passcode size 
-                {
-                    return;
-                }
-                currentInput += input;
-                
-                break;
-        }
+        if (accessWasGranted) return;
 
+        Debug.Log("typo");
+        if (currentInput != null && currentInput.Length == 4) // 4 max passcode size 
+        {
+            ClearInput();
+            return;
+        }
+        currentInput = String.Concat(currentInput, input);
+        Debug.Log("prueba: " + currentInput + input);
+        CheckCombo();
     }
     public void CheckCombo()
     {
-        if (int.TryParse(currentInput, out var currentKombo))
+        Debug.Log("Checking Combo: " + currentInput);
+        Debug.Log("Correct Combo: " + notesCombo);
+        if (currentInput == notesCombo)
         {
-            if (currentKombo == notesCombo)
-            {
-                AccessGranted();
-                ClearInput();
-                return;
-            }
-            AccessDenied();
-            ClearInput();
-
+            AccessGranted();
+            return;
         }
         else
         {
-            Debug.LogWarning("Couldn't process input for some reason..");
+            AccessDenied();
         }
+        
 
     }
     private void AccessDenied()
@@ -90,6 +82,7 @@ public class PianoCheck : MonoBehaviour
 
     private void AccessGranted()
     {
+        Debug.Log("Access Granted!");
         accessWasGranted = true;
         onAccessGranted?.Invoke();
         //panelMesh.material.SetVector("_EmissionColor", screenGrantedColor * screenIntensity);

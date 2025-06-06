@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
     public float mouseSensitivity = 2f;
     public float minVerticalAngle = -40f;
     public float maxVerticalAngle = 40f;
-    float jumpForce = 5f;
+    float jumpForce = 10f;
     bool onFloor;
     private Rigidbody rigidbody3D;
     private float turnSmoothVelocity;
@@ -99,7 +99,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
-    protected void OnCollisionEnter2D(Collision2D collision)
+    protected void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Floor"))
         {
@@ -107,7 +107,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
     }
-    protected void OnCollisionExit2D(Collision2D collision)
+    protected void OnCollisionExit(Collision collision)
     {
         if (collision.gameObject.CompareTag("Floor"))
         {

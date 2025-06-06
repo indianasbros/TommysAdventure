@@ -11,7 +11,7 @@ public class Touching : MonoBehaviour
     [Header("Animación")]
     [SerializeField] private float pressDepth = 0.3f;
     [SerializeField] private float pressSpeed = 1f;
-
+    [SerializeField] private string value;
     private AudioSource audioSource;
     private Vector3 originalPosition;
     private bool isPressed = false;
@@ -35,8 +35,10 @@ public class Touching : MonoBehaviour
         if (!isPressed)
         {
             if (keySound != null)
+            {
                 audioSource.PlayOneShot(keySound);
-
+            }
+            pianoCheck.AddInput(value, keySound);
             StartCoroutine(AnimateKeyPress());
         }
     }

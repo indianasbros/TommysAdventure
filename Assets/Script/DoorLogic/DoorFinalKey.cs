@@ -12,7 +12,7 @@ public class DoorFinalKey : Doors
     protected override void OpenDoor()
     {
         
-        if (Input.GetKeyDown(KeyCode.Space) && canOpen && haveFinalKey)
+        if (Input.GetKeyDown(KeyCode.E) && canOpen && haveFinalKey)
         {
             if (!isOpen)
             {

@@ -4,6 +4,33 @@ using UnityEngine;
 
 public class InventorySystem : MonoBehaviour
 {
+    public PlayerInventory player;
+    private static InventorySystem _instance;
+    public static InventorySystem Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                GameObject obj = new GameObject("InventorySystem");
+                _instance = obj.AddComponent<InventorySystem>();
+            }
+            return _instance;
+        }
+    }
+    
+    void Awake()
+    {
+        if (_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     // This script manages the player's inventory, allowing items to be added when the player collides with them and interact with the item.
     private GameObject[] slots;
     int maxSlots = 0;
@@ -23,10 +50,33 @@ public class InventorySystem : MonoBehaviour
     [Header("Inventory UI")]
     [SerializeField]GameObject inventory;
     [SerializeField]GameObject inventorySlotHandler;
-    Interactable interactableObject = null;
+    
     // Start is called before the first frame update
     void Start()
     {
+        if (player == null)
+        {
+            Debug.LogError("Player GameObject is not assigned in InventorySystem.");
+            GameObject playerTemp = GameObject.FindWithTag("Player");
+
+            if (player == null)
+            {
+                Debug.LogError("No GameObject with tag 'Player' found in the scene.");
+                return;
+            }
+            playerTemp.TryGetComponent(out PlayerInventory playerInventory);
+            if (playerInventory == null)
+            {
+                
+                Debug.LogError("Player GameObject does not have a PlayerInventory component.");
+                return;
+            }
+            player = playerInventory; // Assign the found PlayerInventory component to the player variable
+        }
+        else
+        {
+            Debug.Log("InventorySystem initialized with player: " + player.name);
+        }
         itemToAdd = null; // Initialize itemToAdd to null
         maxSlots = inventorySlotHandler.transform.childCount; // Get the number of child slots in the inventory slot handler
         slots = new GameObject[maxSlots];
@@ -63,18 +113,18 @@ public class InventorySystem : MonoBehaviour
             inventory.SetActive(isInventoryOpen);
 
         }
-        if (Input.GetKeyDown(KeyCode.E) && canAddItem && itemToAdd != null && interactableObject != null)
+        if (Input.GetKeyDown(KeyCode.E) && canAddItem && itemToAdd != null && player.interactableObject != null)
         {
             AddItem(itemToAdd.gameObject, itemToAdd.itemName, itemToAdd.description, itemToAdd.icon, itemToAdd.itemID);
             itemToAdd = null; // Clear the item to add after processing
             canAddItem = false; // Allow adding new items again
 
         }
-        if (Input.GetKeyDown(KeyCode.E) && interactableObject != null)
+        if (Input.GetKeyDown(KeyCode.E) && player.interactableObject != null)
         {
-            Debug.Log("Interacting with object: " + interactableObject.name+ " at position: " + interactableObject.transform.position);
+            Debug.Log("Interacting with object: " + player.interactableObject.name+ " at position: " + player.interactableObject.transform.position);
             Debug.Log("gamemanager instance: " + GameplayManager.Instance);
-            GameplayManager.Instance.InteractWithObject(interactableObject.gameObject); // Call the interact method in GameplayManager
+            GameplayManager.Instance.InteractWithObject(player.interactableObject.gameObject); // Call the interact method in GameplayManager
         }
 
     }
@@ -92,7 +142,7 @@ public class InventorySystem : MonoBehaviour
         }
         if (other.TryGetComponent(out Interactable interactable))
         {
-            interactableObject = interactable; // Store the interactable object for later use
+            player.interactableObject = interactable; // Store the interactable object for later use
         }
     }
     void OnTriggerExit(Collider other)
@@ -105,7 +155,7 @@ public class InventorySystem : MonoBehaviour
         if (other.TryGetComponent(out Interactable interactable))
         {
             interactable.canInteract = true; // Allow interaction with the item
-            interactableObject = null; // Clear the interactable object when exiting the trigger
+            player.interactableObject = null; // Clear the interactable object when exiting the trigger
         }
     }
     public void AddItem(GameObject item, string itemName, string description, Sprite icon, int itemID)

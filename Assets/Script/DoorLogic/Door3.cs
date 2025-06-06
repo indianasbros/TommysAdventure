@@ -9,7 +9,7 @@ public class Door3 : Doors
     protected override void OpenDoor()
     {
         
-        if (Input.GetKeyDown(KeyCode.Space) && canOpen && puzzle3)
+        if (Input.GetKeyDown(KeyCode.E) && canOpen && puzzle3)
         {
             if (!isOpen)
             {
