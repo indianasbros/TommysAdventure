@@ -41,19 +41,20 @@ public class PianoCheck : MonoBehaviour
         audioSource.PlayOneShot(noteSfx);
         if (accessWasGranted) return;
 
-        
+        Debug.Log("typo");
         if (currentInput != null && currentInput.Length == 4) // 4 max passcode size 
         {
             ClearInput();
             return;
         }
         currentInput = String.Concat(currentInput, input);
-        
+        Debug.Log("prueba: " + currentInput + input);
         CheckCombo();
     }
     public void CheckCombo()
     {
-        
+        Debug.Log("Checking Combo: " + currentInput);
+        Debug.Log("Correct Combo: " + notesCombo);
         if (currentInput == notesCombo)
         {
             AccessGranted();
@@ -81,6 +82,7 @@ public class PianoCheck : MonoBehaviour
 
     private void AccessGranted()
     {
+        Debug.Log("Access Granted!");
         accessWasGranted = true;
         onAccessGranted?.Invoke();
         //panelMesh.material.SetVector("_EmissionColor", screenGrantedColor * screenIntensity);

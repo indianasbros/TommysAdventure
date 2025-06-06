@@ -4,7 +4,6 @@ using UnityEngine;
 using System;
 using UnityEngine.UI;
 using TMPro;
-using UnityEngine.SceneManagement;
 
 public class TimeController : MonoBehaviour
 {
@@ -65,7 +64,8 @@ public static TimeController Instance { get; private set; }
 
     private void OnTimerEnd()
     {
-        SceneManager.LoadScene("Defeat");
+        Debug.Log("¡Se acabó el tiempo!");
+
     }
 
 

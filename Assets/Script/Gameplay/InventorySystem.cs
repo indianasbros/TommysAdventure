@@ -80,6 +80,7 @@ public class InventorySystem : MonoBehaviour
     {
         if (player == null)
         {
+            Debug.LogError("Player GameObject is not assigned in InventorySystem.");
             GameObject playerTemp = GameObject.FindWithTag("Player");
 
             if (playerTemp == null)
@@ -131,7 +132,7 @@ public class InventorySystem : MonoBehaviour
             inventory.SetActive(isInventoryOpen);
 
         }*/
-        
+        //isInteracting = interactableObject != null && interactableObject.isInteracting;
         if (Input.GetKeyDown(KeyCode.E) && canAddItem && itemToAdd != null)
         {
             AddItem(itemToAdd.gameObject, itemToAdd.itemName, itemToAdd.description, itemToAdd.icon, itemToAdd.itemID);
@@ -194,7 +195,7 @@ public class InventorySystem : MonoBehaviour
             Debug.LogError("Interactable component not found on the object: " + InteractableObject.name);
             return;
         }
-        
+        Debug.Log("Attempting to interact with object: " + InteractableObject.name);
         if (isInteracting)
         {
             // If the player is already interacting with an object, switch back to the main camera
@@ -206,10 +207,10 @@ public class InventorySystem : MonoBehaviour
         }
         else
         {
-            
+            Debug.Log("Player is not interacting with any object, checking if interaction is possible.");
             if (InteractableObject.canInteract)
             {
-                
+                Debug.Log("Player is interacting with: " + InteractableObject.name);
                 InteractableObject.ChangeToCamera();
                 isInteracting = true;
                 player.SetActive(false);

@@ -36,7 +36,7 @@ public class CandleController : MonoBehaviour
                 // Si ya la estás llevando, E sirve para soltar
                 DropCandle();
             }
-            
+            Debug.Log("Pressed key: " + Input.inputString);
         }
 
         // Encender/apagar solo cuando la estás llevando

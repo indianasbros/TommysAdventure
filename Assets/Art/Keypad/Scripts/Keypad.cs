@@ -81,6 +81,10 @@ namespace NavKeypad
                     StartCoroutine(DisplayResultRoutine(granted));
                 }
             }
+            else
+            {
+                Debug.LogWarning("Couldn't process input for some reason..");
+            }
 
         }
 
