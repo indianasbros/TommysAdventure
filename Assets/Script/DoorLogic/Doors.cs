@@ -6,6 +6,15 @@ using UnityEngine;
 using UnityEngine.UIElements;
 public class Doors : MonoBehaviour
 {
+    public bool puzzleSolved;
+    public bool PuzzleSolved
+    {
+        get { return puzzleSolved; }
+        set
+        {
+            puzzleSolved = value;
+        }
+    }
     protected float speed = 30f; // grados por segundo
     protected Axis rotationAxis = Axis.Y; // eje por defecto (cámbialo en el Inspector)
     protected bool canOpen;
@@ -52,7 +61,7 @@ public class Doors : MonoBehaviour
 
     virtual protected void OpenDoor()
     {
-        if (Input.GetKeyDown(KeyCode.E) && canOpen)
+        if (Input.GetKeyDown(KeyCode.E) && canOpen && puzzleSolved)
         {
             if (!isOpen)
             {
