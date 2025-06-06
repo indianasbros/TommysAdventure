@@ -21,7 +21,6 @@ public class ButtonRaycaster : MonoBehaviour
                 KeypadButton button = hit.collider.GetComponent<KeypadButton>();
                 if (button != null)
                 {
-                    Debug.Log("Button pressed: " + button?.name);
                     button.PressButton();
                 }
             }

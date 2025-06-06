@@ -8,6 +8,7 @@ TagManager:
   - Ring 1
   - Ring 2
   - Floor
+  - HoldPoint
   layers:
   - Default
   - TransparentFX
