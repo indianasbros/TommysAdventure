@@ -22048,7 +22048,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.010226903, y: 0.6989675, z: -0.008264741, w: 0.7150325}
+  m_LocalRotation: {x: 0.010226929, y: 0.6989675, z: -0.008264767, w: 0.7150325}
   m_LocalPosition: {x: 233.70482, y: 2.5690842, z: -18.148457}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -45799,10 +45799,10 @@ PrefabInstance:
       addedObject: {fileID: 1957499060}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f8bfd310650fba243b33ac047e673d82, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1957499062}
+      addedObject: {fileID: 1957499063}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f8bfd310650fba243b33ac047e673d82, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1957499063}
+      addedObject: {fileID: 1957499064}
   m_SourcePrefab: {fileID: 100100000, guid: f8bfd310650fba243b33ac047e673d82, type: 3}
 --- !u!1001 &1956805975
 PrefabInstance:
@@ -46015,26 +46015,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f8bfd310650fba243b33ac047e673d82, type: 3}
   m_PrefabInstance: {fileID: 1955768927}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1957499062
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1957499056}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e83fd542e853e7469a2a4d4abe4a1ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 10
-  rotationSmoothTime: 0.12
-  followTransform: {fileID: 1984959905}
-  mouseSensitivity: 2
-  minVerticalAngle: -40
-  maxVerticalAngle: 40
-  stepAudioSource: {fileID: 0}
-  stepClip: {fileID: 0}
 --- !u!114 &1957499063
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46049,6 +46029,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventory: {fileID: 495480887}
   inventorySlotHandler: {fileID: 1081687953}
+--- !u!114 &1957499064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1957499056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e83fd542e853e7469a2a4d4abe4a1ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 6
+  rotationSmoothTime: 0.12
+  followTransform: {fileID: 0}
+  mouseSensitivity: 2
+  minVerticalAngle: -40
+  maxVerticalAngle: 40
+  stepAudioSource: {fileID: 0}
+  stepClip: {fileID: 0}
 --- !u!1 &1959839284
 GameObject:
   m_ObjectHideFlags: 0

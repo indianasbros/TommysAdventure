@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
 using Unity.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -17,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     public float minVerticalAngle = -40f;
     public float maxVerticalAngle = 40f;
     float jumpForce = 5f;
+    bool onFloor;
     private Rigidbody rigidbody3D;
     private float turnSmoothVelocity;
     private Vector2 lookInput; // Para guardar el movimiento del mouse
@@ -55,9 +57,9 @@ public class PlayerMovement : MonoBehaviour
 
     void Jump()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && onFloor)
         {
-           rigidbody3D.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            rigidbody3D.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
     }
     void MoveAndRotate()
@@ -95,6 +97,21 @@ public class PlayerMovement : MonoBehaviour
             {
                 stepAudioSource.Stop();
             }
+        }
+    }
+    protected void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Floor"))
+        {
+            onFloor = true;
+        }
+
+    }
+    protected void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Floor"))
+        {
+            onFloor = false;
         }
     }
 }
