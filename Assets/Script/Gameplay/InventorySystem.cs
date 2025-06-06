@@ -151,7 +151,7 @@ public class InventorySystem : MonoBehaviour
     }
 
 
-    public void AddItem(GameObject item, string itemName, string description, Sprite icon, int itemID)
+    public void AddItem(GameObject item, string itemName, string description, Sprite icon, string itemID)
     {
         // This method can be called to add an item to the inventory.
         // It can be used for adding items programmatically or from other scripts.
