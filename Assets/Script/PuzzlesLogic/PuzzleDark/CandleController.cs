@@ -11,6 +11,7 @@ public class CandleController : MonoBehaviour
     private bool isCarried = false;
     private bool isPlayerInRange = false;
     private Rigidbody rb;
+    
 
     void Start()
     {
@@ -35,6 +36,7 @@ public class CandleController : MonoBehaviour
                 // Si ya la estás llevando, E sirve para soltar
                 DropCandle();
             }
+            Debug.Log("Pressed key: " + Input.inputString);
         }
 
         // Encender/apagar solo cuando la estás llevando
@@ -59,6 +61,9 @@ public class CandleController : MonoBehaviour
             transform.localRotation = Quaternion.identity;
             isCarried = true;
             rb.isKinematic = true;
+            
+            Collider collider = GetComponent<Collider>();
+            collider.isTrigger = true; // Para evitar colisiones mientras se lleva
             Debug.Log("Candle picked up");
         }
     }
@@ -69,7 +74,8 @@ public class CandleController : MonoBehaviour
         isCarried = false;
 
         rb.isKinematic = false;
-
+        Collider collider = GetComponent<Collider>();
+        collider.isTrigger = false; // Para evitar colisiones mientras se lleva
         // Deja la vela un poco más abajo para que caiga
         transform.position = playerHoldPoint.position + playerHoldPoint.forward * 0.5f + Vector3.down * 0.2f;
         Debug.Log("Candle dropped");
@@ -83,15 +89,15 @@ public class CandleController : MonoBehaviour
         Debug.Log("Candle light: " + isLit);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision other)
     {
-        if (other.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player") && !isCarried)
             isPlayerInRange = true;
     }
 
-    private void OnTriggerExit(Collider other)
+    private void OnCollisionExit(Collision other)
     {
-        if (other.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player") && !isCarried)
             isPlayerInRange = false;
     }
 }

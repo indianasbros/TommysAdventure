@@ -116,6 +116,7 @@ public class InventorySystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
         if (Input.GetKeyDown(KeyCode.I))
         {
             isInventoryOpen = !isInventoryOpen;
@@ -130,7 +131,7 @@ public class InventorySystem : MonoBehaviour
             //Debug.Log("Inventory Closed");
             inventory.SetActive(isInventoryOpen);
 
-        }
+        }*/
         //isInteracting = interactableObject != null && interactableObject.isInteracting;
         if (Input.GetKeyDown(KeyCode.E) && canAddItem && itemToAdd != null)
         {

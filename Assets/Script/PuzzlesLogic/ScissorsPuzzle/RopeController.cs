@@ -7,6 +7,19 @@ public class RopeController : MonoBehaviour
 
     private bool used = false;
 
+    void Update()
+    {
+        if (used && gameObject.activeSelf)
+        {
+            DeactivateRope();
+            return;
+        }
+        if(!used && Input.GetKeyDown(KeyCode.E))
+        {
+            OnMouseDown();
+        }
+    }
+    
     private void OnMouseDown()
     {
         if (used) return;
@@ -19,5 +32,9 @@ public class RopeController : MonoBehaviour
         {
             scissorsManager.ReleaseScissors();
         }
+    }
+    private void DeactivateRope()
+    {
+        gameObject.SetActive(false); // Desactiva la cuerda
     }
 }
