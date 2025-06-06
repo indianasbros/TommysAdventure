@@ -15,7 +15,7 @@ public class Door1 : Doors
     protected override void OpenDoor()
     {
 
-        if (Input.GetKeyDown(KeyCode.Space) && canOpen && puzzle1)
+        if (Input.GetKeyDown(KeyCode.E) && canOpen && puzzle1)
         {
             if (!isOpen)
             {

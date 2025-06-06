@@ -52,7 +52,7 @@ public class Doors : MonoBehaviour
 
     virtual protected void OpenDoor()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && canOpen)
+        if (Input.GetKeyDown(KeyCode.E) && canOpen)
         {
             if (!isOpen)
             {

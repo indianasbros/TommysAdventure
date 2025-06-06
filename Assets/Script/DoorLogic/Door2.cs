@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Door2 : Doors
 {
-    public bool puzzle2;
+    private bool puzzle2;
     public bool Puzzle2Solved
     {
         get { return puzzle2; }
@@ -17,7 +17,7 @@ public class Door2 : Doors
     protected override void OpenDoor()
     {
 
-        if (Input.GetKeyDown(KeyCode.Space) && canOpen && puzzle2)
+        if (Input.GetKeyDown(KeyCode.E) && canOpen && puzzle2)
         {
             if (!isOpen)
             {

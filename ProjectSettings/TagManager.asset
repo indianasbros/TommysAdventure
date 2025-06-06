@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Item
+  - Ring 1
+  - Ring 2
+  - Floor
   layers:
   - Default
   - TransparentFX

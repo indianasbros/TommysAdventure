@@ -15,7 +15,6 @@ public class Interactable : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E) && isInteracting)
         {
             Debug.Log("Changing to main camera");
-
             ChangeToMainCamera();
         }
     }
@@ -31,5 +30,6 @@ public class Interactable : MonoBehaviour
         CinemachineController.Instance.ChangeMainCamera();
         isInteracting = false;
         canInteract = true;
+        
     }
 }

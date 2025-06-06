@@ -4,7 +4,7 @@ public class Item : MonoBehaviour
     public string itemName;
     public string description;
     public Sprite icon;
-    public int itemID;
+    public string itemID;
     [HideInInspector]
     public bool pickedUp;
 
