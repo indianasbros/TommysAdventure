@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Door2 : Doors
 {
-    public bool puzzle2;
+    private bool puzzle2;
     public bool Puzzle2Solved
     {
         get { return puzzle2; }

@@ -3,10 +3,11 @@ using UnityEngine;
 public class CandleController : MonoBehaviour
 {
     [SerializeField] private Light candleLight;
-    [SerializeField] private KeyCode interactKey = KeyCode.E;
+    [SerializeField] private KeyCode grabKey = KeyCode.E;
+    [SerializeField] private KeyCode dropKey = KeyCode.Q;
     [SerializeField] private Transform playerHoldPoint;
 
-    private bool isLit = false;
+    private bool isLit = true; // Por defecto la vela está encendida
     private bool isCarried = false;
     private bool isPlayerInRange = false;
     private Rigidbody rb;
@@ -14,7 +15,7 @@ public class CandleController : MonoBehaviour
     void Start()
     {
         if (candleLight != null)
-            candleLight.enabled = false;
+            candleLight.enabled = isLit;
 
         rb = GetComponent<Rigidbody>();
         if (rb == null)
@@ -23,13 +24,13 @@ public class CandleController : MonoBehaviour
 
     void Update()
     {
-        if (isPlayerInRange && Input.GetKeyDown(interactKey))
+        if (isPlayerInRange)
         {
-            if (!isCarried)
+            if (!isCarried && Input.GetKeyDown(grabKey))
             {
                 PickUpCandle();
             }
-            else
+            else if( isCarried && Input.GetKeyDown(dropKey))
             {
                 // Si ya la estás llevando, E sirve para soltar
                 DropCandle();

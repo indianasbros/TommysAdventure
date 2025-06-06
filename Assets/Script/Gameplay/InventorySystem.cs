@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class InventorySystem : MonoBehaviour
 {
-    public PlayerInventory player;
+    public GameObject player;
     private static InventorySystem _instance;
     public static InventorySystem Instance
     {
@@ -18,7 +18,7 @@ public class InventorySystem : MonoBehaviour
             return _instance;
         }
     }
-    
+
     void Awake()
     {
         if (_instance == null)
@@ -35,8 +35,24 @@ public class InventorySystem : MonoBehaviour
     private GameObject[] slots;
     int maxSlots = 0;
     bool canAddItem = true;
+    public bool CanAddItem
+    {
+        get { return canAddItem; }
+        set
+        {
+            canAddItem = value;
+        }
+    }
     bool isInventoryOpen = false;
     Item itemToAdd;
+    public Item ItemToAdd
+    {
+        get { return itemToAdd; }
+        set
+        {
+            itemToAdd = value;
+        }
+    }
     private bool isInteracting = false;
     public bool IsInteracting
     {
@@ -46,11 +62,19 @@ public class InventorySystem : MonoBehaviour
             isInteracting = value;
         }
     }
-
+    private Interactable interactableObject = null;
+    public Interactable InteractableObject
+    {
+        get { return interactableObject; }
+        set
+        {
+            interactableObject = value;
+        }
+    }
     [Header("Inventory UI")]
-    [SerializeField]GameObject inventory;
-    [SerializeField]GameObject inventorySlotHandler;
-    
+    [SerializeField] GameObject inventory;
+    [SerializeField] GameObject inventorySlotHandler;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -59,19 +83,13 @@ public class InventorySystem : MonoBehaviour
             Debug.LogError("Player GameObject is not assigned in InventorySystem.");
             GameObject playerTemp = GameObject.FindWithTag("Player");
 
-            if (player == null)
+            if (playerTemp == null)
             {
                 Debug.LogError("No GameObject with tag 'Player' found in the scene.");
                 return;
             }
-            playerTemp.TryGetComponent(out PlayerInventory playerInventory);
-            if (playerInventory == null)
-            {
-                
-                Debug.LogError("Player GameObject does not have a PlayerInventory component.");
-                return;
-            }
-            player = playerInventory; // Assign the found PlayerInventory component to the player variable
+            
+            player = playerTemp; // Assign the found PlayerInventory component to the player variable
         }
         else
         {
@@ -88,7 +106,7 @@ public class InventorySystem : MonoBehaviour
         for (int i = 0; i < maxSlots; i++)
         {
             slots[i] = inventorySlotHandler.transform.GetChild(i).gameObject; // Assign each child slot to the slots array
-            if(slots[i].GetComponent<Slot>().item == null)
+            if (slots[i].GetComponent<Slot>().item == null)
             {
                 slots[i].GetComponent<Slot>().isEmpty = true; // Mark the slot as empty if it has no item
             }
@@ -113,51 +131,26 @@ public class InventorySystem : MonoBehaviour
             inventory.SetActive(isInventoryOpen);
 
         }
-        if (Input.GetKeyDown(KeyCode.E) && canAddItem && itemToAdd != null && player.interactableObject != null)
+        //isInteracting = interactableObject != null && interactableObject.isInteracting;
+        if (Input.GetKeyDown(KeyCode.E) && canAddItem && itemToAdd != null)
         {
             AddItem(itemToAdd.gameObject, itemToAdd.itemName, itemToAdd.description, itemToAdd.icon, itemToAdd.itemID);
             itemToAdd = null; // Clear the item to add after processing
             canAddItem = false; // Allow adding new items again
 
         }
-        if (Input.GetKeyDown(KeyCode.E) && player.interactableObject != null)
+        else if (Input.GetKeyDown(KeyCode.E) && interactableObject != null)
         {
-            Debug.Log("Interacting with object: " + player.interactableObject.name+ " at position: " + player.interactableObject.transform.position);
-            Debug.Log("gamemanager instance: " + GameplayManager.Instance);
-            GameplayManager.Instance.InteractWithObject(player.interactableObject.gameObject); // Call the interact method in GameplayManager
+            InteractWithObject(); // Call the interact method in GameplayManager
+        }
+        else if (Input.GetKeyDown(KeyCode.E) && interactableObject == null)
+        {
+            Debug.Log("No interactable object to interact with.");
         }
 
     }
 
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Item") && canAddItem)
-        {
-            Item item = other.GetComponent<Item>();
-            if (item != null)
-            {
-                canAddItem = true;
-                itemToAdd = item;
-            }
-        }
-        if (other.TryGetComponent(out Interactable interactable))
-        {
-            player.interactableObject = interactable; // Store the interactable object for later use
-        }
-    }
-    void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Item"))
-        {
-            canAddItem = false; // Disable adding items when exiting the trigger
-            itemToAdd = null; // Clear the item to add when exiting the trigger
-        }
-        if (other.TryGetComponent(out Interactable interactable))
-        {
-            interactable.canInteract = true; // Allow interaction with the item
-            player.interactableObject = null; // Clear the interactable object when exiting the trigger
-        }
-    }
+
     public void AddItem(GameObject item, string itemName, string description, Sprite icon, int itemID)
     {
         // This method can be called to add an item to the inventory.
@@ -193,4 +186,40 @@ public class InventorySystem : MonoBehaviour
         Debug.Log("Item added: " + itemName);
         // Logic to add the item to the inventory UI can be added here
     }
+    public void InteractWithObject()
+    {
+       
+        if (InteractableObject == null)
+        {
+            Debug.LogError("Interactable component not found on the object: " + InteractableObject.name);
+            return;
+        }
+        Debug.Log("Attempting to interact with object: " + InteractableObject.name);
+        if (isInteracting)
+        {
+            // If the player is already interacting with an object, switch back to the main camera
+            InteractableObject.ChangeToMainCamera();
+            isInteracting = false;
+            player.SetActive(true);
+
+            return;
+        }
+        else
+        {
+            Debug.Log("Player is not interacting with any object, checking if interaction is possible.");
+            if (InteractableObject.canInteract)
+            {
+                Debug.Log("Player is interacting with: " + InteractableObject.name);
+                InteractableObject.ChangeToCamera();
+                isInteracting = true;
+                player.SetActive(false);
+                return;
+            }
+            else
+            {
+                Debug.Log("Interaction with " + InteractableObject.name + " is not possible at the moment?"+InteractableObject.name);
+            }
+        }
+    }
+
 }

@@ -13,7 +13,7 @@ public class PaintCheck : MonoBehaviour
     [SerializeField] private UnityEvent onAccessGranted;
     [SerializeField] private UnityEvent onAccessDenied;
     
-    [SerializeField] private string notesCombo = "1234";
+    [SerializeField] private string notesCombo = "12345";
 
     public UnityEvent OnAccessGranted => onAccessGranted;
     public UnityEvent OnAccessDenied => onAccessDenied;
@@ -31,23 +31,24 @@ public class PaintCheck : MonoBehaviour
     private void Awake()
     {
         ClearInput();
-        notesCombo = "1234"; // Set your desired passcode here
+        notesCombo = "12345"; // Set your desired passcode here
     }
     public void AddInput(string input, AudioClip noteSfx)
     {
         audioSource.PlayOneShot(noteSfx);
         if (accessWasGranted) return;
 
-        if (currentInput != null && currentInput.Length == 4) // 4 max passcode size 
+        if (currentInput != null && currentInput.Length == 5) // 4 max passcode size 
         {
             ClearInput();
             return;
         }
-        currentInput = String.Concat(currentInput, input);
+        currentInput += input;
         CheckCombo();
     }
     public void CheckCombo()
     {
+        Debug.Log("Current Input: " + currentInput);
         if (currentInput == notesCombo)
         {
             AccessGranted();

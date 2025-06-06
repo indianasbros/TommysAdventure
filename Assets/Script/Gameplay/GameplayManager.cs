@@ -56,51 +56,5 @@ public class GameplayManager : MonoBehaviour
     {
 
     }
-    public void InteractWithObject(GameObject obj)
-    {
-        player.TryGetComponent(out PlayerInventory inventory);
-        obj.TryGetComponent(out Interactable interactable);
-        if (inventory == null)
-        {
-            Debug.LogError("PlayerInventory component not found on player GameObject.");
-            return;
-        }
-        if (interactable == null)
-        {
-            Debug.LogError("Interactable component not found on the object: " + obj.name);
-            return;
-        }
-        Debug.Log("Attempting to interact with object: " + obj.name);
-        if (inventory.IsInteracting)
-        {
-            Debug.Log("Player is already interacting with an object, switching back to main camera.");
-            // If the player is already interacting with an object, switch back to the main camera
-            interactable.ChangeToMainCamera();
-            inventory.IsInteracting = false;
-            interactable.isInteracting = false;
-            interactable.canInteract = true;
-            Debug.Log(player.name + " is now active again.");
-            player.SetActive(true);
-
-            return;
-        }
-        else
-        {
-            Debug.Log("Player is not interacting with any object, checking if interaction is possible.");
-        }
-        if (interactable.canInteract)
-        {
-            Debug.Log("Player is interacting with: " + obj.name);
-            interactable.ChangeToCamera();
-            inventory.IsInteracting = true;
-            interactable.isInteracting = true;
-            interactable.canInteract = false;
-            player.SetActive(false);
-            return;
-        }
-        else
-        {
-            Debug.Log("Interaction with " + obj.name + " is not possible at the moment?"+obj.name);
-        }
-    }
+    
 }
