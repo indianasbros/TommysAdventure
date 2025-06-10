@@ -22,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody rigidbody3D;
     private float turnSmoothVelocity;
     private Vector2 lookInput; // Para guardar el movimiento del mouse
+    Quaternion rotation;
     Animator animator;
 
     // Steps Audio
@@ -79,6 +80,16 @@ public class PlayerMovement : MonoBehaviour
             // Aquí NO calculamos el ángulo basado en la cámara
             // Solo movemos relativo al personaje
 
+            if (Input.GetKey(KeyCode.A))
+            {
+                Quaternion rotation = Quaternion.Euler(0, -rotationSpeed, 0);
+                transform.rotation = Quaternion.Slerp(transform.rotation, transform.rotation * rotation, Time.deltaTime);
+            }
+            if (Input.GetKey(KeyCode.D))
+            {
+                Quaternion rotation = Quaternion.Euler(0, rotationSpeed, 0);
+                transform.rotation = Quaternion.Slerp(transform.rotation, transform.rotation * rotation, Time.deltaTime);
+            }
             // Movimiento relativo al personaje
             Vector3 moveDir = transform.forward * vertical + transform.right * horizontal;
 
