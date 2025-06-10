@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     public float rotationSmoothTime = 0.12f;
 
     [Header("Camera Settings")]
-    public Transform followTransform; // El pivot o la cámara que sigue al personaje
+    //public Transform followTransform; // El pivot o la cámara que sigue al personaje
     public float mouseSensitivity = 2f;
     public float minVerticalAngle = -40f;
     public float maxVerticalAngle = 40f;
@@ -47,11 +47,7 @@ public class PlayerMovement : MonoBehaviour
         lookInput.y += Input.GetAxis("Mouse Y") * mouseSensitivity;
         lookInput.y = Mathf.Clamp(lookInput.y, minVerticalAngle, maxVerticalAngle);
 
-        // Aplicar rotación vertical a la cámara/pivot
-        if (followTransform != null)
-        {
-            followTransform.localRotation = Quaternion.Euler(-lookInput.y, 0f, 0f);
-        }
+        
         Jump();
         MoveAndRotate();
     }
@@ -80,16 +76,7 @@ public class PlayerMovement : MonoBehaviour
             // Aquí NO calculamos el ángulo basado en la cámara
             // Solo movemos relativo al personaje
 
-            if (Input.GetKey(KeyCode.A))
-            {
-                Quaternion rotation = Quaternion.Euler(0, -rotationSpeed, 0);
-                transform.rotation = Quaternion.Slerp(transform.rotation, transform.rotation * rotation, Time.deltaTime);
-            }
-            if (Input.GetKey(KeyCode.D))
-            {
-                Quaternion rotation = Quaternion.Euler(0, rotationSpeed, 0);
-                transform.rotation = Quaternion.Slerp(transform.rotation, transform.rotation * rotation, Time.deltaTime);
-            }
+            
             // Movimiento relativo al personaje
             Vector3 moveDir = transform.forward * vertical + transform.right * horizontal;
 
