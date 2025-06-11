@@ -20,14 +20,14 @@ public class Interactable : MonoBehaviour
     }
     public void ChangeToCamera()
     {
-        CinemachineController.Instance.ChangeCamera(cameraToChangeTo.name);
+        CameraManager.Instance.ChangeCamera(cameraToChangeTo.name);
 
         isInteracting = true;
         canInteract = false;
     }
     public void ChangeToMainCamera()
     {
-        CinemachineController.Instance.ChangeMainCamera();
+        CameraManager.Instance.ChangeMainCamera();
         isInteracting = false;
         canInteract = true;
         
