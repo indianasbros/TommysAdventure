@@ -36,7 +36,6 @@ public class CandleController : MonoBehaviour
                 // Si ya la estás llevando, E sirve para soltar
                 DropCandle();
             }
-            Debug.Log("Pressed key: " + Input.inputString);
         }
 
         // Encender/apagar solo cuando la estás llevando
@@ -62,7 +61,7 @@ public class CandleController : MonoBehaviour
             isCarried = true;
             rb.isKinematic = true;
             
-            Collider collider = GetComponent<Collider>();
+            Collider collider = GetComponent<BoxCollider>();
             collider.isTrigger = true; // Para evitar colisiones mientras se lleva
             Debug.Log("Candle picked up");
         }
@@ -74,7 +73,7 @@ public class CandleController : MonoBehaviour
         isCarried = false;
 
         rb.isKinematic = false;
-        Collider collider = GetComponent<Collider>();
+        Collider collider = GetComponent<BoxCollider>();
         collider.isTrigger = false; // Para evitar colisiones mientras se lleva
         // Deja la vela un poco más abajo para que caiga
         transform.position = playerHoldPoint.position + playerHoldPoint.forward * 0.5f + Vector3.down * 0.2f;

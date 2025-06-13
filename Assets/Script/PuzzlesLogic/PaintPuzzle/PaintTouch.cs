@@ -10,7 +10,7 @@ public class PaintTouch : MonoBehaviour
 
     [Header("Animación")]
     [SerializeField] private float pressDepth = 0.3f;
-    [SerializeField] private float pressSpeed = 1f;
+    [SerializeField] private float  pressSpeed = 1f;
     [SerializeField] private string value;
     private AudioSource audioSource;
     //private Vector3 originalPosition;
@@ -38,7 +38,7 @@ public class PaintTouch : MonoBehaviour
             {
                 audioSource.PlayOneShot(paintSound);
             }
-            check.AddInput(value, paintSound);
+            check.AddInput(value);
             //StartCoroutine(AnimateKeyPress());
         }
     }

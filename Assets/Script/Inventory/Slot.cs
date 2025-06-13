@@ -1,11 +1,26 @@
 using UnityEngine;
+using UnityEngine.UI;
+
 public class Slot : MonoBehaviour
 {
-    public bool isEmpty;
+    public bool isEmpty = true;
+    public ItemData itemData;
+    public int quantity;
 
-    public string itemName;
-    public string description;
-    public Sprite icon;
-    public int itemID;
-    public GameObject item;
+    public void SetItem(ItemData data, int qty = 1)
+    {
+        itemData = data;
+        quantity = qty;
+        isEmpty = false;
+    }
+    public void Update()
+    {
+        GetComponent<Image>().sprite = itemData.icon;
+    }
+    public void Clear()
+    {
+        itemData = null;
+        quantity = 0;
+        isEmpty = true;
+    }
 }
