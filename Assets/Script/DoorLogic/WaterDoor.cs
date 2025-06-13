@@ -1,21 +1,22 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class Door1 : Doors
-{ 
-    public bool puzzle1;
-    public bool Puzzle1Solved
+public class WaterDoor : Doors
+{
+    private bool waterPuzzleSolved;
+    public bool WaterPuzzleSolved
     {
-        get { return puzzle1; }
+        get { return waterPuzzleSolved; }
         set
         {
-            puzzle1 = value;
+            waterPuzzleSolved = value;
         }
     }
-    
     protected override void OpenDoor()
     {
 
-        if (Input.GetKeyDown(KeyCode.E) && canOpen && puzzle1)
+        if (Input.GetKeyDown(KeyCode.E) && canOpen && waterPuzzleSolved)
         {
             if (!isOpen)
             {

@@ -5,7 +5,6 @@ using UnityEngine;
 public class ExitKey : MonoBehaviour
 {
     public bool canTake;
-
     // Update is called once per frame
     void Update()
     {
@@ -15,4 +14,5 @@ public class ExitKey : MonoBehaviour
             Destroy(gameObject, 0.1f);
         }
     }
+    
 }

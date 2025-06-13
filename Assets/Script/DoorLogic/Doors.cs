@@ -6,12 +6,21 @@ using UnityEngine;
 using UnityEngine.UIElements;
 public class Doors : MonoBehaviour
 {
+    [SerializeField]private bool puzzleSolved;
+    public bool PuzzleSolved
+    {
+        get { return puzzleSolved; }
+        set
+        {
+            puzzleSolved = value;
+        }
+    }
     protected float speed = 30f; // grados por segundo
     protected Axis rotationAxis = Axis.Y; // eje por defecto (cámbialo en el Inspector)
-    protected bool canOpen;
     protected float initialAngle;
     protected float targetAngle;
     protected bool isOpen = false;
+    [SerializeField]protected bool canOpen;
     public bool CanOpen
     {
         get { return canOpen; }
@@ -26,6 +35,8 @@ public class Doors : MonoBehaviour
 
     void Start()
     {
+        canOpen = false;
+        puzzleSolved = false;
         initialAngle = GetCurrentAngle();
         targetAngle = initialAngle;
 
@@ -52,7 +63,7 @@ public class Doors : MonoBehaviour
 
     virtual protected void OpenDoor()
     {
-        if (Input.GetKeyDown(KeyCode.E) && canOpen)
+        if (Input.GetKeyDown(KeyCode.E) && canOpen && puzzleSolved)
         {
             if (!isOpen)
             {

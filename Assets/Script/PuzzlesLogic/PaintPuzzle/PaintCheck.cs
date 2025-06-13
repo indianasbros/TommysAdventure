@@ -33,18 +33,17 @@ public class PaintCheck : MonoBehaviour
         ClearInput();
         notesCombo = "12345"; // Set your desired passcode here
     }
-    public void AddInput(string input, AudioClip noteSfx)
+    public void AddInput(string input)
     {
-        audioSource.PlayOneShot(noteSfx);
         if (accessWasGranted) return;
 
         if (currentInput != null && currentInput.Length == 5) // 4 max passcode size 
         {
+            CheckCombo();
             ClearInput();
             return;
         }
         currentInput += input;
-        CheckCombo();
     }
     public void CheckCombo()
     {

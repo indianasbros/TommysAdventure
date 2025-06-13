@@ -1,22 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class RingCode : MonoBehaviour
+public class WaterObjects : MonoBehaviour
 {
+    WaterLevel waterPuzzle;
     public bool canTake;
+
+
     void Start()
     {
         canTake = false;
+        if (waterPuzzle == null)
+        {
+            waterPuzzle = FindObjectOfType<WaterLevel>();
+        }
+        if (waterPuzzle != null)
+        {
+            Debug.Log("se encontro");
+        }
+        if (waterPuzzle == null)
+        {
+            Debug.LogError("No se encontró WaterLevel en la escena.");
+        }
     }
 
-    // Update is called once per frame
+
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E) && canTake)
+        if (Input.GetKeyDown(KeyCode.R) && canTake)
         {
-            //se añade al inventario
+            Debug.Log("agarre");
+
+            waterPuzzle.objectTaked = true;
             Destroy(gameObject, 0.1f);
         }
     }
@@ -24,7 +40,6 @@ public class RingCode : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("estoy colisionando con " + other.name);
             canTake = true;
         }
     }

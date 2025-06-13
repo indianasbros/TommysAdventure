@@ -6,7 +6,6 @@ using UnityEngine;
 using UnityEngine.UIElements;
 public class DoorFinalKey : Doors
 {
-
     public bool haveFinalKey;
     
     protected override void OpenDoor()
@@ -16,12 +15,12 @@ public class DoorFinalKey : Doors
         {
             if (!isOpen)
             {
-                targetAngle = (initialAngle - 80f + 360f) % 360f; // abre 80 grados
+                targetAngle = (initialAngle - 80f + 360f) % 360f;
                 isOpen = true;
             }
             else
             {
-                targetAngle = initialAngle; // cierra de vuelta
+                targetAngle = initialAngle;
                 isOpen = false;
             }
         }
