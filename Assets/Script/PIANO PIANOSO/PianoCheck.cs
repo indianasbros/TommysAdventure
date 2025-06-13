@@ -41,15 +41,14 @@ public class PianoCheck : MonoBehaviour
         audioSource.PlayOneShot(noteSfx);
         if (accessWasGranted) return;
 
-        Debug.Log("typo");
+        currentInput = currentInput + input;
+        Debug.Log("current input: " + currentInput);
         if (currentInput != null && currentInput.Length == 4) // 4 max passcode size 
         {
+            CheckCombo();
             ClearInput();
             return;
         }
-        currentInput = String.Concat(currentInput, input);
-        Debug.Log("prueba: " + currentInput + input);
-        CheckCombo();
     }
     public void CheckCombo()
     {

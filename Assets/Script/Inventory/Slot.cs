@@ -1,3 +1,4 @@
+using System.Data.Common;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,7 +16,10 @@ public class Slot : MonoBehaviour
     }
     public void Update()
     {
-        GetComponent<Image>().sprite = itemData.icon;
+        if (itemData != null)
+        {
+            GetComponent<Image>().sprite = itemData.icon;
+        }
     }
     public void Clear()
     {

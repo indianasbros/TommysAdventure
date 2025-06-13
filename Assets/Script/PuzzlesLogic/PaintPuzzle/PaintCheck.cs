@@ -39,11 +39,11 @@ public class PaintCheck : MonoBehaviour
 
         if (currentInput != null && currentInput.Length == 5) // 4 max passcode size 
         {
+            CheckCombo();
             ClearInput();
             return;
         }
         currentInput += input;
-        CheckCombo();
     }
     public void CheckCombo()
     {

@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 public class Doors : MonoBehaviour
 {
-    private bool puzzleSolved;
+    [SerializeField]private bool puzzleSolved;
     public bool PuzzleSolved
     {
         get { return puzzleSolved; }
@@ -20,7 +20,7 @@ public class Doors : MonoBehaviour
     protected float initialAngle;
     protected float targetAngle;
     protected bool isOpen = false;
-    protected bool canOpen;
+    [SerializeField]protected bool canOpen;
     public bool CanOpen
     {
         get { return canOpen; }
