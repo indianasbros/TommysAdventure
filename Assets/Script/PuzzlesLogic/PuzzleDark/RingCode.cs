@@ -24,6 +24,7 @@ public class RingCode : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            Debug.Log("estoy colisionando con " + other.name);
             canTake = true;
         }
     }
