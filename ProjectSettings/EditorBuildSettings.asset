@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Credits.unity
     guid: 92c813b771d8be748ababf08fbe36c96
+  - enabled: 1
+    path: Assets/Scenes/DifficultyLevel.unity
+    guid: c74568bd53d34244984063efdc51dcab
   m_configObjects: {}
