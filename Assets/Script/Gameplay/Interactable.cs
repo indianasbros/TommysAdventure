@@ -1,11 +1,20 @@
 using UnityEngine;
 
-public class Interactable : MonoBehaviour
+public class Interactable : MonoBehaviour, ICameraInteractable
 {
-    public bool canInteract;
+    private bool canInteract;
+    public bool CanInteract {
+        get { return canInteract; }
+        set {canInteract = value; }
+
+    }
     public bool isInteracting;
     public GameObject cameraToChangeTo;
+<<<<<<< HEAD:Assets/Script/PuzzlesLogic/Interactable.cs
     private KeyCode interactKey = KeyCode.E;
+=======
+
+>>>>>>> 276208addf60083b0152b7b5fc249c95455e44b0:Assets/Script/Gameplay/Interactable.cs
 
     void Start()
     {
@@ -20,7 +29,6 @@ public class Interactable : MonoBehaviour
             if (System.Enum.TryParse<KeyCode>(savedKey, true, out var parsedKey))
             {
                 interactKey = parsedKey;
-                Debug.Log("Parsed KeyCode: " + interactKey);
             }
         }
     }

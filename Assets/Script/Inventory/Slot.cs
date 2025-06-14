@@ -7,6 +7,7 @@ public class Slot : MonoBehaviour
     public bool isEmpty = true;
     public ItemData itemData;
     public int quantity;
+    public Sprite defaultImage;
 
     public void SetItem(ItemData data, int qty = 1)
     {
@@ -19,6 +20,10 @@ public class Slot : MonoBehaviour
         if (itemData != null)
         {
             GetComponent<Image>().sprite = itemData.icon;
+        }
+        else
+        {
+            GetComponent<Image>().sprite = defaultImage;
         }
     }
     public void Clear()
