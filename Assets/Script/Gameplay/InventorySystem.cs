@@ -73,6 +73,7 @@ public class InventorySystem : MonoBehaviour
                     if (slot.quantity == 0)
                     {
                         slot.Clear();
+                        slot.Update();
                     }
                     return true;
                 }
@@ -80,6 +81,7 @@ public class InventorySystem : MonoBehaviour
                 {
                     amount -= slot.quantity;
                     slot.Clear();
+                    slot.Update();
                 }
             }
         }

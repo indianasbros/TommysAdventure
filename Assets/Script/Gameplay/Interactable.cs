@@ -1,10 +1,17 @@
 using UnityEngine;
 
-public class Interactable : MonoBehaviour
+public class Interactable : MonoBehaviour, ICameraInteractable
 {
-    public bool canInteract;
+    private bool canInteract;
+    public bool CanInteract {
+        get { return canInteract; }
+        set {canInteract = value; }
+
+    }
     public bool isInteracting;
     public GameObject cameraToChangeTo;
+
+
     void Start()
     {
         canInteract = true;

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class InteractableInventory : MonoBehaviour
+public class InteractableInventory : MonoBehaviour,IInventoryReceiver
 {
     [Header("Puzzle Requirements")]
     public List<ItemRequirement> requiredItems = new List<ItemRequirement>();

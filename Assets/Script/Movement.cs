@@ -47,8 +47,8 @@ public class PlayerMovement : MonoBehaviour
         lookInput.y += Input.GetAxis("Mouse Y") * mouseSensitivity;
         lookInput.y = Mathf.Clamp(lookInput.y, minVerticalAngle, maxVerticalAngle);
 
-        
         Jump();
+        animator.SetBool("IsJumping",!onFloor);
         MoveAndRotate();
     }
 
@@ -56,11 +56,13 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && onFloor)
         {
+            animator.SetTrigger("Jump");
             rigidbody3D.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
     }
     void MoveAndRotate()
     {
+        
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
         Vector3 inputDirection = new Vector3(horizontal, 0f, vertical).normalized;

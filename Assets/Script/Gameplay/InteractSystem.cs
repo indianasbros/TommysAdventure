@@ -1,45 +1,23 @@
-
 using System;
 using UnityEngine;
 
 public class InteractSystem : MonoBehaviour
 {
     public GameObject player;
+
     private bool isInteracting = false;
-    public bool IsInteracting
-    {
-        get { return isInteracting; }
-        set
-        {
-            isInteracting = value;
-        }
-    }
-    private ItemPickup interactableItem = null;
-    private Interactable interactableObject = null;
-    public Interactable InteractableObject
-    {
-        get { return interactableObject; }
-        set
-        {
-            interactableObject = value;
-        }
-    }
+    public bool IsInteracting => isInteracting;
+
+    private GameObject interactableTarget;
+
     [Header("Observers")]
     public TriggerDetector targetDetector;
+
     private static InteractSystem _instance;
-    public static InteractSystem Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                GameObject obj = new GameObject("InteractSystem");
-                _instance = obj.AddComponent<InteractSystem>();
-            }
-            return _instance;
-        }
-    }
+    public static InteractSystem Instance => _instance ??= new GameObject("InteractSystem").AddComponent<InteractSystem>();
+
     public event Action<bool> OnCanInteract;
+
     void Awake()
     {
         if (_instance == null)
@@ -52,109 +30,86 @@ public class InteractSystem : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    private void Start()
+
+    void Start()
     {
         if (player == null)
-        {
             player = GameObject.FindGameObjectWithTag("Player");
-        }
+
         targetDetector.OnTriggerEntered += TriggerEnter;
         targetDetector.OnTriggerExited += TriggerExit;
     }
-    private void Update()
+
+    void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) && interactableTarget != null)
         {
-            if (interactableItem != null)
-            {
-                InteractWithItem();
-            }
-            if (interactableObject != null)
-            {
-                InteractWithObject();
-            }
+            InteractWithTarget();
         }
-        
     }
-    public void InteractWithItem()
+
+    public void InteractWithTarget()
     {
-        if (interactableItem != null && interactableItem.TryGetComponent(out ItemPickup pickup))
+        GameObject obj = interactableTarget;
+
+        // 1. Pickup
+        if (obj.TryGetComponent<IPickable>(out var pickup))
         {
-            Debug.Log("agarro item: " + interactableObject.name);
+            player.GetComponent<Animator>()?.SetTrigger("doPickUp");
             pickup.PickUp();
+            interactableTarget = null;
+            OnCanInteract?.Invoke(false);
             return;
         }
-    }
-    public void InteractWithObject()
-    {
 
-        if (InteractableObject == null)
+        // 2. Inventario (puzzle, etc.)
+        if (obj.TryGetComponent<IInventoryReceiver>(out var receiver))
         {
-            Debug.LogError("Interactable component not found on the object: " + InteractableObject.name);
-            return;
+            receiver.TryReceiveItems();
         }
-        Debug.Log("Attempting to interact with object: " + InteractableObject.name);
 
-        
-        if (isInteracting)
+        // 3. Cámara
+        if (obj.TryGetComponent<ICameraInteractable>(out var cameraObj))
         {
-            // If the player is already interacting with an object, switch back to the main camera
-            InteractableObject.ChangeToMainCamera();
-            isInteracting = false;
-            player.SetActive(true);
-
-            return;
-        }
-        else
-        {
-            Debug.Log("Player is not interacting with any object, checking if interaction is possible.");
-            if (InteractableObject.canInteract)
+            if (isInteracting)
             {
-                Debug.Log("Player is interacting with: " + InteractableObject.name);
-                InteractableObject.ChangeToCamera();
+                cameraObj.ChangeToMainCamera();
+                isInteracting = false;
+                player.SetActive(true);
+            }
+            else if (cameraObj.CanInteract)
+            {
+                cameraObj.ChangeToCamera();
                 isInteracting = true;
                 player.SetActive(false);
-                return;
-            }
-            else
-            {
-                Debug.Log("Interaction with " + InteractableObject.name + " is not possible at the moment");
             }
         }
     }
+
     void TriggerEnter(Collider collider)
     {
-        if (collider.TryGetComponent(out Interactable interactable))
+        GameObject obj = collider.gameObject;
+
+        // Verificamos si implementa al menos una interfaz
+        bool hasInteraction = obj.TryGetComponent<IPickable>(out _) ||
+                              obj.TryGetComponent<IInventoryReceiver>(out _) ||
+                              obj.TryGetComponent<ICameraInteractable>(out _);
+
+        if (hasInteraction)
         {
-            interactable.canInteract = true;
+            interactableTarget = obj;
             OnCanInteract?.Invoke(true);
-            interactableObject = interactable;
-            Debug.Log("Entered interactable object: " + interactable.name);
-            return;
-        }
-        if (collider.TryGetComponent(out ItemPickup item))
-        {
-            OnCanInteract?.Invoke(true);
-            interactableItem = item;
-            Debug.Log("Entered interactable item : " + item.name);
-            return;
+            Debug.Log($"Entered interactable object: {obj.name}");
         }
     }
+
     void TriggerExit(Collider collider)
     {
-        if (collider.TryGetComponent(out Interactable interactable))
+        if (collider.gameObject == interactableTarget)
         {
-            interactable.canInteract = false;
+            interactableTarget = null;
             OnCanInteract?.Invoke(false);
-            interactableObject = null;
-            Debug.Log("Exited interactable trigger, cleared interactable object.");
-        }
-        if (collider.TryGetComponent(out ItemPickup item))
-        {
-            OnCanInteract?.Invoke(false);
-            interactableItem = null;
-            Debug.Log("Exited interactable item : " + item.name);
-            return;
+            Debug.Log($"Exited interactable object: {collider.name}");
         }
     }
 }
