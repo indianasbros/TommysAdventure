@@ -61,7 +61,7 @@ public class GameplayManager : MonoBehaviour
     {
 
         SceneManager.LoadScene("Defeat");
-        CameraManager.Instance.
+        
     }
     public void Victory()
     {
