@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -6,7 +7,7 @@ public class Credits : MonoBehaviour
     void Start()
     {
         // Go to the menu after 20 seconds
-        StartCoroutine(RetunToMenu());
+        StartCoroutine(ReturnToMenu());
     }
 
     void Update()
@@ -17,7 +18,7 @@ public class Credits : MonoBehaviour
         }
     }
 
-    System.Collections.IEnumerator RetunToMenu()
+    IEnumerator ReturnToMenu()
     {
         yield return new WaitForSeconds(20f);
         SceneManager.LoadScene("Menu");

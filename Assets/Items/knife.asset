@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 33d4d1be2e57ab948944a3f5c2b6b3f5, type: 3}
-  m_Name: mom_ring
+  m_Name: knife
   m_EditorClassIdentifier: 
-  itemName: Dad's Wedding Ring
-  description: Dad's Wedding Ring
-  icon: {fileID: 21300000, guid: 46a0e5bea811f694897f5ca95ed86e5a, type: 3}
-  itemID: moms_ring
+  itemName: Knife
+  description: Knife
+  icon: {fileID: 21300000, guid: ea53ae2f2a7dd93478a69b8c5ce35b0b, type: 3}
+  itemID: 
   isStackable: 0

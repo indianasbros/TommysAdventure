@@ -65,11 +65,11 @@ public static TimeController Instance { get; private set; }
     private void OnTimerEnd()
     {
         Debug.Log("¡Se acabó el tiempo!");
-
+        GameplayManager.Instance.GameOver();
     }
 
 
-    public void StopTimer() => isRunning = false;
+    public void StopTimer() => isRunning = false;  
     public void ResumeTimer() => isRunning = true;
     public void ResetTimer()
     {

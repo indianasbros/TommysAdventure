@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: LLave de Teddy
   description: 
-  icon: {fileID: 21300000, guid: ff831033e462f2e4696aac2f5787e3b9, type: 3}
+  icon: {fileID: 21300000, guid: eb7e0b23c3e911342a59193896615a12, type: 3}
   itemID: teddy_key
   isStackable: 0

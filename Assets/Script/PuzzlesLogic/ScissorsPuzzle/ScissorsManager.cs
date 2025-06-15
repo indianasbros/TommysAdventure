@@ -1,18 +1,24 @@
+using GogoGaga.OptimizedRopesAndCables;
 using UnityEngine;
 
 public class ScissorsManager : MonoBehaviour
 {
     [SerializeField] private Rigidbody scissorsRigidbody;
-
+    [SerializeField] private RopeController[] ropes;
     private void Start()
     {
-        // Asegúrate que las tijeras empiecen suspendidas
         scissorsRigidbody.isKinematic = true;
     }
 
     public void ReleaseScissors()
     {
-        Debug.Log("Tijeras liberadas");
         scissorsRigidbody.isKinematic = false;
+        foreach (var rope in ropes)
+        {
+            if (!rope.Cutted)
+            {
+                rope.DeactivateRope();
+            }
+        }
     }
 }
