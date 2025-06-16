@@ -54,7 +54,7 @@ public class CameraManager : MonoBehaviour
             LockCursor(true);
         }
     }
-    void LockCursor(bool lockCursor)
+    public void LockCursor(bool lockCursor)
     {
         if (lockCursor)
         {

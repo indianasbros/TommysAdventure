@@ -84,6 +84,21 @@ public class InteractSystem : MonoBehaviour
                 player.SetActive(false);
             }
         }
+        //4. Objeto de cerca
+        if (obj.TryGetComponent<ObjectUpClose>(out var upClose))
+        {
+            if (isInteracting)
+            {
+                upClose.Interact(false);
+                isInteracting = false;
+            }
+            else if (upClose.CanInteract)
+            {
+                upClose.Interact(true);
+                isInteracting = true;
+            }
+            
+        }
     }
 
     void TriggerEnter(Collider collider)
@@ -93,7 +108,8 @@ public class InteractSystem : MonoBehaviour
         // Verificamos si implementa al menos una interfaz
         bool hasInteraction = obj.TryGetComponent<IPickable>(out _) ||
                               obj.TryGetComponent<IInventoryReceiver>(out _) ||
-                              obj.TryGetComponent<ICameraInteractable>(out _);
+                              obj.TryGetComponent<ICameraInteractable>(out _) ||
+                              obj.TryGetComponent<ObjectUpClose>(out _);
 
         if (hasInteraction)
         {

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HUDManager : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class HUDManager : MonoBehaviour
         }
     }
     public GameObject interactableIcon;
+    public GameObject upClose;
+    public GameObject upCloseImage;
     void OnEnable()
     {
         InteractSystem.Instance.OnCanInteract += UpdateInteract;
@@ -28,11 +31,16 @@ public class HUDManager : MonoBehaviour
     void Start()
     {
         interactableIcon.SetActive(false);
-        
+        upClose.SetActive(false);
     }
     void UpdateInteract(bool show)
     {
         interactableIcon.SetActive(show);
+    }
+    public void UpdateUpClose(Sprite image, bool show)
+    {
+        upCloseImage.GetComponent<Image>().sprite = image;
+        upClose.SetActive(show);
     }
 
 }

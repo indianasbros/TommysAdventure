@@ -57,11 +57,21 @@ public class GameplayManager : MonoBehaviour
     {
 
     }
+    public void PauseGame(bool pause)
+    {
+        if (pause)
+        {
+            Time.timeScale = 0;
+            return;
+        }
+        Time.timeScale = 1;
+
+    }
     public void GameOver()
     {
 
         SceneManager.LoadScene("Defeat");
-        
+
     }
     public void Victory()
     {

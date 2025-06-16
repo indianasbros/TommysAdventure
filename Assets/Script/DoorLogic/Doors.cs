@@ -36,7 +36,6 @@ public class Doors : MonoBehaviour
     void Start()
     {
         canOpen = false;
-        puzzleSolved = false;
         initialAngle = GetCurrentAngle();
         targetAngle = initialAngle;
 

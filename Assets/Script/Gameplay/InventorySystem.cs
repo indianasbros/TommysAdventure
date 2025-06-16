@@ -23,7 +23,7 @@ public class InventorySystem : MonoBehaviour
     {
         slots = inventorySlotHandler.GetComponentsInChildren<Slot>();
     }
-     void Update()
+    void Update()
     {
         if (Input.GetKeyDown(KeyCode.I))
         {
