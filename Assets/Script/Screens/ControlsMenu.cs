@@ -10,6 +10,8 @@ public class ControlsMenu : MonoBehaviour
     [SerializeField] private List<Slider> audioSliders;
     [SerializeField] private TMP_Text messageText;
 
+    public static KeyCode InteractKey { get; private set; } = KeyCode.E;
+
     void Start()
     {
         for (int i = 0; i < keyInputs.Count; i++)
@@ -28,7 +30,6 @@ public class ControlsMenu : MonoBehaviour
         }
     }
 
-
     public void OnSave()
     {
         for (int i = 0; i < keyInputs.Count; i++)
@@ -43,6 +44,15 @@ public class ControlsMenu : MonoBehaviour
 
         messageText.text = "** Configuraciones Guardadas **";
 
+        if (System.Enum.TryParse<KeyCode>(keyInputs[4].text, true, out var parsedKey))
+        {
+            InteractKey = parsedKey;
+        }
+        else
+        {
+            InteractKey = KeyCode.E;
+        }
+
         StartCoroutine(ClearMessageAfterDelay(3));
     }
 
@@ -51,5 +61,4 @@ public class ControlsMenu : MonoBehaviour
         yield return new WaitForSeconds(seconds);
         messageText.text = "";
     }
-
 }

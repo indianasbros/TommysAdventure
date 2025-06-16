@@ -1,36 +1,27 @@
+
 using UnityEngine;
 
 public class Interactable : MonoBehaviour, ICameraInteractable
 {
     private bool canInteract;
-    public bool CanInteract {
+    public bool CanInteract
+    {
         get { return canInteract; }
-        set {canInteract = value; }
+        set { canInteract = value; }
 
     }
     public bool isInteracting;
     public GameObject cameraToChangeTo;
-    private KeyCode interactKey = KeyCode.E;
+
 
     void Start()
     {
         canInteract = true;
         isInteracting = false;
-
-        if (PlayerPrefs.HasKey("Key_4"))
-        {
-            string savedKey = PlayerPrefs.GetString("Key_4");
-            Debug.Log("Saved key from PlayerPrefs: " + savedKey);
-
-            if (System.Enum.TryParse<KeyCode>(savedKey, true, out var parsedKey))
-            {
-                interactKey = parsedKey;
-            }
-        }
     }
     void Update()
     {
-        if (Input.GetKeyDown(interactKey) && isInteracting)
+        if (Input.GetKeyDown(KeyCode.E) && isInteracting)
         {
             Debug.Log("Changing to main camera");
             ChangeToMainCamera();
@@ -48,6 +39,6 @@ public class Interactable : MonoBehaviour, ICameraInteractable
         CameraManager.Instance.ChangeMainCamera();
         isInteracting = false;
         canInteract = true;
-        
+
     }
 }
