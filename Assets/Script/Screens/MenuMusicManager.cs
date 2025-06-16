@@ -3,14 +3,14 @@ using UnityEngine.SceneManagement;
 
 public class MenuMusicManager : MonoBehaviour
 {
-    private static MenuMusicManager instance;
+    public static MenuMusicManager Instance { get; private set; }
 
     // Keep menu music in settings
     void Awake()
     {
-        if (instance == null)
+        if (Instance == null)
         {
-            instance = this;
+            Instance = this;
             DontDestroyOnLoad(gameObject);
             SceneManager.sceneLoaded += OnSceneLoaded;
 

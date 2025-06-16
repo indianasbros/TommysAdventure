@@ -4,15 +4,35 @@ using UnityEngine;
 
 public class HUDManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public static HUDManager Instance { get; private set; }
+    void Awake()
     {
-        
+        if (Instance != null) Destroy(gameObject);
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+    }
+    public GameObject interactableIcon;
+    void OnEnable()
+    {
+        InteractSystem.Instance.OnCanInteract += UpdateInteract;
     }
 
-    // Update is called once per frame
-    void Update()
+    void OnDisable()
     {
+        // Siempre desuscribirse para evitar memory leaks
+        InteractSystem.Instance.OnCanInteract -= UpdateInteract;
+    }
+    void Start()
+    {
+        interactableIcon.SetActive(false);
         
     }
+    void UpdateInteract(bool show)
+    {
+        interactableIcon.SetActive(show);
+    }
+
 }

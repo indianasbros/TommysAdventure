@@ -4,10 +4,12 @@ public class RopeController : MonoBehaviour
 {
     [SerializeField] private bool isCorrectRope = false;
     [SerializeField] private ScissorsManager scissorsManager;
+    [SerializeField] private GameObject rope;
 
     private bool cutted = false;
+    public bool Cutted { get { return cutted; } }
     private bool canCut = false;
-
+    public ErrorController errorController;
     void Update()
     {
         if (cutted && gameObject.activeSelf)
@@ -17,31 +19,34 @@ public class RopeController : MonoBehaviour
         }
         if (!cutted && canCut && Input.GetKeyDown(KeyCode.E))
         {
-            OnMouseDown();
+            Untie();
         }
     }
 
-    private void OnMouseDown()
+    private void Untie()
     {
         if (cutted) return;
         cutted = true;
 
-        // Lógica visual opcional: desaparecer cuerda, animación, etc.
         Debug.Log("Cuerda desatada: " + gameObject.name);
 
         if (isCorrectRope)
         {
             scissorsManager.ReleaseScissors();
         }
+        else
+        {
+            errorController.Fail();
+        }
     }
-    private void DeactivateRope()
+    public void DeactivateRope()
     {
-        gameObject.SetActive(false); // Desactiva la cuerda
+        rope.SetActive(false); // Desactiva la cuerda
     }
     public void ResetRope()
     {
         cutted = false;
-        gameObject.SetActive(true); // Reactiva la cuerda
+        rope.SetActive(true); // Reactiva la cuerda
     }
     private void OnTriggerEnter(Collider other)
     {
