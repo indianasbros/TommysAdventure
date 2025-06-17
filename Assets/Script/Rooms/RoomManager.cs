@@ -64,4 +64,12 @@ public class RoomManager : MonoBehaviour
         globalAudio.outputAudioMixerGroup = room.MixerGroup;
         globalAudio.Play();
     }
+    public void StopMusic()
+    {
+        globalAudio.Pause();
+    }
+    public void ResumeMusic()
+    {
+        globalAudio.Play();
+    }
 }

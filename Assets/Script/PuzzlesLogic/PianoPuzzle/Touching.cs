@@ -1,18 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class Touching : MonoBehaviour
 {
     
     [Header("Audio")]
     [SerializeField] private AudioClip keySound;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioMixerGroup sfxGroup;
 
     [Header("Animación")]
     [SerializeField] private float pressDepth = 0.3f;
     [SerializeField] private float pressSpeed = 1f;
     [SerializeField] private string value;
-    private AudioSource audioSource;
     private Vector3 originalPosition;
     private bool isPressed = false;
 
@@ -36,6 +38,7 @@ public class Touching : MonoBehaviour
         {
             if (keySound != null)
             {
+                audioSource.outputAudioMixerGroup = sfxGroup;
                 audioSource.PlayOneShot(keySound);
             }
             pianoCheck.AddInput(value, keySound);

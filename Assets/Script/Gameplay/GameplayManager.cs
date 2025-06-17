@@ -69,12 +69,13 @@ public class GameplayManager : MonoBehaviour
     }
     public void GameOver()
     {
-
+        CameraManager.Instance.LockCursor(false);
         SceneManager.LoadScene("Defeat");
 
     }
     public void Victory()
     {
-        SceneManager.LoadScene("Defeat");
+        CameraManager.Instance.LockCursor(false);
+        SceneManager.LoadScene("Victory");
     }
 }

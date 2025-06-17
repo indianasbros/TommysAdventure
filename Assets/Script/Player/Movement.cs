@@ -4,15 +4,16 @@ using Cinemachine;
 using Unity.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Audio;
 
 
 public class PlayerMovement : MonoBehaviour
 {
-    [Header("Movement Settings")]
+    [Header("-----Movement Settings-----")]
     public float speed = 6f;
     public float rotationSmoothTime = 0.12f;
 
-    [Header("Camera Settings")]
+    [Header("-----Camera Settings-----")]
     //public Transform followTransform; // El pivot o la cámara que sigue al personaje
     public float mouseSensitivity = 2f;
     public float minVerticalAngle = -40f;
@@ -26,8 +27,10 @@ public class PlayerMovement : MonoBehaviour
     Animator animator;
 
     // Steps Audio
+    [Header("-----Audio Settings-----")]
     [SerializeField] private AudioSource stepAudioSource;
     [SerializeField] private AudioClip stepClip;
+    [SerializeField] private AudioMixerGroup sfxGroup;
 
     void Start()
     {
@@ -38,6 +41,7 @@ public class PlayerMovement : MonoBehaviour
         // Steps Audio
         stepAudioSource.clip = stepClip;
         stepAudioSource.loop = true;
+        stepAudioSource.outputAudioMixerGroup = sfxGroup;
     }
 
     void Update()
@@ -48,7 +52,6 @@ public class PlayerMovement : MonoBehaviour
         lookInput.y = Mathf.Clamp(lookInput.y, minVerticalAngle, maxVerticalAngle);
 
         Jump();
-        animator.SetBool("IsJumping",!onFloor);
         MoveAndRotate();
     }
 

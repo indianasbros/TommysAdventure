@@ -11,10 +11,11 @@ public class CandleController : MonoBehaviour
     private bool isCarried = false;
     private bool isPlayerInRange = false;
     private Rigidbody rb;
-    
+    Transform originalParent;
 
     void Start()
     {
+        originalParent = transform.parent;
         if (candleLight != null)
             candleLight.enabled = isLit;
 
@@ -61,7 +62,7 @@ public class CandleController : MonoBehaviour
             isCarried = true;
             rb.isKinematic = true;
             
-            Collider collider = GetComponent<BoxCollider>();
+            Collider collider = GetComponent<Collider>();
             collider.isTrigger = true; // Para evitar colisiones mientras se lleva
             Debug.Log("Candle picked up");
         }
@@ -69,13 +70,12 @@ public class CandleController : MonoBehaviour
 
     private void DropCandle()
     {
-        transform.SetParent(null);
+        transform.SetParent(originalParent);
         isCarried = false;
 
         rb.isKinematic = false;
-        Collider collider = GetComponent<BoxCollider>();
+        Collider collider = GetComponent<Collider>();
         collider.isTrigger = false; // Para evitar colisiones mientras se lleva
-        // Deja la vela un poco más abajo para que caiga
         transform.position = playerHoldPoint.position + playerHoldPoint.forward * 0.5f + Vector3.down * 0.2f;
         Debug.Log("Candle dropped");
     }

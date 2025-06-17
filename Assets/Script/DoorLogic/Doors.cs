@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEditor.Rendering;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.UIElements;
 public class Doors : MonoBehaviour
 {
@@ -29,9 +30,10 @@ public class Doors : MonoBehaviour
 
     protected enum Axis { X, Y, Z }
 
-    // Door Audio
-    public AudioClip doorSound; //Inspector
-    private AudioSource audioSource;
+    [Header("-----Audio Settings-----")]
+    [SerializeField] public AudioClip doorSound;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioMixerGroup sfxGroup;
 
     void Start()
     {
@@ -41,6 +43,7 @@ public class Doors : MonoBehaviour
 
         //Door Audio
         audioSource = GetComponent<AudioSource>();
+        audioSource.outputAudioMixerGroup = sfxGroup;
         if (audioSource == null)
         {
             audioSource = gameObject.AddComponent<AudioSource>();
