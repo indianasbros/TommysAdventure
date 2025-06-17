@@ -5,7 +5,10 @@ using UnityEngine;
 
 public class RingCode : MonoBehaviour
 {
+
     public bool canTake;
+    [SerializeField] private AudioSource ringSound;
+
     void Start()
     {
         canTake = false;
@@ -16,6 +19,13 @@ public class RingCode : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E) && canTake)
         {
+
+            //Sound Heart Stop
+            if (ringSound.isPlaying)
+            {
+                ringSound.Stop();
+            }
+
             //se añade al inventario
             Destroy(gameObject, 0.1f);
         }
@@ -26,6 +36,12 @@ public class RingCode : MonoBehaviour
         {
             Debug.Log("estoy colisionando con " + other.name);
             canTake = true;
+
+            //Sound Heart Start
+            if (!ringSound.isPlaying)
+            {
+                ringSound.Play();
+            }                
         }
     }
     void OnTriggerExit(Collider other)
@@ -34,5 +50,11 @@ public class RingCode : MonoBehaviour
         {
             canTake = false;
         }
+
+        //Stop heart music
+        if (ringSound.isPlaying)
+        {
+            ringSound.Stop();
+        }            
     }
 }
