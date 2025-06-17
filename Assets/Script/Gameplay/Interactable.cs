@@ -1,11 +1,13 @@
+
 using UnityEngine;
 
 public class Interactable : MonoBehaviour, ICameraInteractable
 {
     private bool canInteract;
-    public bool CanInteract {
+    public bool CanInteract
+    {
         get { return canInteract; }
-        set {canInteract = value; }
+        set { canInteract = value; }
 
     }
     public bool isInteracting;
@@ -37,6 +39,6 @@ public class Interactable : MonoBehaviour, ICameraInteractable
         CameraManager.Instance.ChangeMainCamera();
         isInteracting = false;
         canInteract = true;
-        
+
     }
 }

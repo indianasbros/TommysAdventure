@@ -28,7 +28,7 @@ public class MenuMusicManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name != "Menu" && scene.name != "Settings")
+        if (scene.name != "Menu" && scene.name != "Settings" && scene.name != "DifficultyLevel")
         {
             SceneManager.sceneLoaded -= OnSceneLoaded;
             Destroy(gameObject);
