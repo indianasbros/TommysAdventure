@@ -17,11 +17,12 @@ public class RingCode : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+      
         if (Input.GetKeyDown(KeyCode.E) && canTake)
         {
 
             //Sound Heart Stop
-            if (ringSound.isPlaying)
+            if (ringSound != null)
             {
                 ringSound.Stop();
             }
@@ -30,20 +31,20 @@ public class RingCode : MonoBehaviour
             Destroy(gameObject, 0.1f);
         }
     }
+
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("estoy colisionando con " + other.name);
             canTake = true;
+        }
 
-            //Sound Heart Start
-            if (!ringSound.isPlaying)
-            {
-                ringSound.Play();
-            }                
+        if (!ringSound.isPlaying)
+        {
+            ringSound.Play();
         }
     }
+
     void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -51,10 +52,9 @@ public class RingCode : MonoBehaviour
             canTake = false;
         }
 
-        //Stop heart music
         if (ringSound.isPlaying)
         {
             ringSound.Stop();
-        }            
+        }
     }
 }
