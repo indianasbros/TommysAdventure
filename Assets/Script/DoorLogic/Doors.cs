@@ -76,9 +76,6 @@ public class Doors : MonoBehaviour
 
     virtual protected void OpenDoor()
     {
-        Debug.LogWarning(interactKey);
-        Debug.LogWarning(puzzleSolved);
-        Debug.LogWarning(canOpen);
         if (Input.GetKeyDown(interactKey) && canOpen && puzzleSolved)
         {
             if (!isOpen)

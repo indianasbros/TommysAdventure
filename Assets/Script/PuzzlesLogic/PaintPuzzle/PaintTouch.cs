@@ -9,8 +9,6 @@ public class PaintTouch : MonoBehaviour
     [SerializeField] private AudioClip paintSound;
 
     [Header("Animación")]
-    [SerializeField] private float pressDepth = 0.3f;
-    [SerializeField] private float  pressSpeed = 1f;
     [SerializeField] private string value;
     private AudioSource audioSource;
     //private Vector3 originalPosition;
@@ -39,33 +37,10 @@ public class PaintTouch : MonoBehaviour
                 audioSource.PlayOneShot(paintSound);
             }
             check.AddInput(value);
-            //StartCoroutine(AnimateKeyPress());
+            
         }
     }
 
-    /*private IEnumerator AnimateKeyPress()
-    {
-        isPressed = true;
-
-        Vector3 targetPosition = originalPosition - new Vector3(0, pressDepth, 0);
-        float t = 0f;
-        while (t < 1f)
-        {
-            t += Time.deltaTime / pressSpeed;
-            transform.localPosition = Vector3.Lerp(originalPosition, targetPosition, t);
-            yield return null;
-        }
-
-        t = 0f;
-        while (t < 1f)
-        {
-            t += Time.deltaTime / pressSpeed;
-            transform.localPosition = Vector3.Lerp(targetPosition, originalPosition, t);
-            yield return null;
-        }
-
-        transform.localPosition = originalPosition;
-        isPressed = false;
-    }*/
+    
 
 }
