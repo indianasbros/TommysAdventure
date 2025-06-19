@@ -32,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private AudioClip stepClip;
     [SerializeField] private AudioMixerGroup sfxGroup;
 
+
     void Start()
     {
         animator = GetComponent<Animator>();

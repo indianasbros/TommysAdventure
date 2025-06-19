@@ -18,6 +18,9 @@ public class InteractSystem : MonoBehaviour
 
     public event Action<bool> OnCanInteract;
 
+    private KeyCode interactKey = KeyCode.E;
+
+
     void Awake()
     {
         if (_instance == null)
@@ -38,11 +41,20 @@ public class InteractSystem : MonoBehaviour
 
         targetDetector.OnTriggerEntered += TriggerEnter;
         targetDetector.OnTriggerExited += TriggerExit;
+
+        //Control Setting for Interact
+        if (PlayerPrefs.HasKey("Key_0"))
+        {
+            if (System.Enum.TryParse<KeyCode>(PlayerPrefs.GetString("Key_0"), true, out var parsedKey))
+            {
+                interactKey = parsedKey;
+            }
+        }
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E) && interactableTarget != null)
+        if (Input.GetKeyDown(interactKey) && interactableTarget != null)
         {
             InteractWithTarget();
         }

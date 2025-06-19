@@ -10,6 +10,20 @@ public class RopeController : MonoBehaviour
     public bool Cutted { get { return cutted; } }
     private bool canCut = false;
     public ErrorController errorController;
+    private KeyCode interactKey = KeyCode.E;
+
+    void Start()
+    {
+        //Control Setting for Interact
+        if (PlayerPrefs.HasKey("Key_0"))
+        {
+            if (System.Enum.TryParse<KeyCode>(PlayerPrefs.GetString("Key_0"), true, out var parsedKey))
+            {
+                interactKey = parsedKey;
+            }
+        }
+    }
+
     void Update()
     {
         if (cutted && gameObject.activeSelf)
@@ -17,7 +31,7 @@ public class RopeController : MonoBehaviour
             DeactivateRope();
             return;
         }
-        if (!cutted && canCut && Input.GetKeyDown(KeyCode.E))
+        if (!cutted && canCut && Input.GetKeyDown(interactKey))
         {
             Untie();
         }

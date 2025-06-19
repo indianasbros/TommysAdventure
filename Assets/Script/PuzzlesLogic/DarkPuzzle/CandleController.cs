@@ -22,6 +22,23 @@ public class CandleController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         if (rb == null)
             rb = gameObject.AddComponent<Rigidbody>(); // Seguridad por si falta
+
+        //Control Setting for Interact
+        if (PlayerPrefs.HasKey("Key_0"))
+        {
+            if (System.Enum.TryParse<KeyCode>(PlayerPrefs.GetString("Key_0"), true, out var parsedKey))
+            {
+                grabKey = parsedKey;
+            }
+        }
+        //Control Setting for Interact
+        if (PlayerPrefs.HasKey("Key_1"))
+        {
+            if (System.Enum.TryParse<KeyCode>(PlayerPrefs.GetString("Key_1"), true, out var parsedKey))
+            {
+                dropKey = parsedKey;
+            }
+        }
     }
 
     void Update()
@@ -32,7 +49,7 @@ public class CandleController : MonoBehaviour
             {
                 PickUpCandle();
             }
-            else if( isCarried && Input.GetKeyDown(dropKey))
+            else if (isCarried && Input.GetKeyDown(dropKey))
             {
                 // Si ya la estás llevando, E sirve para soltar
                 DropCandle();
@@ -61,7 +78,7 @@ public class CandleController : MonoBehaviour
             transform.localRotation = Quaternion.identity;
             isCarried = true;
             rb.isKinematic = true;
-            
+
             Collider collider = GetComponent<Collider>();
             collider.isTrigger = true; // Para evitar colisiones mientras se lleva
             Debug.Log("Candle picked up");

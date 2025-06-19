@@ -6,15 +6,29 @@ using UnityEngine;
 public class RingCode : MonoBehaviour
 {
     public bool canTake;
+
+    private KeyCode interactKey = KeyCode.E;
+
+
     void Start()
     {
         canTake = false;
-    }
+
+        //Control Setting for Interact
+        if (PlayerPrefs.HasKey("Key_0"))
+        {
+            if (System.Enum.TryParse<KeyCode>(PlayerPrefs.GetString("Key_0"), true, out var parsedKey))
+            {
+                interactKey = parsedKey;
+            }
+        }
+    }  
+
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E) && canTake)
+        if (Input.GetKeyDown(interactKey) && canTake)
         {
             //se añade al inventario
             Destroy(gameObject, 0.1f);

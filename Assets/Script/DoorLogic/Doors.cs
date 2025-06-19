@@ -52,9 +52,9 @@ public class Doors : MonoBehaviour
         }
 
         //Control Setting for Interact
-        if (PlayerPrefs.HasKey("Key_4"))
+        if (PlayerPrefs.HasKey("Key_0"))
         {
-            if (System.Enum.TryParse<KeyCode>(PlayerPrefs.GetString("Key_4"), true, out var parsedKey))
+            if (System.Enum.TryParse<KeyCode>(PlayerPrefs.GetString("Key_0"), true, out var parsedKey))
             {
                 interactKey = parsedKey;
             }
@@ -71,7 +71,6 @@ public class Doors : MonoBehaviour
             SetCurrentAngle(newAngle);
         }
         OpenDoor();
-
     }
 
     virtual protected void OpenDoor()

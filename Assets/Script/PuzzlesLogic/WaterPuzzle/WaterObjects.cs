@@ -7,6 +7,7 @@ public class WaterObjects : MonoBehaviour
     WaterLevel waterPuzzle;
     public bool canTake;
 
+    private KeyCode takeKey = KeyCode.R;
 
     void Start()
     {
@@ -23,12 +24,21 @@ public class WaterObjects : MonoBehaviour
         {
             Debug.LogError("No se encontró WaterLevel en la escena.");
         }
+
+        //Control Setting for Take
+        if (PlayerPrefs.HasKey("Key_2"))
+        {
+            if (System.Enum.TryParse<KeyCode>(PlayerPrefs.GetString("Key_2"), true, out var parsedKey))
+            {
+                takeKey = parsedKey;
+            }
+        }
     }
 
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R) && canTake)
+        if (Input.GetKeyDown(takeKey) && canTake)
         {
             Debug.Log("agarre");
 

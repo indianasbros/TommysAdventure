@@ -9,6 +9,9 @@ public class InventorySystem : MonoBehaviour
     public GameObject inventorySlotHandler;
     private Slot[] slots;
     bool isInventoryOpen = false;
+
+    private KeyCode inventaryKey = KeyCode.I;
+
     void Awake()
     {
         if (Instance != null) Destroy(gameObject);
@@ -22,10 +25,19 @@ public class InventorySystem : MonoBehaviour
     void Start()
     {
         slots = inventorySlotHandler.GetComponentsInChildren<Slot>();
+
+        //Control Setting for Inventary
+        if (PlayerPrefs.HasKey("Key_3"))
+        {
+            if (System.Enum.TryParse<KeyCode>(PlayerPrefs.GetString("Key_3"), true, out var parsedKey))
+            {
+                inventaryKey = parsedKey;
+            }
+        }
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.I))
+        if (Input.GetKeyDown(inventaryKey))
         {
             isInventoryOpen = !isInventoryOpen;
         }
