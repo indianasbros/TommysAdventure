@@ -17,6 +17,15 @@ public class RadioDialogo : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         audioSource.clip = audioDialogo;
         DialogueManager.Instance.radios.Add(this);
+
+        //Control Setting for Interact
+        if (PlayerPrefs.HasKey("Key_0"))
+        {
+            if (System.Enum.TryParse<KeyCode>(PlayerPrefs.GetString("Key_0"), true, out var parsedKey))
+            {
+                interactKey = parsedKey;
+            }
+        }
     }
 
     void OnDestroy()
