@@ -5,9 +5,12 @@ using UnityEngine;
 
 public class RingCode : MonoBehaviour
 {
+    [SerializeField] private AudioSource ringSound;
+
     public bool canTake;
 
     private KeyCode interactKey = KeyCode.E;
+
 
 
     void Start()
@@ -30,6 +33,12 @@ public class RingCode : MonoBehaviour
     {
         if (Input.GetKeyDown(interactKey) && canTake)
         {
+            //Sound Heart Stop
+            if (ringSound != null)
+            {
+                ringSound.Stop();
+            }
+
             //se añade al inventario
             Destroy(gameObject, 0.1f);
         }
@@ -41,12 +50,22 @@ public class RingCode : MonoBehaviour
             Debug.Log("estoy colisionando con " + other.name);
             canTake = true;
         }
+
+        if (!ringSound.isPlaying)
+        {
+            ringSound.Play();
+        }
     }
     void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
         {
             canTake = false;
+        }
+
+        if (ringSound.isPlaying)
+        {
+            ringSound.Stop();
         }
     }
 }
