@@ -2975,6 +2975,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keySound: {fileID: 8300000, guid: 5e60ce26da1bdbc4e8633e22f3525ed8, type: 3}
+  audioSource: {fileID: 0}
+  sfxGroup: {fileID: 0}
   pressDepth: 0.3
   pressSpeed: 1
   value: 6
@@ -3483,6 +3485,10 @@ PrefabInstance:
       propertyPath: audioDialogo
       value: 
       objectReference: {fileID: 8300000, guid: ed245ae268f84f04fa5337e7ed4987c3, type: 3}
+    - target: {fileID: 2663501545565692245, guid: a7dbdd508737b0d49b444c4263d812f1, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: -6898667531952140711, guid: 0263faa962c5c7c4a840d0d966c393f6, type: 2}
     - target: {fileID: 9159537069380060400, guid: a7dbdd508737b0d49b444c4263d812f1, type: 3}
       propertyPath: m_LocalPosition.x
       value: -14.980904
@@ -3641,6 +3647,8 @@ MonoBehaviour:
   puzzleSolved: 0
   canOpen: 0
   doorSound: {fileID: 8300000, guid: 4a978ac34f0b73f459672c11c46f9a92, type: 3}
+  audioSource: {fileID: 0}
+  sfxGroup: {fileID: 0}
 --- !u!65 &149961830
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3723,8 +3731,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   paintSound: {fileID: 8300000, guid: 5e60ce26da1bdbc4e8633e22f3525ed8, type: 3}
-  pressDepth: 0.3
-  pressSpeed: 1
   value: 2
   check: {fileID: 1612907690}
 --- !u!82 &157094827
@@ -4318,6 +4324,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 163900542}
+  - component: {fileID: 163900543}
   m_Layer: 0
   m_Name: Rings
   m_TagString: Untagged
@@ -4342,6 +4349,102 @@ Transform:
   - {fileID: 669658933}
   m_Father: {fileID: 499599256}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &163900543
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 163900541}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 8500983672552811287, guid: 0263faa962c5c7c4a840d0d966c393f6, type: 2}
+  m_audioClip: {fileID: 8300000, guid: 3453ca42f3bf72248b061b10ecbb3a73, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!43 &164565151
 Mesh:
   m_ObjectHideFlags: 0
@@ -5621,6 +5724,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keySound: {fileID: 8300000, guid: 73fed7fdd0286d441be99bd383df35aa, type: 3}
+  audioSource: {fileID: 0}
+  sfxGroup: {fileID: 0}
   pressDepth: 0.3
   pressSpeed: 1
   value: 7
@@ -7200,6 +7305,8 @@ MonoBehaviour:
   puzzleSolved: 0
   canOpen: 0
   doorSound: {fileID: 8300000, guid: 4a978ac34f0b73f459672c11c46f9a92, type: 3}
+  audioSource: {fileID: 0}
+  sfxGroup: {fileID: 0}
 --- !u!65 &321153092
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9653,7 +9760,8 @@ MonoBehaviour:
   puzzleSolved: 0
   canOpen: 0
   doorSound: {fileID: 0}
-  haveFinalKey: 0
+  audioSource: {fileID: 0}
+  sfxGroup: {fileID: 0}
 --- !u!64 &383739122
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -10032,6 +10140,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keySound: {fileID: 8300000, guid: 60c944693173e9640a4457cbaa3d6613, type: 3}
+  audioSource: {fileID: 0}
+  sfxGroup: {fileID: 0}
   pressDepth: 0.3
   pressSpeed: 1
   value: 1
@@ -10294,6 +10404,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactableIcon: {fileID: 1056674580}
+  upClose: {fileID: 0}
+  upCloseImage: {fileID: 0}
 --- !u!1 &431486487 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -6372620159720347986, guid: 0d75ec03df2042d48967db7fe3c830d8, type: 3}
@@ -11363,6 +11475,8 @@ MonoBehaviour:
   puzzleSolved: 0
   canOpen: 0
   doorSound: {fileID: 8300000, guid: 4a978ac34f0b73f459672c11c46f9a92, type: 3}
+  audioSource: {fileID: 0}
+  sfxGroup: {fileID: 0}
 --- !u!65 &488175626
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15089,6 +15203,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keySound: {fileID: 8300000, guid: ddc523e099e1fea419fe3f8b4a16cdef, type: 3}
+  audioSource: {fileID: 0}
+  sfxGroup: {fileID: 0}
   pressDepth: 0.3
   pressSpeed: 1
   value: 3
@@ -15694,6 +15810,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2b37886f677ae44aa72bd3fa9d2a449, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ringSound: {fileID: 163900543}
   canTake: 0
 --- !u!114 &669658944
 MonoBehaviour:
@@ -15720,6 +15837,10 @@ PrefabInstance:
       propertyPath: audioDialogo
       value: 
       objectReference: {fileID: 8300000, guid: 4b295d1e8012f534d8fd1f8117d26a53, type: 3}
+    - target: {fileID: 2663501545565692245, guid: a7dbdd508737b0d49b444c4263d812f1, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: -6898667531952140711, guid: 0263faa962c5c7c4a840d0d966c393f6, type: 2}
     - target: {fileID: 9159537069380060400, guid: a7dbdd508737b0d49b444c4263d812f1, type: 3}
       propertyPath: m_LocalPosition.x
       value: -26.1
@@ -16906,6 +17027,8 @@ MonoBehaviour:
   puzzleSolved: 0
   canOpen: 0
   doorSound: {fileID: 8300000, guid: 4a978ac34f0b73f459672c11c46f9a92, type: 3}
+  audioSource: {fileID: 0}
+  sfxGroup: {fileID: 0}
 --- !u!1001 &695110770
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17817,8 +17940,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   paintSound: {fileID: 8300000, guid: 5e60ce26da1bdbc4e8633e22f3525ed8, type: 3}
-  pressDepth: 0.3
-  pressSpeed: 1
   value: 3
   check: {fileID: 1612907690}
 --- !u!82 &742782517
@@ -18405,6 +18526,10 @@ PrefabInstance:
       propertyPath: audioDialogo
       value: 
       objectReference: {fileID: 8300000, guid: 819b9bb0461cf554a8dcb0e458850de1, type: 3}
+    - target: {fileID: 2663501545565692245, guid: a7dbdd508737b0d49b444c4263d812f1, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: -6898667531952140711, guid: 0263faa962c5c7c4a840d0d966c393f6, type: 2}
     - target: {fileID: 9159537069380060400, guid: a7dbdd508737b0d49b444c4263d812f1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -23876,6 +24001,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keySound: {fileID: 8300000, guid: aeedcd79646962e4f874137c9769f053, type: 3}
+  audioSource: {fileID: 0}
+  sfxGroup: {fileID: 0}
   pressDepth: 0.3
   pressSpeed: 1
   value: 5
@@ -25260,7 +25387,7 @@ Transform:
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
   m_LocalRotation: {x: -0.008653237, y: 0.9748817, z: -0.21920262, w: -0.03848441}
-  m_LocalPosition: {x: -98, y: 10.887479, z: -5}
+  m_LocalPosition: {x: 119.3, y: 10.887479, z: -4.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -25483,6 +25610,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keySound: {fileID: 8300000, guid: 6b4a8793929878341b4efa9a232993e3, type: 3}
+  audioSource: {fileID: 0}
+  sfxGroup: {fileID: 0}
   pressDepth: 0.3
   pressSpeed: 1
   value: 4
@@ -33409,8 +33538,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   paintSound: {fileID: 8300000, guid: 5e60ce26da1bdbc4e8633e22f3525ed8, type: 3}
-  pressDepth: 0.3
-  pressSpeed: 1
   value: 4
   check: {fileID: 1612907690}
 --- !u!82 &1319257492
@@ -40144,7 +40271,7 @@ Transform:
   m_GameObject: {fileID: 1547722299}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -126.80482, y: -12.281606, z: 20.548456}
+  m_LocalPosition: {x: 90.495186, y: -12.281606, z: 20.748455}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -40508,6 +40635,10 @@ PrefabInstance:
       propertyPath: audioDialogo
       value: 
       objectReference: {fileID: 8300000, guid: 26298789b77230f46b4585bd5e6cb779, type: 3}
+    - target: {fileID: 2663501545565692245, guid: a7dbdd508737b0d49b444c4263d812f1, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: -6898667531952140711, guid: 0263faa962c5c7c4a840d0d966c393f6, type: 2}
     - target: {fileID: 9159537069380060400, guid: a7dbdd508737b0d49b444c4263d812f1, type: 3}
       propertyPath: m_LocalPosition.x
       value: -27.708826
@@ -40860,6 +40991,8 @@ MonoBehaviour:
   puzzleSolved: 1
   canOpen: 1
   doorSound: {fileID: 8300000, guid: 4a978ac34f0b73f459672c11c46f9a92, type: 3}
+  audioSource: {fileID: 0}
+  sfxGroup: {fileID: 0}
 --- !u!64 &1605949715
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -42322,6 +42455,10 @@ PrefabInstance:
       propertyPath: audioDialogo
       value: 
       objectReference: {fileID: 8300000, guid: 6890eafa17d3641419f756cf759aab53, type: 3}
+    - target: {fileID: 2663501545565692245, guid: a7dbdd508737b0d49b444c4263d812f1, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: -6898667531952140711, guid: 0263faa962c5c7c4a840d0d966c393f6, type: 2}
     - target: {fileID: 9159537069380060400, guid: a7dbdd508737b0d49b444c4263d812f1, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.41
@@ -43401,6 +43538,10 @@ PrefabInstance:
       propertyPath: audioDialogo
       value: 
       objectReference: {fileID: 8300000, guid: 6e478412cd036374d98cfd01faa18191, type: 3}
+    - target: {fileID: 2663501545565692245, guid: a7dbdd508737b0d49b444c4263d812f1, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: -6898667531952140711, guid: 0263faa962c5c7c4a840d0d966c393f6, type: 2}
     - target: {fileID: 9159537069380060400, guid: a7dbdd508737b0d49b444c4263d812f1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -49702,6 +49843,10 @@ PrefabInstance:
       propertyPath: audioDialogo
       value: 
       objectReference: {fileID: 8300000, guid: f8713f49fb48d8040bbba16c26a15282, type: 3}
+    - target: {fileID: 2663501545565692245, guid: a7dbdd508737b0d49b444c4263d812f1, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: -6898667531952140711, guid: 0263faa962c5c7c4a840d0d966c393f6, type: 2}
     - target: {fileID: 9159537069380060400, guid: a7dbdd508737b0d49b444c4263d812f1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 8.435516
@@ -50510,6 +50655,8 @@ MonoBehaviour:
   puzzleSolved: 0
   canOpen: 0
   doorSound: {fileID: 8300000, guid: 4a978ac34f0b73f459672c11c46f9a92, type: 3}
+  audioSource: {fileID: 0}
+  sfxGroup: {fileID: 0}
 --- !u!65 &1879560289
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -50633,6 +50780,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keySound: {fileID: 8300000, guid: cfe55545006dd6d4b9bff5c3c97f68c0, type: 3}
+  audioSource: {fileID: 0}
+  sfxGroup: {fileID: 0}
   pressDepth: 0.3
   pressSpeed: 1
   value: 2
@@ -51467,8 +51616,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   paintSound: {fileID: 8300000, guid: 5e60ce26da1bdbc4e8633e22f3525ed8, type: 3}
-  pressDepth: 0.3
-  pressSpeed: 1
   value: 1
   check: {fileID: 1612907690}
 --- !u!82 &1924282157
@@ -52140,7 +52287,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f8bfd310650fba243b33ac047e673d82, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -98
+      value: 119.3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f8bfd310650fba243b33ac047e673d82, type: 3}
       propertyPath: m_LocalPosition.y
@@ -52148,7 +52295,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f8bfd310650fba243b33ac047e673d82, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -15
+      value: -14.8
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f8bfd310650fba243b33ac047e673d82, type: 3}
       propertyPath: m_LocalRotation.w
@@ -52776,6 +52923,7 @@ MonoBehaviour:
   maxVerticalAngle: 40
   stepAudioSource: {fileID: 1957499064}
   stepClip: {fileID: 8300000, guid: e2c2297f77726d94d923d3889c9646c2, type: 3}
+  sfxGroup: {fileID: 0}
 --- !u!82 &1957499064
 AudioSource:
   m_ObjectHideFlags: 0
@@ -57914,6 +58062,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2b37886f677ae44aa72bd3fa9d2a449, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ringSound: {fileID: 163900543}
   canTake: 1
 --- !u!114 &2105431258
 MonoBehaviour:
@@ -57967,8 +58116,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   paintSound: {fileID: 8300000, guid: 5e60ce26da1bdbc4e8633e22f3525ed8, type: 3}
-  pressDepth: 0.3
-  pressSpeed: 1
   value: 4
   check: {fileID: 1612907690}
 --- !u!82 &2107195749

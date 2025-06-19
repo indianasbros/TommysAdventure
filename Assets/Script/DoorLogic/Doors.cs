@@ -4,6 +4,7 @@ using JetBrains.Annotations;
 using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.ProBuilder.Shapes;
 using UnityEngine.UIElements;
 public class Doors : MonoBehaviour
 {
@@ -18,12 +19,14 @@ public class Doors : MonoBehaviour
             puzzleSolved = value;
         }
     }
-    protected float speed = 60f; // grados por segundo
+    protected float speed = 30f; // grados por segundo
+    protected int speedMultiplier = 3;
     protected Axis rotationAxis = Axis.Y; // eje por defecto (cámbialo en el Inspector)
     protected float initialAngle;
     protected float targetAngle;
     protected bool isOpen = false;
-    [SerializeField]protected bool canOpen;
+    public bool IsOpen { get; set; }
+    [SerializeField] protected bool canOpen;
     public bool CanOpen
     {
         get { return canOpen; }
@@ -33,8 +36,7 @@ public class Doors : MonoBehaviour
     protected enum Axis { X, Y, Z }
 
     [Header("-----Audio Settings-----")]
-    [SerializeField] public AudioClip doorOpenSound;
-     [SerializeField] public AudioClip doorCloseSound;
+    [SerializeField] public AudioClip doorSound;
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioMixerGroup sfxGroup;
 
@@ -53,9 +55,9 @@ public class Doors : MonoBehaviour
         }
 
         //Control Setting for Interact
-        if (PlayerPrefs.HasKey("Key_4"))
+        if (PlayerPrefs.HasKey("Key_0"))
         {
-            if (System.Enum.TryParse<KeyCode>(PlayerPrefs.GetString("Key_4"), true, out var parsedKey))
+            if (System.Enum.TryParse<KeyCode>(PlayerPrefs.GetString("Key_0"), true, out var parsedKey))
             {
                 interactKey = parsedKey;
             }
@@ -72,14 +74,10 @@ public class Doors : MonoBehaviour
             SetCurrentAngle(newAngle);
         }
         OpenDoor();
-
     }
 
     virtual protected void OpenDoor()
     {
-        Debug.LogWarning(interactKey);
-        Debug.LogWarning(puzzleSolved);
-        Debug.LogWarning(canOpen);
         if (Input.GetKeyDown(interactKey) && canOpen && puzzleSolved)
         {
             if (!isOpen)
@@ -88,20 +86,33 @@ public class Doors : MonoBehaviour
                 isOpen = true;
 
                 //Door Audio
-                if (doorOpenSound != null)
+                if (doorSound != null)
                 {
-                    audioSource.PlayOneShot(doorOpenSound);
+                    audioSource.PlayOneShot(doorSound);
                 }
             }
             else
             {
-                targetAngle = initialAngle;
-                audioSource.PlayOneShot(doorCloseSound); // cierra de vuelta
+                targetAngle = initialAngle; // cierra de vuelta
                 isOpen = false;
             }
         }
     }
     
+    public void CloseDoor()
+    {
+        if (isOpen && puzzleSolved)
+        {
+            targetAngle = initialAngle; // cierra de vuelta
+            //Door Audio
+            if (doorSound != null)
+            {
+                audioSource.PlayOneShot(doorSound);
+            }
+            isOpen = false;
+        }
+
+    }
     float GetCurrentAngle()
     {
         switch (rotationAxis)
@@ -131,6 +142,10 @@ public class Doors : MonoBehaviour
         {
             canOpen = true;
         }
+        if (other.CompareTag("Water"))
+        {
+            canOpen = false;
+        }
     }
 
     void OnTriggerExit(Collider other)
@@ -138,7 +153,11 @@ public class Doors : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             canOpen = false;
-            // Ya no cerramos automáticamente al salir
+
+        }
+        if (other.CompareTag("Water"))
+        {
+            canOpen = true;
         }
     }
 }

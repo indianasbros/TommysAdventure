@@ -2,6 +2,8 @@ using UnityEngine;
 
 class ObjectUpClose : MonoBehaviour
 {
+    [SerializeField] private AudioClip audioClip;
+    [SerializeField] private AudioSource audioSource;
     public Sprite image;
     bool canInteract;
     [SerializeField] private AudioSource audioSource;
@@ -13,6 +15,7 @@ class ObjectUpClose : MonoBehaviour
     }
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         canInteract = false;
         if (audioSource == null)
         {
@@ -26,9 +29,11 @@ class ObjectUpClose : MonoBehaviour
             audioSource.PlayOneShot(sound);
 
             HUDManager.Instance.UpdateUpClose(image, show);
+            audioSource.PlayOneShot(audioClip);
             return;
         }
-        HUDManager.Instance.UpdateUpClose(null,show);
+        HUDManager.Instance.UpdateUpClose(null, show);
+        audioSource.PlayOneShot(audioClip);
     }
     void OnTriggerEnter(Collider other)
     {

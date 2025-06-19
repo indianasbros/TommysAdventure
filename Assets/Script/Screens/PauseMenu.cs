@@ -37,13 +37,16 @@ public class PauseMenu : MonoBehaviour
         {
             GameplayManager.Instance.PauseGame(true);
             CameraManager.Instance.LockCursor(false);
-            RoomManager.Instance.StopMusic();
+            RoomManager.Instance.PauseMusic();
+            DialogueManager.Instance.PauseAudio();
             isMenuOpen = true;
             return;
         }
         GameplayManager.Instance.PauseGame(false);
         CameraManager.Instance.LockCursor(true);
         RoomManager.Instance.ResumeMusic();
+        DialogueManager.Instance.ResumeAudio();
+
         isMenuOpen = false;
 
     }

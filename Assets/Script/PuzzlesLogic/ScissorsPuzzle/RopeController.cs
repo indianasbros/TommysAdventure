@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class RopeController : MonoBehaviour
@@ -5,11 +6,26 @@ public class RopeController : MonoBehaviour
     [SerializeField] private bool isCorrectRope = false;
     [SerializeField] private ScissorsManager scissorsManager;
     [SerializeField] private GameObject rope;
+    [SerializeField] Animator animator;
 
     private bool cutted = false;
     public bool Cutted { get { return cutted; } }
     private bool canCut = false;
     public ErrorController errorController;
+    private KeyCode interactKey = KeyCode.E;
+
+    void Start()
+    {
+        //Control Setting for Interact
+        if (PlayerPrefs.HasKey("Key_0"))
+        {
+            if (System.Enum.TryParse<KeyCode>(PlayerPrefs.GetString("Key_0"), true, out var parsedKey))
+            {
+                interactKey = parsedKey;
+            }
+        }
+    }
+
     void Update()
     {
         if (cutted && gameObject.activeSelf)
@@ -17,18 +33,19 @@ public class RopeController : MonoBehaviour
             DeactivateRope();
             return;
         }
-        if (!cutted && canCut && Input.GetKeyDown(KeyCode.E))
+        if (!cutted && canCut && Input.GetKeyDown(interactKey))
         {
-            Untie();
+            AnimateUntie();
         }
     }
-
-    private void Untie()
+    private void AnimateUntie()
     {
         if (cutted) return;
+        animator.SetBool("Tied", false);
+    }
+    public void Untie()
+    {
         cutted = true;
-
-        Debug.Log("Cuerda desatada: " + gameObject.name);
 
         if (isCorrectRope)
         {

@@ -6,10 +6,32 @@ public class InteractableInventory : MonoBehaviour,IInventoryReceiver
 {
     [Header("Puzzle Requirements")]
     public List<ItemRequirement> requiredItems = new List<ItemRequirement>();
+    private List<ItemRequirement> items = new List<ItemRequirement>();
 
     [Header("Puzzle Solved Event")]
     public UnityEvent onPuzzleResolved;
 
+    public bool ReceiveItem(ItemData itemToReceive)
+    {
+        foreach (var itemRequirement in items)
+        {
+            if (itemRequirement.item == itemToReceive)
+            {
+                Debug.Log("Ya cuenta con este item");
+                return false;
+            }
+        }
+        foreach (var requirement in requiredItems)
+        {
+            
+            if (itemToReceive == requirement.item)
+            {
+                items.Add(new ItemRequirement(requirement.item, 1));
+                return false;
+            }
+        }
+        return true;
+    }
     public bool TryReceiveItems()
     {
         // Verificar si el inventario tiene todos los ítems necesarios
@@ -20,6 +42,10 @@ public class InteractableInventory : MonoBehaviour,IInventoryReceiver
             {
                 Debug.Log($"Falta {requirement.item.itemName}: {requirement.quantity - playerCount} más.");
                 return false;
+            }
+            else
+            {
+                items.Add(new ItemRequirement(requirement.item,requirement.quantity));
             }
         }
 

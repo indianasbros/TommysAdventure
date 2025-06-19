@@ -12,7 +12,7 @@ namespace NavKeypad
         [SerializeField] private UnityEvent onAccessGranted;
         [SerializeField] private UnityEvent onAccessDenied;
         [Header("Combination Code (4 Numbers Max)")]
-        [SerializeField] private int keypadCombo = 1234;
+        [SerializeField] private string keypadCombo = "1234";
 
         public UnityEvent OnAccessGranted => onAccessGranted;
         public UnityEvent OnAccessDenied => onAccessDenied;
@@ -73,9 +73,9 @@ namespace NavKeypad
         }
         public void CheckCombo()
         {
-            if (int.TryParse(currentInput, out var currentKombo))
+            if (currentInput != null)
             {
-                bool granted = currentKombo == keypadCombo;
+                bool granted = currentInput == keypadCombo;
                 if (!displayingResult)
                 {
                     StartCoroutine(DisplayResultRoutine(granted));

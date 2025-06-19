@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class CandleController : MonoBehaviour
 {
@@ -6,8 +7,11 @@ public class CandleController : MonoBehaviour
     [SerializeField] private KeyCode grabKey = KeyCode.E;
     [SerializeField] private KeyCode dropKey = KeyCode.Q;
     [SerializeField] private Transform playerHoldPoint;
-
-    private bool isLit = true; // Por defecto la vela está encendida
+    [SerializeField] private AudioClip beatSound;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioMixerGroup mixerGroup;
+    [SerializeField] private Doors door;
+    private bool isLit = false; // Por defecto la vela está encendida
     private bool isCarried = false;
     private bool isPlayerInRange = false;
     private Rigidbody rb;
@@ -15,13 +19,35 @@ public class CandleController : MonoBehaviour
 
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+        audioSource.clip = beatSound;
         originalParent = transform.parent;
         if (candleLight != null)
+        {
             candleLight.enabled = isLit;
+        }
 
         rb = GetComponent<Rigidbody>();
         if (rb == null)
-            rb = gameObject.AddComponent<Rigidbody>(); // Seguridad por si falta
+        {
+            rb = gameObject.AddComponent<Rigidbody>();
+        }
+        
+        if (PlayerPrefs.HasKey("Key_0"))
+        {
+            if (System.Enum.TryParse<KeyCode>(PlayerPrefs.GetString("Key_0"), true, out var parsedKey))
+            {
+                grabKey = parsedKey;
+            }
+        }
+        
+        if (PlayerPrefs.HasKey("Key_1"))
+        {
+            if (System.Enum.TryParse<KeyCode>(PlayerPrefs.GetString("Key_1"), true, out var parsedKey))
+            {
+                dropKey = parsedKey;
+            }
+        }
     }
 
     void Update()
@@ -32,17 +58,31 @@ public class CandleController : MonoBehaviour
             {
                 PickUpCandle();
             }
-            else if( isCarried && Input.GetKeyDown(dropKey))
+            else if (isCarried && Input.GetKeyDown(dropKey))
             {
-                // Si ya la estás llevando, E sirve para soltar
                 DropCandle();
             }
         }
 
-        // Encender/apagar solo cuando la estás llevando
         if (isCarried && Input.GetKeyDown(KeyCode.F))
         {
             ToggleLight();
+        }
+        
+        if (!door.PuzzleSolved && isCarried && audioSource.isPlaying)
+        {
+            Debug.Log("no sueno");
+            audioSource.Stop();
+        }
+        else if (!door.PuzzleSolved && !isCarried && !audioSource.isPlaying)
+        {
+            Debug.Log("sueno");
+            audioSource.clip = beatSound;
+            audioSource.Play();
+        }
+        if (door.PuzzleSolved && audioSource.isPlaying)
+        {
+            audioSource.Stop();
         }
     }
 
@@ -61,7 +101,7 @@ public class CandleController : MonoBehaviour
             transform.localRotation = Quaternion.identity;
             isCarried = true;
             rb.isKinematic = true;
-            
+
             Collider collider = GetComponent<Collider>();
             collider.isTrigger = true; // Para evitar colisiones mientras se lleva
             Debug.Log("Candle picked up");

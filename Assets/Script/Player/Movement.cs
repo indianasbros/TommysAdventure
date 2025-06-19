@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Cinemachine;
 using Unity.Collections;
 using Unity.VisualScripting;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -10,9 +11,9 @@ using UnityEngine.Audio;
 public class PlayerMovement : MonoBehaviour
 {
     [Header("-----Movement Settings-----")]
-    public float speed = 6f;
+   [SerializeField] public float speed;
     public float rotationSmoothTime = 0.12f;
-
+    private float BuffedSpeed = 20f;
     [Header("-----Camera Settings-----")]
     //public Transform followTransform; // El pivot o la cámara que sigue al personaje
     public float mouseSensitivity = 2f;
@@ -20,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
     public float maxVerticalAngle = 40f;
     float jumpForce = 10f;
     bool onFloor;
+    bool isSwimming;
     private Rigidbody rigidbody3D;
     private float turnSmoothVelocity;
     private Vector2 lookInput; // Para guardar el movimiento del mouse
@@ -34,6 +36,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
+        speed = 10f;
         animator = GetComponent<Animator>();
         rigidbody3D = GetComponent<Rigidbody>();
         Cursor.lockState = CursorLockMode.Locked;
@@ -50,9 +53,18 @@ public class PlayerMovement : MonoBehaviour
         lookInput.x += Input.GetAxis("Mouse X") * mouseSensitivity;
         lookInput.y += Input.GetAxis("Mouse Y") * mouseSensitivity;
         lookInput.y = Mathf.Clamp(lookInput.y, minVerticalAngle, maxVerticalAngle);
-
+        UpdateSpeed();
         Jump();
         MoveAndRotate();
+    }
+    void UpdateSpeed()
+    {
+        if (PowerUps.Instancia.PowerUpSpeed)
+        {
+            Debug.Log("asdasd");
+            speed = BuffedSpeed;
+            PowerUps.Instancia.PowerUpSpeed = false; //Esto es solo el buff, para evitar que se dupee la velocidad, la gui deberia seguir activada con el item , gracias por leer 
+        }
     }
 
     void Jump()
@@ -69,11 +81,20 @@ public class PlayerMovement : MonoBehaviour
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
         Vector3 inputDirection = new Vector3(horizontal, 0f, vertical).normalized;
-        animator.SetFloat("Velocity", inputDirection.magnitude);
+        if (isSwimming)
+        {
+            animator.SetBool("isSwimming", isSwimming);
+            animator.SetFloat("SwimSpeed", inputDirection.magnitude);
+        }
+        else
+        {
+            animator.SetFloat("Velocity", inputDirection.magnitude);
+        }
+        
         if (inputDirection.magnitude >= 0.1f)
         {
             // Steps Audio
-            if (!stepAudioSource.isPlaying)
+            if (!stepAudioSource.isPlaying && !isSwimming)
             {
                 stepAudioSource.Play();
             }
@@ -109,6 +130,13 @@ public class PlayerMovement : MonoBehaviour
             onFloor = true;
         }
 
+    }
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Water"))
+        {
+            isSwimming = true;
+        }
     }
     protected void OnCollisionExit(Collision collision)
     {
