@@ -44,7 +44,7 @@ public class TimeController : MonoBehaviour
         
         if (PowerUps.Instancia.PowerUpTime)
         {
-            applyPowerUp();
+            ApplyPowerUp();
         }
         if (timeRemaining > 0)
         {
@@ -59,9 +59,9 @@ public class TimeController : MonoBehaviour
             OnTimerEnd();
         }
     }
-    private void applyPowerUp()
+    private void ApplyPowerUp()
     {
-        timeRemaining += 900f; //15 minutos por power up XD
+        timeRemaining += 900f; //15 minutos
         PowerUps.Instancia.PowerUpTime = false; //aca hagan cambios de ui si quieren pero no creo que sea necesario, en caso de que no lo hagan borren el TimeGUI
     }
     private void SetDifficulty(Difficulty difficulty)

@@ -7,7 +7,7 @@ public class ExitShop : MonoBehaviour
 {
     public void ExitShopp()
     {
-        SceneManager.LoadScene("Kiara"); // Cambia "Kiara" por el nombre de la escena principal
+        SceneManager.LoadScene("Game");
         Debug.Log("Saliendo de la tienda y volviendo a la escena principal.");
         TimeController.Instance.isRunning = true;
     }

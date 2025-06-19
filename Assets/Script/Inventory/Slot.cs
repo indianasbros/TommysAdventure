@@ -8,7 +8,7 @@ public class Slot : MonoBehaviour
     public ItemData itemData;
     public int quantity;
     public Sprite defaultImage;
-
+    
     public void SetItem(ItemData data, int qty = 1)
     {
         itemData = data;

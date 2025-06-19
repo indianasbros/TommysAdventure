@@ -31,7 +31,6 @@ public class PianoCheck : MonoBehaviour
     private void Awake()
     {
         ClearInput();
-        notesCombo = "1234"; // Set your desired passcode here
     }
 
 
@@ -43,7 +42,7 @@ public class PianoCheck : MonoBehaviour
 
         currentInput = currentInput + input;
         Debug.Log("current input: " + currentInput);
-        if (currentInput != null && currentInput.Length == 4) // 4 max passcode size 
+        if (currentInput != null && currentInput.Length == notesCombo.Length) 
         {
             CheckCombo();
             ClearInput();

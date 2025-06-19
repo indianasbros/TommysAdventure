@@ -5,15 +5,14 @@ using UnityEngine;
 public class MusicSheets : MonoBehaviour
 {
     [SerializeField] public GameObject sheetSlice;
-    bool hasItem;
-    public bool HasItem { get; set; }
-    // Start is called before the first frame update
+    private bool hasItem;
+    public bool HasItem { get { return hasItem; } set {hasItem = value; } }
+ 
     void Start()
     {
         sheetSlice.SetActive(false);
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (hasItem)

@@ -13,7 +13,7 @@ public class PaintCheck : MonoBehaviour
     [SerializeField] private UnityEvent onAccessGranted;
     [SerializeField] private UnityEvent onAccessDenied;
     
-    [SerializeField] private string notesCombo = "12345";
+    [SerializeField] private string notesCombo = "24351";
 
     public UnityEvent OnAccessGranted => onAccessGranted;
     public UnityEvent OnAccessDenied => onAccessDenied;
@@ -31,7 +31,6 @@ public class PaintCheck : MonoBehaviour
     private void Awake()
     {
         ClearInput();
-        notesCombo = "12345"; // Set your desired passcode here
     }
     public void AddInput(string input)
     {
