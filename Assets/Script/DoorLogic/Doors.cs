@@ -18,7 +18,7 @@ public class Doors : MonoBehaviour
             puzzleSolved = value;
         }
     }
-    protected float speed = 30f; // grados por segundo
+    protected float speed = 60f; // grados por segundo
     protected Axis rotationAxis = Axis.Y; // eje por defecto (cámbialo en el Inspector)
     protected float initialAngle;
     protected float targetAngle;
@@ -33,7 +33,8 @@ public class Doors : MonoBehaviour
     protected enum Axis { X, Y, Z }
 
     [Header("-----Audio Settings-----")]
-    [SerializeField] public AudioClip doorSound;
+    [SerializeField] public AudioClip doorOpenSound;
+     [SerializeField] public AudioClip doorCloseSound;
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioMixerGroup sfxGroup;
 
@@ -87,14 +88,15 @@ public class Doors : MonoBehaviour
                 isOpen = true;
 
                 //Door Audio
-                if (doorSound != null)
+                if (doorOpenSound != null)
                 {
-                    audioSource.PlayOneShot(doorSound);
+                    audioSource.PlayOneShot(doorOpenSound);
                 }
             }
             else
             {
-                targetAngle = initialAngle; // cierra de vuelta
+                targetAngle = initialAngle;
+                audioSource.PlayOneShot(doorCloseSound); // cierra de vuelta
                 isOpen = false;
             }
         }
