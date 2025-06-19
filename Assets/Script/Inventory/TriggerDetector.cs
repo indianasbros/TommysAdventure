@@ -16,7 +16,6 @@ public class TriggerDetector : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("colisioné con "+other.name);
         OnTriggerEntered?.Invoke(other);
     }
     private void OnTriggerExit(Collider other)

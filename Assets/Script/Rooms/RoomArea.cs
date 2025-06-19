@@ -12,7 +12,8 @@ public class RoomArea : MonoBehaviour
     public AudioClip RoomMusic => roomMusic;
     public AudioMixerGroup MixerGroup => mixerGroup;
     public Collider RoomCollider => roomCollider;
-
+    bool playerInRoom;
+    public bool PlayerInRoom { get { return playerInRoom; } private set { playerInRoom = value; } }
     private void Reset()
     {
         roomCollider = GetComponent<Collider>();
@@ -23,6 +24,7 @@ public class RoomArea : MonoBehaviour
     {
         if (RoomManager.Instance != null && other.transform == RoomManager.Instance.Tommy)
         {
+            PlayerInRoom = true;
             RoomManager.Instance.EnterRoom(this);
         }
     }
@@ -32,6 +34,7 @@ public class RoomArea : MonoBehaviour
 
         if (RoomManager.Instance != null && other.transform == RoomManager.Instance.Tommy)
         {
+            PlayerInRoom = false;
             RoomManager.Instance.ExitRoom(this);
         }
     }

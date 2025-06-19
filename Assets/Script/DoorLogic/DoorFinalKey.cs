@@ -8,7 +8,7 @@ public class DoorFinalKey : Doors
 {
     protected override void OpenDoor()
     {
-        if (Input.GetKeyDown(KeyCode.E) && canOpen)
+        if (Input.GetKeyDown(KeyCode.E) && canOpen && PuzzleSolved)
         {
             GameplayManager.Instance.Victory();
         }

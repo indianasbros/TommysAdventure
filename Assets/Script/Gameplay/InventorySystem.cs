@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class InventorySystem : MonoBehaviour
 {
-    public static InventorySystem Instance { get; private set; }
 
     [Header("Inventory UI")]
     public GameObject inventoryUI;
     public GameObject inventorySlotHandler;
     private Slot[] slots;
     bool isInventoryOpen = false;
+    public static InventorySystem Instance { get; private set; }
     void Awake()
     {
         if (Instance != null) Destroy(gameObject);

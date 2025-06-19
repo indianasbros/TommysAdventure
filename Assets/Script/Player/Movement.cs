@@ -20,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
     public float maxVerticalAngle = 40f;
     float jumpForce = 10f;
     bool onFloor;
+    bool isSwimming;
     private Rigidbody rigidbody3D;
     private float turnSmoothVelocity;
     private Vector2 lookInput; // Para guardar el movimiento del mouse
@@ -69,11 +70,20 @@ public class PlayerMovement : MonoBehaviour
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
         Vector3 inputDirection = new Vector3(horizontal, 0f, vertical).normalized;
-        animator.SetFloat("Velocity", inputDirection.magnitude);
+        if (isSwimming)
+        {
+            animator.SetBool("isSwimming", isSwimming);
+            animator.SetFloat("SwimSpeed", inputDirection.magnitude);
+        }
+        else
+        {
+            animator.SetFloat("Velocity", inputDirection.magnitude);
+        }
+        
         if (inputDirection.magnitude >= 0.1f)
         {
             // Steps Audio
-            if (!stepAudioSource.isPlaying)
+            if (!stepAudioSource.isPlaying && !isSwimming)
             {
                 stepAudioSource.Play();
             }
@@ -109,6 +119,13 @@ public class PlayerMovement : MonoBehaviour
             onFloor = true;
         }
 
+    }
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Water"))
+        {
+            isSwimming = true;
+        }
     }
     protected void OnCollisionExit(Collision collision)
     {

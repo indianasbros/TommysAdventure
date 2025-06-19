@@ -4,6 +4,7 @@ using JetBrains.Annotations;
 using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.ProBuilder.Shapes;
 using UnityEngine.UIElements;
 public class Doors : MonoBehaviour
 {
@@ -19,11 +20,13 @@ public class Doors : MonoBehaviour
         }
     }
     protected float speed = 30f; // grados por segundo
+    protected int speedMultiplier = 3;
     protected Axis rotationAxis = Axis.Y; // eje por defecto (cámbialo en el Inspector)
     protected float initialAngle;
     protected float targetAngle;
     protected bool isOpen = false;
-    [SerializeField]protected bool canOpen;
+    public bool IsOpen { get; set; }
+    [SerializeField] protected bool canOpen;
     public bool CanOpen
     {
         get { return canOpen; }
@@ -97,6 +100,20 @@ public class Doors : MonoBehaviour
         }
     }
     
+    public void CloseDoor()
+    {
+        if (isOpen && puzzleSolved)
+        {
+            targetAngle = initialAngle; // cierra de vuelta
+            //Door Audio
+            if (doorSound != null)
+            {
+                audioSource.PlayOneShot(doorSound);
+            }
+            isOpen = false;
+        }
+
+    }
     float GetCurrentAngle()
     {
         switch (rotationAxis)
@@ -126,6 +143,10 @@ public class Doors : MonoBehaviour
         {
             canOpen = true;
         }
+        if (other.CompareTag("Water"))
+        {
+            canOpen = false;
+        }
     }
 
     void OnTriggerExit(Collider other)
@@ -133,7 +154,11 @@ public class Doors : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             canOpen = false;
-            // Ya no cerramos automáticamente al salir
+
+        }
+        if (other.CompareTag("Water"))
+        {
+            canOpen = true;
         }
     }
 }

@@ -104,12 +104,14 @@ public class InteractSystem : MonoBehaviour
     void TriggerEnter(Collider collider)
     {
         GameObject obj = collider.gameObject;
-
-        // Verificamos si implementa al menos una interfaz
+        if (collider.CompareTag("Interactable"))
+        {
+            OnCanInteract?.Invoke(true);
+        }
         bool hasInteraction = obj.TryGetComponent<IPickable>(out _) ||
-                              obj.TryGetComponent<IInventoryReceiver>(out _) ||
-                              obj.TryGetComponent<ICameraInteractable>(out _) ||
-                              obj.TryGetComponent<ObjectUpClose>(out _);
+                            obj.TryGetComponent<IInventoryReceiver>(out _) ||
+                            obj.TryGetComponent<ICameraInteractable>(out _) ||
+                            obj.TryGetComponent<ObjectUpClose>(out _);
 
         if (hasInteraction)
         {
@@ -121,6 +123,10 @@ public class InteractSystem : MonoBehaviour
 
     void TriggerExit(Collider collider)
     {
+        if (collider.CompareTag("Interactable"))
+        {
+            OnCanInteract?.Invoke(false);
+        }
         if (collider.gameObject == interactableTarget)
         {
             interactableTarget = null;

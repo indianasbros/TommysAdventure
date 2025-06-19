@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public class RadioDialogo : MonoBehaviour
 {
@@ -8,20 +9,19 @@ public class RadioDialogo : MonoBehaviour
     private AudioSource audioSource;
     private bool playerInRank = false;
     private bool playing = false;
-
-    private static List<RadioDialogo> radios = new List<RadioDialogo>();
+    public bool Playing { get { return playing; } private set { playing = value; } }
     private KeyCode interactKey = KeyCode.E;
 
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
         audioSource.clip = audioDialogo;
-        radios.Add(this);
+        DialogueManager.Instance.radios.Add(this);
     }
 
     void OnDestroy()
     {
-        radios.Remove(this);
+        DialogueManager.Instance.radios.Remove(this);
     }
 
     void Update()
@@ -34,6 +34,7 @@ public class RadioDialogo : MonoBehaviour
 
     private IEnumerator PlayingDialog()
     {
+        List<RadioDialogo> radios = DialogueManager.Instance.radios;
         foreach (RadioDialogo radio in radios)
         {
             if (radio != this)
@@ -42,19 +43,28 @@ public class RadioDialogo : MonoBehaviour
             }
         }
 
-        playing = true;
+        Playing = true;
         audioSource.Play();
         yield return new WaitForSeconds(audioSource.clip.length);
-        playing = false;
+        Playing = false;
     }
 
     public void StopAudio()
     {
         if (audioSource.isPlaying)
         {
+            Debug.Log("paro audio");
             audioSource.Stop();
-            playing = false;
+            Playing = false;
         }
+    }
+    public void PauseAudio()
+    {
+        audioSource.Pause();
+    }
+    public void ResumeAudio()
+    {
+        audioSource.Play();   
     }
 
     void OnTriggerEnter(Collider other)

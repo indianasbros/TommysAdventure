@@ -126,7 +126,7 @@ BlendTree:
     m_CycleOffset: 0
     m_DirectBlendParameter: Velocity
     m_Mirror: 0
-  m_BlendParameter: Velocity
+  m_BlendParameter: SwimSpeed
   m_BlendParameterY: Velocity
   m_MinThreshold: 0
   m_MaxThreshold: 1

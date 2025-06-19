@@ -9,6 +9,9 @@ TagManager:
   - Ring 2
   - Floor
   - Water
+  - HoldPoint
+  - Interactable
+  - Roof
   layers:
   - Default
   - TransparentFX
