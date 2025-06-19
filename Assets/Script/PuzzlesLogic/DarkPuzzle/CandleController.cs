@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class CandleController : MonoBehaviour
 {
@@ -6,7 +7,10 @@ public class CandleController : MonoBehaviour
     [SerializeField] private KeyCode grabKey = KeyCode.E;
     [SerializeField] private KeyCode dropKey = KeyCode.Q;
     [SerializeField] private Transform playerHoldPoint;
-
+    [SerializeField] private AudioClip beatSound;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioMixerGroup mixerGroup;
+    [SerializeField] private Doors door;
     private bool isLit = true; // Por defecto la vela está encendida
     private bool isCarried = false;
     private bool isPlayerInRange = false;
@@ -15,6 +19,8 @@ public class CandleController : MonoBehaviour
 
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+        audioSource.clip = beatSound;
         originalParent = transform.parent;
         if (candleLight != null)
             candleLight.enabled = isLit;
@@ -51,15 +57,29 @@ public class CandleController : MonoBehaviour
             }
             else if (isCarried && Input.GetKeyDown(dropKey))
             {
-                // Si ya la estás llevando, E sirve para soltar
                 DropCandle();
             }
         }
 
-        // Encender/apagar solo cuando la estás llevando
         if (isCarried && Input.GetKeyDown(KeyCode.F))
         {
             ToggleLight();
+        }
+        
+        if (!door.PuzzleSolved && isCarried && audioSource.isPlaying)
+        {
+            Debug.Log("no sueno");
+            audioSource.Stop();
+        }
+        else if (!door.PuzzleSolved && !isCarried && !audioSource.isPlaying)
+        {
+            Debug.Log("sueno");
+            audioSource.clip = beatSound;
+            audioSource.Play();
+        }
+        if (door.PuzzleSolved && audioSource.isPlaying)
+        {
+            audioSource.Stop();
         }
     }
 
