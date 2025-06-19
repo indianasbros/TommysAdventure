@@ -26,4 +26,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/DifficultyLevel.unity
     guid: c74568bd53d34244984063efdc51dcab
+  - enabled: 1
+    path: Assets/Scenes/UITienda.unity
+    guid: 09d5138794fb7e148bf59d25bf6c9c51
+  - enabled: 1
+    path: Assets/Scenes/Kiara.unity
+    guid: eb0c07cb00a255841b2f5488bce9f413
   m_configObjects: {}

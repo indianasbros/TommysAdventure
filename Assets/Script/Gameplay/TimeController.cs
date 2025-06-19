@@ -8,7 +8,6 @@ using TMPro;
 public class TimeController : MonoBehaviour
 {
     public static TimeController Instance { get; private set; }
-
     public enum Difficulty { Easy, Normal, Hard }
 
     [Header("Configuración")]
@@ -16,7 +15,7 @@ public class TimeController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI timerText;
 
     private float timeRemaining;
-    private bool isRunning;
+    public bool isRunning;
 
     public float TimeRemaining => timeRemaining;
     public bool IsRunning => isRunning;
@@ -42,7 +41,11 @@ public class TimeController : MonoBehaviour
     void Update()
     {
         if (!isRunning) return;
-
+        
+        if (PowerUps.Instancia.PowerUpTime)
+        {
+            applyPowerUp();
+        }
         if (timeRemaining > 0)
         {
             timeRemaining -= Time.deltaTime;
@@ -56,7 +59,11 @@ public class TimeController : MonoBehaviour
             OnTimerEnd();
         }
     }
-
+    private void applyPowerUp()
+    {
+        timeRemaining += 900f; //15 minutos por power up XD
+        PowerUps.Instancia.PowerUpTime = false; //aca hagan cambios de ui si quieren pero no creo que sea necesario, en caso de que no lo hagan borren el TimeGUI
+    }
     private void SetDifficulty(Difficulty difficulty)
     {
         switch (difficulty)

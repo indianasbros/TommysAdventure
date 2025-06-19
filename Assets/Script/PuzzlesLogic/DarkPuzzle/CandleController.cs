@@ -11,7 +11,7 @@ public class CandleController : MonoBehaviour
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioMixerGroup mixerGroup;
     [SerializeField] private Doors door;
-    private bool isLit = true; // Por defecto la vela está encendida
+    private bool isLit = false; // Por defecto la vela está encendida
     private bool isCarried = false;
     private bool isPlayerInRange = false;
     private Rigidbody rb;
@@ -23,13 +23,16 @@ public class CandleController : MonoBehaviour
         audioSource.clip = beatSound;
         originalParent = transform.parent;
         if (candleLight != null)
+        {
             candleLight.enabled = isLit;
+        }
 
         rb = GetComponent<Rigidbody>();
         if (rb == null)
-            rb = gameObject.AddComponent<Rigidbody>(); // Seguridad por si falta
-
-        //Control Setting for Interact
+        {
+            rb = gameObject.AddComponent<Rigidbody>();
+        }
+        
         if (PlayerPrefs.HasKey("Key_0"))
         {
             if (System.Enum.TryParse<KeyCode>(PlayerPrefs.GetString("Key_0"), true, out var parsedKey))
@@ -37,7 +40,7 @@ public class CandleController : MonoBehaviour
                 grabKey = parsedKey;
             }
         }
-        //Control Setting for Interact
+        
         if (PlayerPrefs.HasKey("Key_1"))
         {
             if (System.Enum.TryParse<KeyCode>(PlayerPrefs.GetString("Key_1"), true, out var parsedKey))
