@@ -6,7 +6,6 @@ class ObjectUpClose : MonoBehaviour
     [SerializeField] private AudioSource audioSource;
     public Sprite image;
     bool canInteract;
-    [SerializeField] private AudioSource audioSource;
     [SerializeField] public AudioClip sound;
     public bool CanInteract
     {

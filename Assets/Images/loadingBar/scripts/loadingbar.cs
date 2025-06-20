@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class loadingbar : MonoBehaviour {
@@ -26,8 +27,8 @@ public class loadingbar : MonoBehaviour {
         }
         else
         {
-            imageComp.fillAmount = 0.0f;
-            
+            SceneManager.LoadScene("Game");
+            //imageComp.fillAmount = 0.0f;
         }
     }
 }

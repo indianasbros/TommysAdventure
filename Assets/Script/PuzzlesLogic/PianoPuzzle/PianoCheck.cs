@@ -40,8 +40,8 @@ public class PianoCheck : MonoBehaviour
         audioSource.PlayOneShot(noteSfx);
         if (accessWasGranted) return;
 
-        currentInput = currentInput + input;
-        Debug.Log("current input: " + currentInput);
+        currentInput += input;
+        
         if (currentInput != null && currentInput.Length == notesCombo.Length) 
         {
             CheckCombo();

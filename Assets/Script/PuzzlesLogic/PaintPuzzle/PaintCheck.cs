@@ -36,13 +36,13 @@ public class PaintCheck : MonoBehaviour
     {
         if (accessWasGranted) return;
 
-        if (currentInput != null && currentInput.Length == 5) // 4 max passcode size 
+        currentInput += input;
+        if (currentInput != null && currentInput.Length == notesCombo.Length)
         {
             CheckCombo();
             ClearInput();
             return;
         }
-        currentInput += input;
     }
     public void CheckCombo()
     {

@@ -8,7 +8,7 @@ public class RoomArea : MonoBehaviour
     [SerializeField] private AudioClip roomMusic;
     [SerializeField] private AudioMixerGroup mixerGroup;
     [SerializeField] private Collider roomCollider;
-
+    public bool IsFirstPuzzle;
     public AudioClip RoomMusic => roomMusic;
     public AudioMixerGroup MixerGroup => mixerGroup;
     public Collider RoomCollider => roomCollider;

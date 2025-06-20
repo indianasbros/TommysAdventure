@@ -13,6 +13,7 @@ public class InteractableInventory : MonoBehaviour,IInventoryReceiver
     
     public bool TryReceiveItems()
     {
+        Debug.Log("recivo items");
         // Verificar si el inventario tiene todos los ítems necesarios
         foreach (var requirement in requiredItems)
         {

@@ -12,6 +12,8 @@ public class TimeController : MonoBehaviour
 
     [Header("Configuración")]
     [SerializeField] private Difficulty gameDifficulty = Difficulty.Normal;
+    [Header("UI")]
+    [SerializeField] private GameObject timerPanel;
     [SerializeField] private TextMeshProUGUI timerText;
 
     private float timeRemaining;
@@ -31,17 +33,37 @@ public class TimeController : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
     }
-
+    void OnEnable()
+    {
+        RoomManager.Instance.OnEnteredFirstPuzzle += OnEnteredFirstPuzzle;
+    }
+    void OnDisable()
+    {
+        RoomManager.Instance.OnEnteredFirstPuzzle -= OnEnteredFirstPuzzle;
+    }
+    void OnEnteredFirstPuzzle()
+    {
+        
+        isRunning = true;
+        
+    }
     void Start()
     {
-        SetDifficulty(gameDifficulty);
-        UpdateTimerDisplay();
+        isRunning = false;
+        timerPanel.SetActive(false);
+        
     }
 
     void Update()
     {
-        if (!isRunning) return;
-        
+        if (!IsRunning) return;
+        if (IsRunning && !timerPanel.activeSelf)
+        {
+            Debug.Log("activo el timer");
+            timerPanel.SetActive(true);
+            SetDifficulty(gameDifficulty);
+            UpdateTimerDisplay();
+        }
         if (PowerUps.Instancia.PowerUpTime)
         {
             ApplyPowerUp();
@@ -49,6 +71,7 @@ public class TimeController : MonoBehaviour
         if (timeRemaining > 0)
         {
             timeRemaining -= Time.deltaTime;
+            Debug.Log("actualizo tiempo");
             UpdateTimerDisplay();
         }
         else
@@ -62,7 +85,7 @@ public class TimeController : MonoBehaviour
     private void ApplyPowerUp()
     {
         timeRemaining += 900f; //15 minutos
-        PowerUps.Instancia.PowerUpTime = false; //aca hagan cambios de ui si quieren pero no creo que sea necesario, en caso de que no lo hagan borren el TimeGUI
+        PowerUps.Instancia.PowerUpTime = false;
     }
     private void SetDifficulty(Difficulty difficulty)
     {
@@ -71,6 +94,7 @@ public class TimeController : MonoBehaviour
             case Difficulty.Easy:
                 timeRemaining = Mathf.Infinity;
                 isRunning = false;
+                timerPanel.SetActive(true);
                 timerText.text = "∞";
                 break;
 
@@ -88,6 +112,7 @@ public class TimeController : MonoBehaviour
 
     private void UpdateTimerDisplay()
     {
+        if (!timerPanel.activeSelf) return;
         if (float.IsInfinity(timeRemaining))
         {
             timerText.text = "∞";
@@ -102,7 +127,7 @@ public class TimeController : MonoBehaviour
     private void OnTimerEnd()
     {
         Debug.Log("¡Se acabó el tiempo!");
-
+        GameplayManager.Instance.GameOver();
     }
 
     public void StopTimer() => isRunning = false;

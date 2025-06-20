@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,7 +10,7 @@ public class RoomManager : MonoBehaviour
 
     [SerializeField] private Transform tommy;
     public Transform Tommy => tommy;
-
+    public event Action OnEnteredFirstPuzzle;
     private static AudioSource globalAudio;
     private RoomArea currentRoom;
 
@@ -45,9 +46,13 @@ public class RoomManager : MonoBehaviour
         {
             currentRoom = room;
             ChangeMusic(room);
+            if(currentRoom.IsFirstPuzzle && OnEnteredFirstPuzzle != null)
+            {
+                Debug.Log("Entered first puzzle room");
+                OnEnteredFirstPuzzle?.Invoke();
+            }
         }
     }
-
     public void ExitRoom(RoomArea room)
     {
         if (currentRoom == room)

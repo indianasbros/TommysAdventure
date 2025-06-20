@@ -142,10 +142,7 @@ public class Doors : MonoBehaviour
         {
             canOpen = true;
         }
-        if (other.CompareTag("Water"))
-        {
-            canOpen = false;
-        }
+        
     }
 
     void OnTriggerExit(Collider other)
@@ -155,9 +152,6 @@ public class Doors : MonoBehaviour
             canOpen = false;
 
         }
-        if (other.CompareTag("Water"))
-        {
-            canOpen = true;
-        }
+        
     }
 }

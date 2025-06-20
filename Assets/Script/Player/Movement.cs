@@ -11,7 +11,7 @@ using UnityEngine.Audio;
 public class PlayerMovement : MonoBehaviour
 {
     [Header("-----Movement Settings-----")]
-   [SerializeField] public float speed;
+    [SerializeField] public float speed;
     public float rotationSmoothTime = 0.12f;
     private float BuffedSpeed = 20f;
     [Header("-----Camera Settings-----")]
@@ -77,7 +77,7 @@ public class PlayerMovement : MonoBehaviour
     }
     void MoveAndRotate()
     {
-        
+
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
         Vector3 inputDirection = new Vector3(horizontal, 0f, vertical).normalized;
@@ -88,9 +88,11 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
+            animator.SetFloat("SwimSpeed", 0);
+            animator.SetBool("isSwimming", isSwimming);
             animator.SetFloat("Velocity", inputDirection.magnitude);
         }
-        
+
         if (inputDirection.magnitude >= 0.1f)
         {
             // Steps Audio
@@ -102,7 +104,7 @@ public class PlayerMovement : MonoBehaviour
             // Aquí NO calculamos el ángulo basado en la cámara
             // Solo movemos relativo al personaje
 
-            
+
             // Movimiento relativo al personaje
             Vector3 moveDir = transform.forward * vertical + transform.right * horizontal;
 
@@ -143,6 +145,13 @@ public class PlayerMovement : MonoBehaviour
         if (collision.gameObject.CompareTag("Floor"))
         {
             onFloor = false;
+        }
+    }
+    void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Water"))
+        {
+            isSwimming = false;
         }
     }
 }

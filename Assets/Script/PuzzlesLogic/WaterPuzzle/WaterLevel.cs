@@ -21,11 +21,11 @@ public class WaterLevel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (roomTrigger.PlayerInRoom)
+        if (roomTrigger.PlayerInRoom && !waterDoor.PuzzleSolved)
         {
             previousDoor.CloseDoor();
         }
-        if (previousDoor.IsOpen && waterDoor.IsOpen && waterDoor.PuzzleSolved)
+        if (waterDoor.PuzzleSolved)
         {
             canIncrese = false;
         }
@@ -37,6 +37,7 @@ public class WaterLevel : MonoBehaviour
         Vector3 scale = transform.localScale;
         if (canIncrese)
         {
+            Debug.Log("incrementando agua");
             if (scale.y < waterMax)
             {
                 scale.y += waterIncrese * Time.deltaTime;
@@ -50,6 +51,7 @@ public class WaterLevel : MonoBehaviour
         }
         else if (waterDoor.PuzzleSolved)
         {
+            Debug.Log("decrementando agua");
             if (scale.y > waterMin)
             {
                 scale.y -= waterIncrese * Time.deltaTime;
