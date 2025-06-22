@@ -5,34 +5,48 @@ using UnityEngine.Events;
 public class InteractableInventory : MonoBehaviour,IInventoryReceiver
 {
     [Header("Puzzle Requirements")]
-    public List<ItemRequirement> requiredItems = new List<ItemRequirement>();
+    public List<ItemRequirement> requiredItems;
 
     [Header("Puzzle Solved Event")]
     public UnityEvent onPuzzleResolved;
+    bool isInventoryOpen = false;
+    public bool IsInventoryOpen => isInventoryOpen;
+    bool canReceive = true;
+    public bool CanReceive { get => canReceive; set => canReceive = value; }
 
-    
-    public bool TryReceiveItems()
+    void Start()
     {
-        Debug.Log("recivo items");
-        // Verificar si el inventario tiene todos los ítems necesarios
+        canReceive = true; 
+    }
+    
+    public bool TryReceiveItem(ItemData item)
+    {
         foreach (var requirement in requiredItems)
         {
-            int playerCount = InventorySystem.Instance.GetItemQuantity(requirement.item);
-            if (playerCount < requirement.quantity)
+            if (requirement.item == item && InventorySystem.Instance.GetItemQuantity(item) >= requirement.quantity)
             {
-                Debug.Log($"Falta {requirement.item.itemName}: {requirement.quantity - playerCount} más.");
-                return false;
+                ObjectInventorySystem.Instance.TryAddItem(item, requirement.quantity);
+                InventorySystem.Instance.RemoveItem(item, requirement.quantity);
+                Debug.Log("Item entregado correctamente al objeto");
+
+                onPuzzleResolved?.Invoke();
+                return true;
             }
         }
 
-        // Quitar los ítems requeridos
-        foreach (var requirement in requiredItems)
+        Debug.Log("Este item no cumple con los requisitos o cantidad insuficiente");
+        return false;
+    }
+    public void ConsumeItem(ItemData item, int amount = 1)
+    {
+        requiredItems.RemoveAt(
+            requiredItems.FindIndex(requirement => requirement.item == item && requirement.quantity <= amount)
+        );
+        if (requiredItems.Count == 0)
         {
-            InventorySystem.Instance.RemoveItem(requirement.item, requirement.quantity);
+            onPuzzleResolved?.Invoke();
+            CanReceive = false;
+            Debug.Log("Todos los requisitos del puzzle han sido cumplidos.");
         }
-
-        Debug.Log("Puzzle resuelto!");
-        onPuzzleResolved?.Invoke();
-        return true;
     }
 }

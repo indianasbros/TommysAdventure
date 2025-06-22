@@ -1,4 +1,6 @@
 public interface IInventoryReceiver
 {
-    bool TryReceiveItems();
+    bool CanReceive { get; }
+    bool TryReceiveItem(ItemData item);
+    
 }

@@ -1,16 +1,18 @@
+using System;
 using UnityEngine;
 
 public class InventorySystem : MonoBehaviour
 {
 
     [Header("Inventory UI")]
-    public GameObject inventoryUI;
-    public GameObject inventorySlotHandler;
+    [SerializeField] private GameObject inventoryUI;
+    [SerializeField] private GameObject inventorySlotHandler;
     private Slot[] slots;
+    public Slot[] Slots => slots;
     bool isInventoryOpen = false;
     public static InventorySystem Instance { get; private set; }
-
-    private KeyCode inventaryKey = KeyCode.I;
+    public event Action<Slot[]> OnUpdateInventory;
+    private KeyCode inventoryKey = KeyCode.I;
 
     void Awake()
     {
@@ -18,7 +20,6 @@ public class InventorySystem : MonoBehaviour
         else
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
     }
 
@@ -29,31 +30,50 @@ public class InventorySystem : MonoBehaviour
         //Control Setting for Inventary
         if (PlayerPrefs.HasKey("Key_3"))
         {
-            if (System.Enum.TryParse<KeyCode>(PlayerPrefs.GetString("Key_3"), true, out var parsedKey))
+            if (Enum.TryParse<KeyCode>(PlayerPrefs.GetString("Key_3"), true, out var parsedKey))
             {
-                inventaryKey = parsedKey;
+                inventoryKey = parsedKey;
             }
         }
     }
     void Update()
     {
-        if (Input.GetKeyDown(inventaryKey))
+        if (Input.GetKeyDown(inventoryKey) && !InteractSystem.Instance.IsInteracting && !ObjectInventorySystem.Instance.IsInventoryOpen)
         {
             isInventoryOpen = !isInventoryOpen;
+            if (isInventoryOpen)
+            {
+                OpenInventory();
+            }
+            else
+            {
+                CloseInventory();
+            }
         }
-
-        inventoryUI.SetActive(isInventoryOpen);
-
+    
+    }
+    public void OpenInventory()
+    {
+        CameraManager.Instance.LockCursor(false);
+        InteractSystem.Instance.player.GetComponent<PlayerMovement>().FreezeMovement = true;
+        inventoryUI.SetActive(true);
         
     }
+    public void CloseInventory()
+    {
+        CameraManager.Instance.LockCursor(true);
+        InteractSystem.Instance.player.GetComponent<PlayerMovement>().FreezeMovement = false;
+        inventoryUI.SetActive(false);
+    }
 
-    public bool TryAddItem(ItemData item)
+    public bool TryAddItem(ItemData item, int amount = 1)
     {
         foreach (var slot in slots)
         {
             if (!slot.isEmpty && slot.itemData == item && item.isStackable)
             {
-                slot.quantity++;
+                slot.quantity += amount;
+                OnUpdateInventory?.Invoke(slots);
                 return true;
             }
         }
@@ -64,11 +84,10 @@ public class InventorySystem : MonoBehaviour
             {
                 slot.SetItem(item, 1);
                 slot.Update();
+                OnUpdateInventory?.Invoke(slots);
                 return true;
             }
         }
-
-        Debug.Log("Inventario lleno");
         return false;
     }
 

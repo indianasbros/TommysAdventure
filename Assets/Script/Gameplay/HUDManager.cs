@@ -12,7 +12,6 @@ public class HUDManager : MonoBehaviour
         else
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
     }
     public GameObject interactableIcon;

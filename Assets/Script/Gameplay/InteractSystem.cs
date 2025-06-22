@@ -6,7 +6,15 @@ public class InteractSystem : MonoBehaviour
     public GameObject player;
 
     private bool isInteracting = false;
-    public bool IsInteracting => isInteracting;
+    public bool IsInteracting
+    {
+        get => isInteracting;
+        private set
+        {
+            isInteracting = value;
+            OnCanInteract?.Invoke(!isInteracting);
+        }
+    }
 
     private GameObject interactableTarget;
 
@@ -17,6 +25,8 @@ public class InteractSystem : MonoBehaviour
     public static InteractSystem Instance => _instance ??= new GameObject("InteractSystem").AddComponent<InteractSystem>();
 
     public event Action<bool> OnCanInteract;
+    public event Action<InteractableInventory> OnCanInteractWithInventory;
+    public event Action OnInteractWithInventory;
 
     private KeyCode interactKey = KeyCode.E;
 
@@ -26,7 +36,6 @@ public class InteractSystem : MonoBehaviour
         if (_instance == null)
         {
             _instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -45,7 +54,7 @@ public class InteractSystem : MonoBehaviour
         //Control Setting for Interact
         if (PlayerPrefs.HasKey("Key_0"))
         {
-            if (System.Enum.TryParse<KeyCode>(PlayerPrefs.GetString("Key_0"), true, out var parsedKey))
+            if (Enum.TryParse<KeyCode>(PlayerPrefs.GetString("Key_0"), true, out var parsedKey))
             {
                 interactKey = parsedKey;
             }
@@ -77,12 +86,27 @@ public class InteractSystem : MonoBehaviour
         // 2. Inventario (puzzle, etc.)
         if (obj.TryGetComponent<IInventoryReceiver>(out var receiver))
         {
-            receiver.TryReceiveItems();
+            if (receiver.CanReceive)
+            {
+                OnInteractWithInventory?.Invoke();
+                isInteracting = true;
+                ObjectInventorySystem.Instance.OpenInventory();
+            }
+            else
+            {
+                Debug.Log("No se puede interactuar con el inventario");
+            }
         }
 
         // 3. Cámara
         if (obj.TryGetComponent<ICameraInteractable>(out var cameraObj))
         {
+            if (obj.TryGetComponent<InteractableInventory>(out var inventory) && inventory.CanReceive)
+            {
+                OnInteractWithInventory?.Invoke();
+                isInteracting = true;
+                ObjectInventorySystem.Instance.OpenInventory();
+            }
             if (isInteracting)
             {
                 cameraObj.ChangeToMainCamera();
@@ -129,7 +153,10 @@ public class InteractSystem : MonoBehaviour
         {
             interactableTarget = obj;
             OnCanInteract?.Invoke(true);
-            Debug.Log($"Entered interactable object: {obj.name}");
+            if (obj.TryGetComponent<InteractableInventory>(out var inventory))
+            {
+                OnCanInteractWithInventory?.Invoke(inventory);
+            }
         }
     }
 

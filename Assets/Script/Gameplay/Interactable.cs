@@ -33,7 +33,6 @@ public class Interactable : MonoBehaviour, ICameraInteractable
     {
         if (Input.GetKeyDown(interactKey) && isInteracting)
         {
-            Debug.Log("Changing to main camera");
             ChangeToMainCamera();
         }
     }

@@ -15,7 +15,6 @@ public class PauseMenu : MonoBehaviour
         else
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
     }
     void Start()

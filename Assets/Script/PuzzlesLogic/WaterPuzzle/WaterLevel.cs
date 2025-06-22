@@ -37,7 +37,6 @@ public class WaterLevel : MonoBehaviour
         Vector3 scale = transform.localScale;
         if (canIncrese)
         {
-            Debug.Log("incrementando agua");
             if (scale.y < waterMax)
             {
                 scale.y += waterIncrese * Time.deltaTime;
@@ -51,7 +50,6 @@ public class WaterLevel : MonoBehaviour
         }
         else if (waterDoor.PuzzleSolved)
         {
-            Debug.Log("decrementando agua");
             if (scale.y > waterMin)
             {
                 scale.y -= waterIncrese * Time.deltaTime;
