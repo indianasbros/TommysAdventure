@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 
 public class GameplayManager : MonoBehaviour
 {
     public GameObject player;
+    [SerializeField] AudioMixer audioMixer;
     private static GameplayManager _instance;
     public static GameplayManager Instance
     {
@@ -51,19 +53,21 @@ public class GameplayManager : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
     public void PauseGame(bool pause)
     {
         if (pause)
         {
+            CameraManager.Instance.LockCursor(false);
+            RoomManager.Instance.PauseMusic();
+            DialogueManager.Instance.PauseAudio();
+            audioMixer.SetFloat("Volume_Sfx", -80f); // Mute audio
             Time.timeScale = 0;
             return;
         }
         Time.timeScale = 1;
+        CameraManager.Instance.LockCursor(true);
+        RoomManager.Instance.ResumeMusic();
+        DialogueManager.Instance.ResumeAudio();
 
     }
     public void GameOver()

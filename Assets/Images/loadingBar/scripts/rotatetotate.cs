@@ -7,15 +7,15 @@ using UnityEngine.UI;
 public class rotatetotate : MonoBehaviour {
 
     private RectTransform rectComponent;
-    private Image imageComp;
-    private bool up = false;
+    //private Image imageComp;
+    //private bool up = false;
 
     public float rotateSpeed = 200f;
 
     // Use this for initialization
     void Start () {
         rectComponent = GetComponent<RectTransform>();
-        imageComp = rectComponent.GetComponent<Image>();
+        //imageComp = rectComponent.GetComponent<Image>();
 
     }
 	

@@ -67,6 +67,7 @@ public class ObjectInventorySystem : MonoBehaviour
         InteractSystem.Instance.OnCanInteractWithInventory += UpdateObjectInventory;
         InventorySystem.Instance.OnUpdateInventory += UpdatePlayerInventory;
         objectSlots = objectInventorySlotHandler.GetComponentsInChildren<Slot>();
+        objectInventoryUI.SetActive(false);
         foreach (var slot in objectSlots)
         {
             slot.isPlayerInventorySlot = false;
@@ -79,10 +80,13 @@ public class ObjectInventorySystem : MonoBehaviour
     }
     public void OpenInventory()
     {
+        Debug.Log("Opening Object Inventory");
         CameraManager.Instance.LockCursor(false);
         InteractSystem.Instance.player.GetComponent<PlayerMovement>().FreezeMovement = true;
         isInventoryOpen = true;
         objectInventoryUI.SetActive(true);
+        ContextMenuController.Instance.Hide();
+        ItemDescriptionUI.Instance.Hide();
 
     }
     public void CloseInventory()
@@ -90,6 +94,8 @@ public class ObjectInventorySystem : MonoBehaviour
         CameraManager.Instance.LockCursor(true);
         InteractSystem.Instance.player.GetComponent<PlayerMovement>().FreezeMovement = false;
         isInventoryOpen = false;
+        ContextMenuController.Instance.Hide();
+        ItemDescriptionUI.Instance.Hide();
         currentObjectInventory = null;
         objectInventoryUI.SetActive(false);
     }
@@ -193,11 +199,12 @@ public class ObjectInventorySystem : MonoBehaviour
             {
                 RemoveItem(item, amount);
                 currentObjectInventory.ConsumeItem(item, amount);
+                InventorySystem.Instance.RemoveItem(item, amount);
                 if (currentObjectInventory.requiredItems.Count == 0)
                 {
                     currentObjectInventory.onPuzzleResolved?.Invoke();
                 }
-                //Debug.Log($"Consumido {item.itemName} para cumplir con los requisitos del puzzle.");
+                
                 return;
             }
         }

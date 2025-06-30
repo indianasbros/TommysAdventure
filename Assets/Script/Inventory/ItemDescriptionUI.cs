@@ -25,7 +25,6 @@ public class ItemDescriptionUI : MonoBehaviour
 
         panel.SetActive(true);
     }
-
     public void Hide()
     {
         panel.SetActive(false);

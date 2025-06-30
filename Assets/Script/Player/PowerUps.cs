@@ -8,7 +8,7 @@ public class PowerUps : MonoBehaviour
 
     public bool PowerUpSpeed;
     public bool PowerUpTime;
-    public bool SpeedUI; //Usen esto cuando tengan el inventario, asi muestran los power upps :D
+    public bool SpeedUI; 
     public bool TimeUI;
     void Awake()
     {

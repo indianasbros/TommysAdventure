@@ -30,7 +30,7 @@ public class ContextMenuController : MonoBehaviour
 
         deliverButton.onClick.RemoveAllListeners();
         discardButton.onClick.RemoveAllListeners();
-
+        deliverButton.gameObject.SetActive(true);
         deliverButton.onClick.AddListener(() =>
         {
             ObjectInventorySystem.Instance.TryAddItem(currentSlot.itemData, currentSlot.quantity);

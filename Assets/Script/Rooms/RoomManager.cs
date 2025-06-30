@@ -48,7 +48,6 @@ public class RoomManager : MonoBehaviour
             ChangeMusic(room);
             if(currentRoom.IsFirstPuzzle && OnEnteredFirstPuzzle != null)
             {
-                Debug.Log("Entered first puzzle room");
                 OnEnteredFirstPuzzle?.Invoke();
             }
         }

@@ -76,12 +76,15 @@ public class ControlsMenu : MonoBehaviour
         switch (index)
         {
             case 0:
-                audioMixer.SetFloat("Volume_Rooms", volumeInDb);
+                audioMixer.SetFloat("Volume_Master", volumeInDb);
                 break;
             case 1:
-                audioMixer.SetFloat("Volume_Sfx", volumeInDb);
+                audioMixer.SetFloat("Volume_Music", volumeInDb);
                 break;
             case 2:
+                audioMixer.SetFloat("Volume_Sfx", volumeInDb);
+                break;
+            case 3:
                 audioMixer.SetFloat("Volume_Dialogues", volumeInDb);
                 break;
         }

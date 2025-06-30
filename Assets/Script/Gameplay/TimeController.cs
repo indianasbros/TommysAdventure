@@ -71,7 +71,6 @@ public class TimeController : MonoBehaviour
         if (timeRemaining > 0)
         {
             timeRemaining -= Time.deltaTime;
-            Debug.Log("actualizo tiempo");
             UpdateTimerDisplay();
         }
         else
@@ -85,7 +84,20 @@ public class TimeController : MonoBehaviour
     private void ApplyPowerUp()
     {
         timeRemaining += 900f; //15 minutos
-        PowerUps.Instancia.PowerUpTime = false;
+        //PowerUps.Instancia.PowerUpTime = false;
+    }
+    public void DiscartPowerUp()
+    {
+        //PowerUps.Instancia.PowerUpTime = false;
+        timeRemaining -= 900f; //15 minutos
+        if (timeRemaining < 0)
+        {
+            timeRemaining = 0;
+            isRunning = false;
+            UpdateTimerDisplay();
+            OnTimerEnd();
+        }
+        UpdateTimerDisplay();
     }
     private void SetDifficulty(Difficulty difficulty)
     {

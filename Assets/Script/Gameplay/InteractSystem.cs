@@ -73,7 +73,7 @@ public class InteractSystem : MonoBehaviour
     {
         GameObject obj = interactableTarget;
 
-        // 1. Pickup
+  
         if (obj.TryGetComponent<IPickable>(out var pickup))
         {
             player.GetComponent<Animator>()?.SetTrigger("doPickUp");
@@ -83,7 +83,7 @@ public class InteractSystem : MonoBehaviour
             return;
         }
 
-        // 2. Inventario (puzzle, etc.)
+        
         if (obj.TryGetComponent<IInventoryReceiver>(out var receiver))
         {
             if (receiver.CanReceive)
@@ -98,7 +98,7 @@ public class InteractSystem : MonoBehaviour
             }
         }
 
-        // 3. Cámara
+        
         if (obj.TryGetComponent<ICameraInteractable>(out var cameraObj))
         {
             if (obj.TryGetComponent<InteractableInventory>(out var inventory) && inventory.CanReceive)

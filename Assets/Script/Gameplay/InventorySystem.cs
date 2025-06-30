@@ -56,6 +56,9 @@ public class InventorySystem : MonoBehaviour
     {
         CameraManager.Instance.LockCursor(false);
         InteractSystem.Instance.player.GetComponent<PlayerMovement>().FreezeMovement = true;
+        isInventoryOpen = true;
+        ContextMenuController.Instance.Hide();
+        ItemDescriptionUI.Instance.Hide();
         inventoryUI.SetActive(true);
         
     }
@@ -63,6 +66,9 @@ public class InventorySystem : MonoBehaviour
     {
         CameraManager.Instance.LockCursor(true);
         InteractSystem.Instance.player.GetComponent<PlayerMovement>().FreezeMovement = false;
+        isInventoryOpen = false;
+        ContextMenuController.Instance.Hide();
+        ItemDescriptionUI.Instance.Hide();
         inventoryUI.SetActive(false);
     }
 
