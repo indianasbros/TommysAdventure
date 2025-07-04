@@ -51,7 +51,11 @@ public class PauseMenu : MonoBehaviour
     }
     public void MainMenu()
     {
-        SceneManager.LoadScene("Menu");
+        RoomManager.Instance.StopMusic();
+        DialogueManager.Instance.StopAudio();
+        AudioListener.pause = false;
         GameplayManager.Instance.PauseGame(false);
+        CameraManager.Instance.LockCursor(false);
+        SceneManager.LoadScene("Menu");
     }
 }

@@ -12,26 +12,14 @@ public class Interactable : MonoBehaviour, ICameraInteractable
     public bool isInteracting;
     public GameObject cameraToChangeTo;
 
-    private KeyCode interactKey = KeyCode.E;
-
-
     void Start()
     {
         canInteract = true;
         isInteracting = false;
-
-        //Control Setting for Interact
-        if (PlayerPrefs.HasKey("Key_0"))
-        {
-            if (System.Enum.TryParse<KeyCode>(PlayerPrefs.GetString("Key_0"), true, out var parsedKey))
-            {
-                interactKey = parsedKey;
-            }
-        }
     }
     void Update()
     {
-        if (Input.GetKeyDown(interactKey) && isInteracting)
+        if (Input.GetKeyDown(InputHandler.Instance.InteractKey) && isInteracting)
         {
             ChangeToMainCamera();
         }

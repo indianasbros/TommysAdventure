@@ -10,7 +10,6 @@ public class RadioDialogo : MonoBehaviour
     private bool playerInRank = false;
     private bool playing = false;
     public bool Playing { get { return playing; } private set { playing = value; } }
-    private KeyCode interactKey = KeyCode.E;
 
     void Start()
     {
@@ -18,14 +17,6 @@ public class RadioDialogo : MonoBehaviour
         audioSource.clip = audioDialogo;
         DialogueManager.Instance.radios.Add(this);
 
-        //Control Setting for Interact
-        if (PlayerPrefs.HasKey("Key_0"))
-        {
-            if (System.Enum.TryParse<KeyCode>(PlayerPrefs.GetString("Key_0"), true, out var parsedKey))
-            {
-                interactKey = parsedKey;
-            }
-        }
     }
 
     void OnDestroy()
@@ -35,7 +26,7 @@ public class RadioDialogo : MonoBehaviour
 
     void Update()
     {
-        if (playerInRank && Input.GetKeyDown(interactKey) && !playing)
+        if (playerInRank && Input.GetKeyDown(InputHandler.Instance.InteractKey) && !playing)
         {
             StartCoroutine(PlayingDialog());
         }

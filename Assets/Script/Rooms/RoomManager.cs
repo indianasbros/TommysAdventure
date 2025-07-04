@@ -32,7 +32,6 @@ public class RoomManager : MonoBehaviour
         if (globalAudio == null)
         {
             GameObject audioObj = new GameObject("RoomMusic");
-            DontDestroyOnLoad(audioObj);
             globalAudio = audioObj.AddComponent<AudioSource>();
             globalAudio.loop = true;
             globalAudio.volume = 1f;

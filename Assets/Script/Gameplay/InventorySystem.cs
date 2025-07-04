@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class InventorySystem : MonoBehaviour
+public class InventorySystem : MonoBehaviour, IInventory
 {
 
     [Header("Inventory UI")]
@@ -12,7 +12,7 @@ public class InventorySystem : MonoBehaviour
     bool isInventoryOpen = false;
     public static InventorySystem Instance { get; private set; }
     public event Action<Slot[]> OnUpdateInventory;
-    private KeyCode inventoryKey = KeyCode.I;
+    
 
     void Awake()
     {
@@ -26,19 +26,18 @@ public class InventorySystem : MonoBehaviour
     void Start()
     {
         slots = inventorySlotHandler.GetComponentsInChildren<Slot>();
-
-        //Control Setting for Inventary
-        if (PlayerPrefs.HasKey("Key_3"))
+        foreach(var powerUp in PowerUps.Instancia.PowerUpsList)
         {
-            if (Enum.TryParse<KeyCode>(PlayerPrefs.GetString("Key_3"), true, out var parsedKey))
+            if (powerUp.Value)
             {
-                inventoryKey = parsedKey;
+                TryAddItem(powerUp.Key);
             }
         }
+        inventoryUI.SetActive(false);
     }
     void Update()
     {
-        if (Input.GetKeyDown(inventoryKey) && !InteractSystem.Instance.IsInteracting && !ObjectInventorySystem.Instance.IsInventoryOpen)
+        if (Input.GetKeyDown(InputHandler.Instance.InventoryKey) && !InteractSystem.Instance.IsInteracting && !ObjectInventorySystem.Instance.IsInventoryOpen)
         {
             isInventoryOpen = !isInventoryOpen;
             if (isInventoryOpen)
@@ -146,4 +145,6 @@ public class InventorySystem : MonoBehaviour
         }
         return total;
     }
+
+    
 }

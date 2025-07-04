@@ -7,6 +7,10 @@ public class CameraManager : MonoBehaviour
     public CinemachineBrain brain;
     public static CameraManager Instance { get; private set; }
 
+    [Header("Main Camera")]
+    public Camera mainCamera;
+
+
     [Header("Cinemachine Camera")]
     [Tooltip("Animator component controlling the camera transitions.")]
     [SerializeField] Animator anim;
@@ -27,6 +31,7 @@ public class CameraManager : MonoBehaviour
         brain = Camera.main.GetComponent<CinemachineBrain>();
         brain.m_CameraActivatedEvent.AddListener(OnCameraSwitched);
         mainGameplayCam.Priority = 100; // fuerza que esta sea la primera
+        mainCamera.GetComponent<AudioListener>().enabled = false; // Asegura que el AudioListener no esté activo al inicio
     }
     public void ChangeCamera(string toCamera)
     {
@@ -42,6 +47,28 @@ public class CameraManager : MonoBehaviour
     public void ChangeMainCamera()
     {
         anim.Play(mainGameplayCam.name);
+    }
+    public void ActivateAudioListener()
+    {
+        if (mainCamera != null)
+        {
+            mainCamera.GetComponent<AudioListener>().enabled = true;
+        }
+        else
+        {
+            Debug.LogWarning("Main Camera is not assigned.");
+        }
+    }
+    public void DeactivateAudioListener()
+    {
+        if (mainCamera != null)
+        {
+            mainCamera.GetComponent<AudioListener>().enabled = false;
+        }
+        else
+        {
+            Debug.LogWarning("Main Camera is not assigned.");
+        }
     }
     private void OnCameraSwitched(ICinemachineCamera fromCam, ICinemachineCamera toCam)
     {

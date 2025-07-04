@@ -28,9 +28,6 @@ public class InteractSystem : MonoBehaviour
     public event Action<InteractableInventory> OnCanInteractWithInventory;
     public event Action OnInteractWithInventory;
 
-    private KeyCode interactKey = KeyCode.E;
-
-
     void Awake()
     {
         if (_instance == null)
@@ -51,19 +48,11 @@ public class InteractSystem : MonoBehaviour
         targetDetector.OnTriggerEntered += TriggerEnter;
         targetDetector.OnTriggerExited += TriggerExit;
 
-        //Control Setting for Interact
-        if (PlayerPrefs.HasKey("Key_0"))
-        {
-            if (Enum.TryParse<KeyCode>(PlayerPrefs.GetString("Key_0"), true, out var parsedKey))
-            {
-                interactKey = parsedKey;
-            }
-        }
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(interactKey) && interactableTarget != null)
+        if (Input.GetKeyDown(InputHandler.Instance.InteractKey) && interactableTarget != null)
         {
             InteractWithTarget();
         }
@@ -111,12 +100,16 @@ public class InteractSystem : MonoBehaviour
             {
                 cameraObj.ChangeToMainCamera();
                 isInteracting = false;
+                CameraManager.Instance.DeactivateAudioListener();
+                player.GetComponent<AudioListener>().enabled = true;
                 player.SetActive(true);
             }
             else if (cameraObj.CanInteract)
             {
                 cameraObj.ChangeToCamera();
                 isInteracting = true;
+                CameraManager.Instance.ActivateAudioListener();
+                player.GetComponent<AudioListener>().enabled = false;
                 player.SetActive(false);
             }
         }

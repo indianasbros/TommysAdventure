@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33d4d1be2e57ab948944a3f5c2b6b3f5, type: 3}
   m_Name: reloj
   m_EditorClassIdentifier: 
-  itemName: reloj
-  description: 
+  itemName: "Reloj de pap\xE1"
+  description: Me permite
   icon: {fileID: 21300000, guid: 12d564004c19e0b42a57a78e4f6d8d6f, type: 3}
   itemID: 
   isStackable: 0
+  isPowerUp: 1

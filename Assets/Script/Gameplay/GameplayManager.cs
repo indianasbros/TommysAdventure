@@ -60,7 +60,7 @@ public class GameplayManager : MonoBehaviour
             CameraManager.Instance.LockCursor(false);
             RoomManager.Instance.PauseMusic();
             DialogueManager.Instance.PauseAudio();
-            audioMixer.SetFloat("Volume_Sfx", -80f); // Mute audio
+            AudioListener.pause = true;
             Time.timeScale = 0;
             return;
         }
@@ -68,7 +68,7 @@ public class GameplayManager : MonoBehaviour
         CameraManager.Instance.LockCursor(true);
         RoomManager.Instance.ResumeMusic();
         DialogueManager.Instance.ResumeAudio();
-
+        AudioListener.pause = false;
     }
     public void GameOver()
     {
@@ -80,5 +80,10 @@ public class GameplayManager : MonoBehaviour
     {
         CameraManager.Instance.LockCursor(false);
         SceneManager.LoadScene("Victory");
+    }
+    public void ChangeScene(string sceneName)
+    {
+        CameraManager.Instance.LockCursor(false);
+        SceneManager.LoadScene(sceneName);
     }
 }

@@ -38,5 +38,15 @@ public class DialogueManager : MonoBehaviour
             }
         }
     }
+    public void StopAudio()
+    {
+        foreach (RadioDialogo radio in radios)
+        {
+            if (radio.Playing)
+            {
+                radio.StopAudio();
+            }
+        }
+    }
     
 }

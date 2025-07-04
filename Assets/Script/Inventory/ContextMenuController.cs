@@ -8,7 +8,7 @@ public class ContextMenuController : MonoBehaviour
     public Button discardButton;
     public Button descriptionButton;
     private Slot currentSlot;
-
+    private float lastTimeClicked;
     public static ContextMenuController Instance { get; private set; }
 
     void Awake()
@@ -22,7 +22,7 @@ public class ContextMenuController : MonoBehaviour
         menuRoot.SetActive(false);
     }
 
-    public void ShowWithDeliver(Slot slot, Vector2 position)
+    public void ShowWithDeliver(Slot slot, Vector2 position, IInventory inventoryFrom, IInventory inventoryTo)
     {
         currentSlot = slot;
         menuRoot.SetActive(true);
@@ -33,23 +33,40 @@ public class ContextMenuController : MonoBehaviour
         deliverButton.gameObject.SetActive(true);
         deliverButton.onClick.AddListener(() =>
         {
-            ObjectInventorySystem.Instance.TryAddItem(currentSlot.itemData, currentSlot.quantity);
-            currentSlot.Clear();
-            currentSlot.Update();
-            Hide();
+            if(Time.time - lastTimeClicked > 0.5f)
+            {
+                inventoryTo.TryAddItem(currentSlot.itemData, currentSlot.quantity);
+                inventoryFrom.RemoveItem(currentSlot.itemData, currentSlot.quantity);
+                Hide();
+                lastTimeClicked = Time.time; // Update last clicked time
+                return; // Prevent double clicks
+            }
         });
 
         discardButton.onClick.AddListener(() =>
         {
-            currentSlot.Clear();
-            currentSlot.Update();
-            Hide();
+            if(Time.time - lastTimeClicked > 0.5f)
+            {
+                inventoryFrom.RemoveItem(currentSlot.itemData, currentSlot.quantity);
+                Hide();
+                if (currentSlot.itemData.isPowerUp && PowerUps.Instancia.HasPowerUp(currentSlot.itemData))
+                {
+                    PowerUps.Instancia.SetPowerUpActive(currentSlot.itemData,false);
+                }
+                lastTimeClicked = Time.time; // Update last clicked time
+                return; // Prevent double clicks
+            }
         });
         descriptionButton.onClick.RemoveAllListeners();
         descriptionButton.onClick.AddListener(() =>
         {
-            ItemDescriptionUI.Instance.Show(slot.itemData);
-            Hide();
+            if(Time.time - lastTimeClicked > 0.5f)
+            {
+                ItemDescriptionUI.Instance.Show(slot.itemData);
+                Hide();
+                lastTimeClicked = Time.time; // Update last clicked time
+                return; // Prevent double clicks
+            }
         });
     }
     
@@ -65,9 +82,13 @@ public class ContextMenuController : MonoBehaviour
 
         if (slot.isEmpty)
         {
-            discardButton.gameObject.SetActive(false);
-            descriptionButton.gameObject.SetActive(false);
-            return;
+            if (Time.time - lastTimeClicked > 0.5f)
+            { 
+                discardButton.gameObject.SetActive(false);
+                descriptionButton.gameObject.SetActive(false);
+                lastTimeClicked = Time.time; // Update last clicked time
+                return;
+            }
         }
 
         discardButton.gameObject.SetActive(true);
@@ -75,16 +96,26 @@ public class ContextMenuController : MonoBehaviour
         
         discardButton.onClick.AddListener(() =>
         {
-            slot.Clear();
-            slot.Update();
-            Hide();
+            if (Time.time - lastTimeClicked > 0.5f)
+            {
+                slot.Clear();
+                slot.Update();
+                Hide();
+                lastTimeClicked = Time.time; // Update last clicked time
+                return; // Prevent double clicks
+            }
         });
 
         descriptionButton.onClick.RemoveAllListeners();
         descriptionButton.onClick.AddListener(() =>
         {
-            ItemDescriptionUI.Instance.Show(slot.itemData);
-            Hide();
+            if (Time.time - lastTimeClicked > 0.5f)
+            {
+                ItemDescriptionUI.Instance.Show(slot.itemData);
+                Hide();
+                lastTimeClicked = Time.time; // Update last clicked time
+                return; // Prevent double clicks
+            }
         });
     }
     public void Hide()

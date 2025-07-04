@@ -3,8 +3,6 @@ using UnityEngine.Audio;
 public class Doors : MonoBehaviour
 {
     [SerializeField] private bool puzzleSolved;
-    protected KeyCode interactKey = KeyCode.E;
-
     public bool PuzzleSolved
     {
         get { return puzzleSolved; }
@@ -55,14 +53,7 @@ public class Doors : MonoBehaviour
             audioSource = gameObject.AddComponent<AudioSource>();
         }
 
-        //Control Setting for Interact
-        if (PlayerPrefs.HasKey("Key_0"))
-        {
-            if (System.Enum.TryParse<KeyCode>(PlayerPrefs.GetString("Key_0"), true, out var parsedKey))
-            {
-                interactKey = parsedKey;
-            }
-        }
+        
     }
 
     void Update()
@@ -79,7 +70,7 @@ public class Doors : MonoBehaviour
 
     virtual protected void OpenDoor()
     {
-        if (Input.GetKeyDown(interactKey) && canOpen && puzzleSolved)
+        if (Input.GetKeyDown(InputHandler.Instance.InteractKey) && canOpen && puzzleSolved)
         {
             if (isFinalDoor)
             {
