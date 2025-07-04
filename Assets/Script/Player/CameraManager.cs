@@ -94,5 +94,9 @@ public class CameraManager : MonoBehaviour
             Cursor.visible = true;
         }
     }
+    public bool IsCursorLocked()
+    {
+        return Cursor.lockState == CursorLockMode.Locked;
+    }
 
 }

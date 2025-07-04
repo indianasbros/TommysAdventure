@@ -64,8 +64,21 @@ public class GameplayManager : MonoBehaviour
             Time.timeScale = 0;
             return;
         }
+        if (!CameraManager.Instance.IsCursorLocked() && InventorySystem.Instance != null && InventorySystem.Instance.IsInventoryOpen)
+        {
+            // If the inventory is open, we don't lock the cursor
+            CameraManager.Instance.LockCursor(false);
+        }
+        else if (ObjectInventorySystem.Instance != null && ObjectInventorySystem.Instance.IsInventoryOpen)
+        {
+            // If the object inventory is open, we don't lock the cursor
+            CameraManager.Instance.LockCursor(false);
+        }
+        else
+        {
+            CameraManager.Instance.LockCursor(true);
+        }
         Time.timeScale = 1;
-        CameraManager.Instance.LockCursor(true);
         RoomManager.Instance.ResumeMusic();
         DialogueManager.Instance.ResumeAudio();
         AudioListener.pause = false;

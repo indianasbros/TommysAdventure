@@ -25,7 +25,10 @@ public class MenuMusicManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
+    void Start()
+    {
+        
+    }
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (scene.name != "Menu" && scene.name != "Settings" && scene.name != "DifficultySelection")

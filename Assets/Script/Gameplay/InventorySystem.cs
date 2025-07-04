@@ -10,6 +10,7 @@ public class InventorySystem : MonoBehaviour, IInventory
     private Slot[] slots;
     public Slot[] Slots => slots;
     bool isInventoryOpen = false;
+    public bool IsInventoryOpen => isInventoryOpen;
     public static InventorySystem Instance { get; private set; }
     public event Action<Slot[]> OnUpdateInventory;
     
@@ -81,10 +82,6 @@ public class InventorySystem : MonoBehaviour, IInventory
                 OnUpdateInventory?.Invoke(slots);
                 return true;
             }
-        }
-
-        foreach (var slot in slots)
-        {
             if (slot.isEmpty)
             {
                 slot.SetItem(item, 1);
@@ -111,6 +108,7 @@ public class InventorySystem : MonoBehaviour, IInventory
                         slot.Clear();
                         slot.Update();
                     }
+                    OnUpdateInventory?.Invoke(slots);
                     return true;
                 }
                 else
@@ -118,9 +116,11 @@ public class InventorySystem : MonoBehaviour, IInventory
                     amount -= slot.quantity;
                     slot.Clear();
                     slot.Update();
+                    OnUpdateInventory?.Invoke(slots);
                 }
             }
         }
+        OnUpdateInventory?.Invoke(slots);
         return amount <= 0;
     }
 

@@ -18,6 +18,12 @@ public class Doors : MonoBehaviour
     protected float targetAngle;
     protected bool isOpen = false;
     public bool IsOpen { get; set; }
+    protected bool isOpening = false;
+    public bool IsOpening
+    {
+        get { return isOpening; }
+        set { isOpening = value; }
+    }
     private bool isFinalDoor = false;
     public bool IsFinalDoor
     {
@@ -104,7 +110,7 @@ public class Doors : MonoBehaviour
     
     public void CloseDoor()
     {
-        if (isOpen && puzzleSolved)
+        if (isOpen && puzzleSolved && !isOpening)
         {
             targetAngle = initialAngle; // cierra de vuelta
             //Door Audio

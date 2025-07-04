@@ -23,19 +23,35 @@ namespace Seagull.Interior_01 {
 
         [SerializeField] private Transform hourHand;
         [SerializeField] private Transform minuteHand;
+        [Header("Custom Start Time")]
+        public int startHour = 0;
+        public int startMinute = 0;
 
+        private float startTime;
+        private float elapsedTime;
         private void Start() {
             if (!controlByScript) return;
 
             if (!shouldUpdateTime) return;
-            calculateTime();
+            startTime = Time.time;
+            currentHourAndMinute = new Vector2(startHour, startMinute);
         }
 
         private void FixedUpdate() {
             if (!controlByScript) return;
+            if (!shouldUpdateTime) {
+                rotateHands();
+                return;
+            }
+
+            elapsedTime = Time.time - startTime;
+
+            float totalSeconds = startHour * 3600f + startMinute * 60f + elapsedTime;
+            float currentHour = Mathf.Floor(totalSeconds / 3600f) % hourMinuteAndSecondUnit.x;
+            float currentMinute = Mathf.Floor((totalSeconds % 3600f) / 60f) % hourMinuteAndSecondUnit.y;
+
+            currentHourAndMinute = new Vector2(currentHour, currentMinute);
             rotateHands();
-            if (!shouldUpdateTime) return;
-            calculateTime();
         }
 
         private void rotateHands() {

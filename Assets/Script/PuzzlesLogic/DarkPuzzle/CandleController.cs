@@ -14,6 +14,7 @@ public class CandleController : MonoBehaviour
     private bool isPlayerInRange = false;
     private Rigidbody rb;
     Transform originalParent;
+    MeshCollider coll;
 
     void Start()
     {
@@ -30,7 +31,7 @@ public class CandleController : MonoBehaviour
         {
             rb = gameObject.AddComponent<Rigidbody>();
         }
-        
+        coll = GetComponentInChildren<MeshCollider>();
 
     }
 
@@ -84,8 +85,8 @@ public class CandleController : MonoBehaviour
             isCarried = true;
             rb.isKinematic = true;
 
-            Collider collider = GetComponent<Collider>();
-            collider.isTrigger = true; // Para evitar colisiones mientras se lleva
+            
+            coll.isTrigger = true; // Para evitar colisiones mientras se lleva
             Debug.Log("Candle picked up");
         }
     }
@@ -96,8 +97,7 @@ public class CandleController : MonoBehaviour
         isCarried = false;
 
         rb.isKinematic = false;
-        Collider collider = GetComponent<Collider>();
-        collider.isTrigger = false; // Para evitar colisiones mientras se lleva
+        coll.isTrigger = false; // Para evitar colisiones mientras se lleva
         transform.position = playerHoldPoint.position + playerHoldPoint.forward * 0.5f + Vector3.down * 0.2f;
         Debug.Log("Candle dropped");
     }

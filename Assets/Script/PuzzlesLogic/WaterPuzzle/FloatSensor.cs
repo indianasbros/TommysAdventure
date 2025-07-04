@@ -12,7 +12,8 @@ public class FloatSensor : MonoBehaviour
         }
         if (other.CompareTag("Roof"))
         {
-            playerFloat.IsFloating = false;
+            GameplayManager.Instance.GameOver();
+            //playerFloat.IsFloating = false;
         }
     }
 
