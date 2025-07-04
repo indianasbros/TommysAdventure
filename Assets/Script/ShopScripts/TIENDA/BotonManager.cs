@@ -3,30 +3,25 @@ using UnityEngine;
 
 public class BotonManager : MonoBehaviour
 {
-    
-    public PowerUps PowerUps;
-    public GoldSystem GoldSystem;
-    public void ComprarVelocidad()
+    public void ComprarVelocidad(ItemData powerUpSpeed)
     {
-        int oro = GameObject.Find("GoldSystem").GetComponent<GoldSystem>().Gold;
-        Debug.Log("Oro disponible: " + oro);
-        if (!PowerUps.Instancia.SpeedUI && oro >= 500)
+        int oro = GoldSystem.Instance.Gold;
+        if (!PowerUps.Instancia.HasPowerUp(powerUpSpeed) && oro >= 500)
         {
-            GameObject.Find("GoldSystem").GetComponent<GoldSystem>().Gold = oro - 500;
-            PowerUps.Instancia.PowerUpSpeed = true;
+            GoldSystem.Instance.Gold = oro - 500;
+            PowerUps.Instancia.AddPowerUp(powerUpSpeed);
             PowerUps.Instancia.SpeedUI = true;
         }
     }
 
-    public void ComprarTiempoExtra()
+    public void ComprarTiempoExtra(ItemData powerUpTime)
     {
-        Debug.Log("Intentando comprar tiempo extra...");
-        int oro = GameObject.Find("GoldSystem").GetComponent<GoldSystem>().Gold;
-        Debug.Log("Oro disponible: " + oro);
-        if (!PowerUps.Instancia.TimeUI && oro >= 1000)
+        int oro = GoldSystem.Instance.Gold;
+        
+        if (!PowerUps.Instancia.HasPowerUp(powerUpTime) && oro >= 1000)
         {
-            GameObject.Find("GoldSystem").GetComponent<GoldSystem>().Gold -= 1000;
-            PowerUps.Instancia.PowerUpTime = true;
+            GoldSystem.Instance.Gold -= 1000;
+            PowerUps.Instancia.AddPowerUp(powerUpTime);
             PowerUps.Instancia.TimeUI = true;
         }
     }

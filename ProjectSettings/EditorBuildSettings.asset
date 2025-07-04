@@ -33,6 +33,6 @@ EditorBuildSettings:
     path: Assets/Scenes/DifficultyLevel.unity
     guid: c74568bd53d34244984063efdc51dcab
   - enabled: 1
-    path: Assets/Scenes/UITienda.unity
+    path: Assets/Scenes/Store.unity
     guid: 09d5138794fb7e148bf59d25bf6c9c51
   m_configObjects: {}

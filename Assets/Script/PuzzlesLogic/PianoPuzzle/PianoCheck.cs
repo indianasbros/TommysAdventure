@@ -51,8 +51,6 @@ public class PianoCheck : MonoBehaviour
     }
     public void CheckCombo()
     {
-        Debug.Log("Checking Combo: " + currentInput);
-        Debug.Log("Correct Combo: " + notesCombo);
         if (currentInput == notesCombo)
         {
             AccessGranted();
@@ -62,20 +60,16 @@ public class PianoCheck : MonoBehaviour
         {
             AccessDenied();
         }
-        
-
     }
     private void AccessDenied()
     {
         onAccessDenied?.Invoke();
-        //panelMesh.material.SetVector("_EmissionColor", screenDeniedColor * screenIntensity);
         audioSource.PlayOneShot(accessDeniedSfx);
     }
 
     private void ClearInput()
     {
         currentInput = "";
-        //keypadDisplayText.text = currentInput;
     }
 
     private void AccessGranted()

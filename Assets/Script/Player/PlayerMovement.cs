@@ -7,6 +7,7 @@ using UnityEngine.Audio;
 public class PlayerMovement : MonoBehaviour
 {
     [Header("-----Movement Settings-----")]
+    [SerializeField] private const float baseSpeed = 10f;
     [SerializeField] private float speed;
     [SerializeField] private float rotationSmoothTime = 0.12f;
     private float BuffedSpeed = 20f;
@@ -28,6 +29,8 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    [Header("-----Power-Up Settings-----")]
+    [SerializeField] private ItemData powerUpSpeed;
     [Header("-----Swimming State-----")]
     [SerializeField] private PlayerFloat playerFloat;
     private bool isSwimming;
@@ -39,55 +42,84 @@ public class PlayerMovement : MonoBehaviour
     private float jumpForce = 10f;
     [SerializeField] private bool onFloor;
     private Rigidbody rigidbody3D;
-    private float turnSmoothVelocity;
     private Vector2 lookInput;
     private Animator animator;
+    Vector3 camRight = Vector3.zero;
+    Vector3 camForward = Vector3.zero;
+    [SerializeField] private Camera mainCamera;
 
     [Header("-----Audio Settings-----")]
     [SerializeField] private AudioSource stepAudioSource;
     [SerializeField] private AudioClip stepClip;
     [SerializeField] private AudioMixerGroup sfxGroup;
+    private Vector3 playerInput;
+    private Vector3 moveDirection;
 
     void Start()
     {
-        speed = 10f;
         animator = GetComponent<Animator>();
         rigidbody3D = GetComponent<Rigidbody>();
+        speed = baseSpeed;
+        // Seguridad para físicas
+        rigidbody3D.interpolation = RigidbodyInterpolation.Interpolate;
+        rigidbody3D.freezeRotation = true;
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        
-        // Steps Audio
+
+        // Audio
         stepAudioSource.clip = stepClip;
         stepAudioSource.loop = true;
         stepAudioSource.outputAudioMixerGroup = sfxGroup;
+        if(TryGetComponent<AudioListener>(out var audioListener))
+        {
+            audioListener.enabled = true;
+        }
+        else
+        {
+            gameObject.AddComponent<AudioListener>();
+            Debug.LogWarning("AudioListener was not found on PlayerMovement. Added a new one.");
+        }
     }
 
-    void Update()
+     void Update()
     {
-        if (FreezeMovement)
-        {
-            // Si el movimiento está congelado, no actualizamos nada
-            return;
-        }
-        // Actualizar estado de nado desde el script PlayerFloat
+        if (FreezeMovement) return;
+
         isSwimming = playerFloat != null && playerFloat.IsFloating;
 
-        // Capturar input del mouse para rotación de cámara
         lookInput.x += Input.GetAxis("Mouse X") * mouseSensitivity;
         lookInput.y += Input.GetAxis("Mouse Y") * mouseSensitivity;
         lookInput.y = Mathf.Clamp(lookInput.y, minVerticalAngle, maxVerticalAngle);
 
-        UpdateSpeed();
         Jump();
-        MoveAndRotate();
+        ProcessInput();
+        HandleAnimationAndAudio();
+    }
+    void FixedUpdate()
+    {
+        if (FreezeMovement)
+        {
+            if (animator.speed > 0f)
+            {
+                animator.StopPlayback();
+            }
+            return;
+        }
+        UpdateSpeed();
+        MovePlayerWithPhysics();
     }
 
     void UpdateSpeed()
     {
-        if (PowerUps.Instancia.PowerUpSpeed)
+        if (PowerUps.Instancia.HasPowerUp(powerUpSpeed) && speed != BuffedSpeed)
         {
             speed = BuffedSpeed;
-            PowerUps.Instancia.PowerUpSpeed = false;
+            
+        }
+        else if (!PowerUps.Instancia.HasPowerUp(powerUpSpeed) && speed != baseSpeed)
+        {
+            speed = BuffedSpeed;
         }
     }
 
@@ -100,40 +132,64 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void MoveAndRotate()
+    void ProcessInput()
     {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
-        Vector3 inputDirection = new Vector3(horizontal, 0f, vertical).normalized;
+        float horizontalMove = Input.GetAxis("Horizontal");
+        float verticalMove = Input.GetAxis("Vertical");
 
+        playerInput = new Vector3(horizontalMove, 0, verticalMove);
+        playerInput = Vector3.ClampMagnitude(playerInput, 1);
 
+        CamDirection();
+
+        moveDirection = playerInput.x * camRight + playerInput.z * camForward;
+    }
+
+    void MovePlayerWithPhysics()
+    {
+        if (moveDirection.magnitude >= 0.1f)
+        {
+            Vector3 move = moveDirection.normalized * speed * Time.fixedDeltaTime;
+            Vector3 targetPosition = rigidbody3D.position + move;
+            rigidbody3D.MovePosition(targetPosition);
+
+            // Rotación hacia dirección de movimiento
+            Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+            rigidbody3D.MoveRotation(Quaternion.Slerp(transform.rotation, targetRotation, rotationSmoothTime));
+        }
+    }
+
+    //Funcion para la direccion de la camara.
+    void CamDirection()
+    {
+        camForward = mainCamera.transform.forward;
+        camRight = mainCamera.transform.right;
+
+        camForward.y = 0;
+        camRight.y = 0;
+
+        camForward = camForward.normalized;
+        camRight = camRight.normalized;
+    }
+    void HandleAnimationAndAudio()
+    {
         if (isSwimming)
         {
-            Debug.Log("nadando");
             animator.SetBool("isSwimming", true);
-            animator.SetFloat("SwimSpeed", inputDirection.magnitude);
+            animator.SetFloat("SwimSpeed", playerInput.magnitude);
         }
         else
         {
-            animator.SetFloat("SwimSpeed", 0);
-            animator.SetFloat("Velocity", inputDirection.magnitude);
+            animator.SetBool("isSwimming", false);
+            animator.SetFloat("Velocity", playerInput.magnitude);
         }
 
-        if (inputDirection.magnitude >= 0.1f)
+        if (playerInput.magnitude >= 0.1f)
         {
-            // Audio
             if (!stepAudioSource.isPlaying && !isSwimming)
             {
                 stepAudioSource.Play();
             }
-
-            Vector3 moveDir = transform.forward * vertical + transform.right * horizontal;
-            Vector3 newPos = rigidbody3D.position + moveDir.normalized * speed * Time.deltaTime;
-            rigidbody3D.MovePosition(newPos);
-
-            float targetAngle = Mathf.Atan2(moveDir.x, moveDir.z) * Mathf.Rad2Deg;
-            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, rotationSmoothTime);
-            transform.rotation = Quaternion.Euler(0f, angle, 0f);
         }
         else
         {
@@ -143,7 +199,6 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
-
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Floor"))

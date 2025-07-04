@@ -1,6 +1,6 @@
 using UnityEngine;
 using System;
-public class ObjectInventorySystem : MonoBehaviour
+public class ObjectInventorySystem : MonoBehaviour, IInventory
 {
 
     [Header("Inventory UI")]
@@ -40,21 +40,35 @@ public class ObjectInventorySystem : MonoBehaviour
     }
     private void UpdatePlayerInventory(Slot[] slots)
     {
+        
         if (slots == null || slots.Length == 0) return;
         foreach (var slot in slots)
         {
-            if (slot == null) continue;
-            if (slot.isEmpty) continue;
-            if (slot.itemData == null) continue;
+            if (slot == null || slot.isEmpty || slot.itemData == null) continue;
+            Debug.Log($"Moving item {slot.itemData.itemName} with quantity {slot.quantity} to player inventory.");
             if (slot.isPlayerInventorySlot)
             {
                 foreach (var playerSlot in playerSlots)
                 {
-                    if (playerSlot.isEmpty && playerSlot.itemData == null)
+                    if (!playerSlot.isEmpty && playerSlot.itemData == slot.itemData && slot.itemData.isStackable)
                     {
+                        Debug.Log($"Stacking item {slot.itemData.itemName} in player inventory slot.");
+                        playerSlot.quantity += slot.quantity;
+                        playerSlot.Update();
+                        slot.Clear();
+                        slot.Update();
+                        break; // Exit after stacking
+                    }
+                    else if(!playerSlot.isEmpty && playerSlot.itemData == slot.itemData)
+                    {
+                        break; // Continue to the next player slot
+                    }
+                    else if (playerSlot.isEmpty && playerSlot.itemData == null)
+                    {
+                        Debug.Log($"Moving item {slot.itemData.itemName} to empty player inventory slot.");
                         playerSlot.SetItem(slot.itemData, slot.quantity);
                         playerSlot.Update();
-                        return; // Exit after moving the first item
+                        break; // Exit after moving the first item
                     }
                 }
                 Debug.Log("No empty player inventory slots available to move item.");
@@ -67,6 +81,7 @@ public class ObjectInventorySystem : MonoBehaviour
         InteractSystem.Instance.OnCanInteractWithInventory += UpdateObjectInventory;
         InventorySystem.Instance.OnUpdateInventory += UpdatePlayerInventory;
         objectSlots = objectInventorySlotHandler.GetComponentsInChildren<Slot>();
+        objectInventoryUI.SetActive(false);
         foreach (var slot in objectSlots)
         {
             slot.isPlayerInventorySlot = false;
@@ -79,10 +94,13 @@ public class ObjectInventorySystem : MonoBehaviour
     }
     public void OpenInventory()
     {
+        Debug.Log("Opening Object Inventory");
         CameraManager.Instance.LockCursor(false);
         InteractSystem.Instance.player.GetComponent<PlayerMovement>().FreezeMovement = true;
         isInventoryOpen = true;
         objectInventoryUI.SetActive(true);
+        ContextMenuController.Instance.Hide();
+        ItemDescriptionUI.Instance.Hide();
 
     }
     public void CloseInventory()
@@ -90,6 +108,8 @@ public class ObjectInventorySystem : MonoBehaviour
         CameraManager.Instance.LockCursor(true);
         InteractSystem.Instance.player.GetComponent<PlayerMovement>().FreezeMovement = false;
         isInventoryOpen = false;
+        ContextMenuController.Instance.Hide();
+        ItemDescriptionUI.Instance.Hide();
         currentObjectInventory = null;
         objectInventoryUI.SetActive(false);
     }
@@ -193,14 +213,14 @@ public class ObjectInventorySystem : MonoBehaviour
             {
                 RemoveItem(item, amount);
                 currentObjectInventory.ConsumeItem(item, amount);
+                InventorySystem.Instance.RemoveItem(item, amount);
                 if (currentObjectInventory.requiredItems.Count == 0)
                 {
                     currentObjectInventory.onPuzzleResolved?.Invoke();
                 }
-                //Debug.Log($"Consumido {item.itemName} para cumplir con los requisitos del puzzle.");
+                
                 return;
             }
         }
     }
-
 }

@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 
 public class GameplayManager : MonoBehaviour
 {
     public GameObject player;
+    [SerializeField] AudioMixer audioMixer;
     private static GameplayManager _instance;
     public static GameplayManager Instance
     {
@@ -51,20 +53,22 @@ public class GameplayManager : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
     public void PauseGame(bool pause)
     {
         if (pause)
         {
+            CameraManager.Instance.LockCursor(false);
+            RoomManager.Instance.PauseMusic();
+            DialogueManager.Instance.PauseAudio();
+            AudioListener.pause = true;
             Time.timeScale = 0;
             return;
         }
         Time.timeScale = 1;
-
+        CameraManager.Instance.LockCursor(true);
+        RoomManager.Instance.ResumeMusic();
+        DialogueManager.Instance.ResumeAudio();
+        AudioListener.pause = false;
     }
     public void GameOver()
     {
@@ -76,5 +80,10 @@ public class GameplayManager : MonoBehaviour
     {
         CameraManager.Instance.LockCursor(false);
         SceneManager.LoadScene("Victory");
+    }
+    public void ChangeScene(string sceneName)
+    {
+        CameraManager.Instance.LockCursor(false);
+        SceneManager.LoadScene(sceneName);
     }
 }

@@ -44,7 +44,19 @@ public class Slot : MonoBehaviour
         Debug.Log($"Clicked on slot with item: {itemData.itemName}, quantity: {quantity}");
         if (isPlayerInventorySlot && ObjectInventorySystem.Instance.IsInventoryOpen)
         {
-            ContextMenuController.Instance.ShowWithDeliver(this, Input.mousePosition);
+            if (!itemData.isPowerUp)
+            {
+                // If the slot is a player inventory slot and the object inventory is open, show the context menu without deliver option
+                ContextMenuController.Instance.Show(this, Input.mousePosition);
+                return;
+            }
+            // If the slot is a player inventory slot and the object inventory is open, show the context menu with deliver option
+            ContextMenuController.Instance.ShowWithDeliver(this, Input.mousePosition, InventorySystem.Instance, ObjectInventorySystem.Instance);
+            return;
+        }
+        else if (!isPlayerInventorySlot && ObjectInventorySystem.Instance.IsInventoryOpen)
+        {
+            ContextMenuController.Instance.ShowWithDeliver(this, Input.mousePosition, ObjectInventorySystem.Instance, InventorySystem.Instance);
             return;
         }
         else if (isPlayerInventorySlot && !ObjectInventorySystem.Instance.IsInventoryOpen)

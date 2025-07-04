@@ -1,16 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using JetBrains.Annotations;
-using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.Audio;
-using UnityEngine.ProBuilder.Shapes;
-using UnityEngine.UIElements;
 public class Doors : MonoBehaviour
 {
     [SerializeField] private bool puzzleSolved;
-    private KeyCode interactKey = KeyCode.E;
-
     public bool PuzzleSolved
     {
         get { return puzzleSolved; }
@@ -19,13 +11,19 @@ public class Doors : MonoBehaviour
             puzzleSolved = value;
         }
     }
-    protected float speed = 30f; // grados por segundo
+    protected float speed = 60f; // grados por segundo
     protected int speedMultiplier = 3;
     protected Axis rotationAxis = Axis.Y; // eje por defecto (cámbialo en el Inspector)
     protected float initialAngle;
     protected float targetAngle;
     protected bool isOpen = false;
     public bool IsOpen { get; set; }
+    private bool isFinalDoor = false;
+    public bool IsFinalDoor
+    {
+        get { return isFinalDoor; }
+        set { isFinalDoor = value; }
+    }
     [SerializeField] protected bool canOpen;
     public bool CanOpen
     {
@@ -36,7 +34,8 @@ public class Doors : MonoBehaviour
     protected enum Axis { X, Y, Z }
 
     [Header("-----Audio Settings-----")]
-    [SerializeField] public AudioClip doorSound;
+    [SerializeField] public AudioClip doorOpenSound;
+    [SerializeField] public AudioClip doorCloseSound;
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioMixerGroup sfxGroup;
 
@@ -54,14 +53,7 @@ public class Doors : MonoBehaviour
             audioSource = gameObject.AddComponent<AudioSource>();
         }
 
-        //Control Setting for Interact
-        if (PlayerPrefs.HasKey("Key_0"))
-        {
-            if (System.Enum.TryParse<KeyCode>(PlayerPrefs.GetString("Key_0"), true, out var parsedKey))
-            {
-                interactKey = parsedKey;
-            }
-        }
+        
     }
 
     void Update()
@@ -78,24 +70,32 @@ public class Doors : MonoBehaviour
 
     virtual protected void OpenDoor()
     {
-        if (Input.GetKeyDown(interactKey) && canOpen && puzzleSolved)
+        if (Input.GetKeyDown(InputHandler.Instance.InteractKey) && canOpen && puzzleSolved)
         {
+            if (isFinalDoor)
+            {
+                GameplayManager.Instance.Victory();
+            }
             if (!isOpen)
-            {
-                targetAngle = (initialAngle - 80f + 360f) % 360f; // abre 80 grados
-                isOpen = true;
-
-                //Door Audio
-                if (doorSound != null)
                 {
-                    audioSource.PlayOneShot(doorSound);
+                    targetAngle = (initialAngle - 80f + 360f) % 360f; // abre 80 grados
+                    isOpen = true;
+
+                    //Door Audio
+                    if (doorOpenSound != null)
+                    {
+                        audioSource.PlayOneShot(doorOpenSound);
+                    }
                 }
-            }
-            else
-            {
-                targetAngle = initialAngle; // cierra de vuelta
-                isOpen = false;
-            }
+                else
+                {
+                    if (doorCloseSound != null)
+                    {
+                        audioSource.PlayOneShot(doorCloseSound);
+                    }
+                    targetAngle = initialAngle; // cierra de vuelta
+                    isOpen = false;
+                }
         }
     }
     
@@ -105,9 +105,9 @@ public class Doors : MonoBehaviour
         {
             targetAngle = initialAngle; // cierra de vuelta
             //Door Audio
-            if (doorSound != null)
+            if (doorCloseSound != null)
             {
-                audioSource.PlayOneShot(doorSound);
+                audioSource.PlayOneShot(doorCloseSound);
             }
             isOpen = false;
         }

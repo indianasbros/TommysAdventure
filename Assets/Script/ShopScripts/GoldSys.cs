@@ -5,12 +5,15 @@ using UnityEngine;
 
 public class GoldSys : MonoBehaviour
 {
-    private TextMeshProUGUI texto;
-    GoldSystem GoldSystem;
+    public TextMeshProUGUI texto;
+    
     private void Update()
     {
-        GoldSystem = GameObject.Find("GoldSystem").GetComponent<GoldSystem>();
-        texto = GetComponent<TextMeshProUGUI>();
-        texto.text = GoldSystem.Gold.ToString();
+        if (GoldSystem.Instance == null)
+        {
+            return; // Asegurarse de que GoldSystem esté inicializado
+        }
+
+        texto.text = GoldSystem.Instance.Gold.ToString();
     }
 }

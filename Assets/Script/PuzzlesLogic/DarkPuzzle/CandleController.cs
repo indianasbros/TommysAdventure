@@ -4,8 +4,6 @@ using UnityEngine.Audio;
 public class CandleController : MonoBehaviour
 {
     [SerializeField] private Light candleLight;
-    [SerializeField] private KeyCode grabKey = KeyCode.E;
-    [SerializeField] private KeyCode dropKey = KeyCode.Q;
     [SerializeField] private Transform playerHoldPoint;
     [SerializeField] private AudioClip beatSound;
     [SerializeField] private AudioSource audioSource;
@@ -33,32 +31,18 @@ public class CandleController : MonoBehaviour
             rb = gameObject.AddComponent<Rigidbody>();
         }
         
-        if (PlayerPrefs.HasKey("Key_0"))
-        {
-            if (System.Enum.TryParse<KeyCode>(PlayerPrefs.GetString("Key_0"), true, out var parsedKey))
-            {
-                grabKey = parsedKey;
-            }
-        }
-        
-        if (PlayerPrefs.HasKey("Key_1"))
-        {
-            if (System.Enum.TryParse<KeyCode>(PlayerPrefs.GetString("Key_1"), true, out var parsedKey))
-            {
-                dropKey = parsedKey;
-            }
-        }
+
     }
 
     void Update()
     {
         if (isPlayerInRange)
         {
-            if (!isCarried && Input.GetKeyDown(grabKey))
+            if (!isCarried && Input.GetKeyDown(InputHandler.Instance.InteractKey))
             {
                 PickUpCandle();
             }
-            else if (isCarried && Input.GetKeyDown(dropKey))
+            else if (isCarried && Input.GetKeyDown(InputHandler.Instance.DropKey))
             {
                 DropCandle();
             }
@@ -71,12 +55,10 @@ public class CandleController : MonoBehaviour
         
         if (!door.PuzzleSolved && isCarried && audioSource.isPlaying)
         {
-            Debug.Log("no sueno");
             audioSource.Stop();
         }
         else if (!door.PuzzleSolved && !isCarried && !audioSource.isPlaying)
         {
-            Debug.Log("sueno");
             audioSource.clip = beatSound;
             audioSource.Play();
         }

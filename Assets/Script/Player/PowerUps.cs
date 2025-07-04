@@ -5,10 +5,59 @@ using UnityEngine;
 public class PowerUps : MonoBehaviour
 {
     public static PowerUps Instancia { get; private set; }
+    public Dictionary<ItemData,bool> PowerUpsList = new ();
+    void Start()
+    {
+        SpeedUI = false;
+        TimeUI = false;
+    }
+    public bool HasPowerUp(ItemData powerUp)
+    {
+        if (PowerUpsList.ContainsKey(powerUp))
+        {
+            return PowerUpsList[powerUp];
+        }
+        return false;
+    }
+    public bool HasPowerUp(string powerUp)
+    {
+        ItemData itemData = Resources.Load<ItemData>("Items/" + powerUp);
+        if (PowerUpsList.ContainsKey(itemData))
+        {
+            return PowerUpsList[itemData];
+        }
+        return false;
+    }
+    public void ResetPowerUps()
+    {
+        PowerUpsList.Clear();
+        SpeedUI = false;
+        TimeUI = false;
+    }
+    public void SetPowerUpActive(ItemData powerUp, bool active = true)
+    {
+        if (PowerUpsList.ContainsKey(powerUp))
+        {
+            PowerUpsList[powerUp] = active;
+        }
+    }
+    public void RemovePowerUp(ItemData powerUp)
+    {
 
-    public bool PowerUpSpeed;
-    public bool PowerUpTime;
-    public bool SpeedUI; //Usen esto cuando tengan el inventario, asi muestran los power upps :D
+        if (PowerUpsList.ContainsKey(powerUp))
+        {
+            PowerUpsList.Remove(powerUp);
+        }
+    }
+    public void AddPowerUp(ItemData powerUp)
+    {
+        
+        if (!PowerUpsList.ContainsKey(powerUp))
+        {
+            PowerUpsList.Add(powerUp,true);
+        }
+    }
+    public bool SpeedUI;
     public bool TimeUI;
     void Awake()
     {
@@ -16,15 +65,14 @@ public class PowerUps : MonoBehaviour
         {
             Instancia = this;
             DontDestroyOnLoad(gameObject);
-            Debug.Log("Singleton 'SingletonSpeed' inicializado y persistente.");
         }
         else
         {
-            Debug.LogWarning("Ya existe una instancia de 'SingletonSpeed'. Destruyendo duplicado.");
             Destroy(gameObject);
         }
     }
-
+    
+    
 }
     
 

@@ -8,4 +8,5 @@ public class ItemData : ScriptableObject
     public Sprite icon;
     public string itemID;
     public bool isStackable;
+    public bool isPowerUp;
 }

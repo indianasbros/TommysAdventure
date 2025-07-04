@@ -35,17 +35,11 @@ public class PauseMenu : MonoBehaviour
         if (pause)
         {
             GameplayManager.Instance.PauseGame(true);
-            CameraManager.Instance.LockCursor(false);
-            RoomManager.Instance.PauseMusic();
-            DialogueManager.Instance.PauseAudio();
+           
             isMenuOpen = true;
             return;
         }
         GameplayManager.Instance.PauseGame(false);
-        CameraManager.Instance.LockCursor(true);
-        RoomManager.Instance.ResumeMusic();
-        DialogueManager.Instance.ResumeAudio();
-
         isMenuOpen = false;
 
     }
@@ -57,7 +51,11 @@ public class PauseMenu : MonoBehaviour
     }
     public void MainMenu()
     {
-        SceneManager.LoadScene("Menu");
+        RoomManager.Instance.StopMusic();
+        DialogueManager.Instance.StopAudio();
+        AudioListener.pause = false;
         GameplayManager.Instance.PauseGame(false);
+        CameraManager.Instance.LockCursor(false);
+        SceneManager.LoadScene("Menu");
     }
 }

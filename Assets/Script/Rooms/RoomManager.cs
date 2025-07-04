@@ -32,7 +32,6 @@ public class RoomManager : MonoBehaviour
         if (globalAudio == null)
         {
             GameObject audioObj = new GameObject("RoomMusic");
-            DontDestroyOnLoad(audioObj);
             globalAudio = audioObj.AddComponent<AudioSource>();
             globalAudio.loop = true;
             globalAudio.volume = 1f;
@@ -48,7 +47,6 @@ public class RoomManager : MonoBehaviour
             ChangeMusic(room);
             if(currentRoom.IsFirstPuzzle && OnEnteredFirstPuzzle != null)
             {
-                Debug.Log("Entered first puzzle room");
                 OnEnteredFirstPuzzle?.Invoke();
             }
         }
