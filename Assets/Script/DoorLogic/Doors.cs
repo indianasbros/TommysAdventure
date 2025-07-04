@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 public class Doors : MonoBehaviour
 {
-    [SerializeField] private bool puzzleSolved;
+    [SerializeField] protected bool puzzleSolved;
     public bool PuzzleSolved
     {
         get { return puzzleSolved; }
@@ -53,7 +53,6 @@ public class Doors : MonoBehaviour
             audioSource = gameObject.AddComponent<AudioSource>();
         }
 
-        
     }
 
     void Update()
@@ -67,35 +66,39 @@ public class Doors : MonoBehaviour
         }
         OpenDoor();
     }
-
-    virtual protected void OpenDoor()
+    protected bool CanOpenDoor()
     {
-        if (Input.GetKeyDown(InputHandler.Instance.InteractKey) && canOpen && puzzleSolved)
+        return canOpen && puzzleSolved;
+    }
+    protected void OpenDoor()
+    {
+        if (Input.GetKeyDown(InputHandler.Instance.InteractKey) && CanOpenDoor())
         {
             if (isFinalDoor)
             {
                 GameplayManager.Instance.Victory();
             }
             if (!isOpen)
-                {
-                    targetAngle = (initialAngle - 80f + 360f) % 360f; // abre 80 grados
-                    isOpen = true;
+            {
+                targetAngle = (initialAngle - 80f + 360f) % 360f; // abre 80 grados
+                isOpen = true;
 
-                    //Door Audio
-                    if (doorOpenSound != null)
-                    {
-                        audioSource.PlayOneShot(doorOpenSound);
-                    }
-                }
-                else
+                //Door Audio
+                if (doorOpenSound != null)
                 {
-                    if (doorCloseSound != null)
-                    {
-                        audioSource.PlayOneShot(doorCloseSound);
-                    }
-                    targetAngle = initialAngle; // cierra de vuelta
-                    isOpen = false;
+                    audioSource.PlayOneShot(doorOpenSound);
                 }
+            }
+            else
+            {
+                if (doorCloseSound != null)
+                {
+                    audioSource.PlayOneShot(doorCloseSound);
+                }
+                targetAngle = initialAngle; // cierra de vuelta
+                isOpen = false;
+            }
+            
         }
     }
     

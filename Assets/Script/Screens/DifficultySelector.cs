@@ -15,7 +15,7 @@ public class DifficultySelector : MonoBehaviour
         toggleEasy.onValueChanged.AddListener(delegate { UpdateLevel(); });
         toggleMedium.onValueChanged.AddListener(delegate { UpdateLevel(); });
         toggleHard.onValueChanged.AddListener(delegate { UpdateLevel(); });
-
+        Selected = Difficulty.Normal; // Default selection
         UpdateLevel(); 
     }
 

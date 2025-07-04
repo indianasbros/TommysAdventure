@@ -51,7 +51,7 @@ public class ContextMenuController : MonoBehaviour
                 Hide();
                 if (currentSlot.itemData.isPowerUp && PowerUps.Instancia.HasPowerUp(currentSlot.itemData))
                 {
-                    PowerUps.Instancia.SetPowerUpActive(currentSlot.itemData,false);
+                    TimeController.Instance.DiscartPowerUp();
                 }
                 lastTimeClicked = Time.time; // Update last clicked time
                 return; // Prevent double clicks

@@ -18,6 +18,7 @@ public class TimeController : MonoBehaviour
 
     public float TimeRemaining => timeRemaining;
     public bool IsRunning => isRunning;
+
     [SerializeField] ItemData powerUpTime;
     void Awake()
     {
@@ -38,15 +39,14 @@ public class TimeController : MonoBehaviour
     {
         RoomManager.Instance.OnEnteredFirstPuzzle -= OnEnteredFirstPuzzle;
     }
-    void OnEnteredFirstPuzzle()
-    {
-        isRunning = true;
-    }
     void Start()
     {
         isRunning = false;
         timerPanel.SetActive(false);
-        
+    }
+    void OnEnteredFirstPuzzle()
+    {
+        isRunning = true;
     }
 
     void Update()
@@ -56,10 +56,10 @@ public class TimeController : MonoBehaviour
         {
             ApplyDifficulty();
             UpdateTimerDisplay();
-        }
-        if (PowerUps.Instancia.HasPowerUp(powerUpTime))
-        {
-            ApplyPowerUp();
+            if (PowerUps.Instancia.HasPowerUp(powerUpTime))
+            {
+                ApplyPowerUp();
+            }
         }
         if (timeRemaining > 0)
         {
@@ -77,7 +77,6 @@ public class TimeController : MonoBehaviour
     private void ApplyPowerUp()
     {
         timeRemaining += 900f; //15 minutos
-        //PowerUps.Instancia.SetPowerUpActive(powerUpTime, false);
     }
     public void DiscartPowerUp()
     {
